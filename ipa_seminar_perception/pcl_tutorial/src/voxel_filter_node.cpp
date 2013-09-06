@@ -9,32 +9,31 @@
 #include <dynamic_reconfigure/server.h>
 #include <pcl_tutorial/voxel_filter_nodeConfig.h>
 #include <pcl/point_types.h>
-//#include <pcl/point_cloud.h>
 #include <pcl_ros/point_cloud.h>
 #include <pcl/filters/voxel_grid.h>
 
 
-class VoxelFilterNode
+class PassthroughFilterNode
 {
 public:
   typedef pcl::PointXYZRGB Point;
   typedef pcl::PointCloud<Point> PointCloud;
 
-  VoxelFilterNode()
+  PassthroughFilterNode()
   {
     pub_ = nh_.advertise<PointCloud>("point_cloud_out",1);
-    sub_ = nh_.subscribe ("point_cloud_in", 1,  &VoxelFilterNode::cloudCallback, this);
-    config_server_.setCallback(boost::bind(&VoxelFilterNode::dynReconfCallback, this, _1, _2));
+    sub_ = nh_.subscribe ("point_cloud_in", 1,  &PassthroughFilterNode::cloudCallback, this);
+    config_server_.setCallback(boost::bind(&PassthroughFilterNode::dynReconfCallback, this, _1, _2));
 
     vg_.setLeafSize (0.01f, 0.01f, 0.01f);
   }
 
-  ~VoxelFilterNode() {}
+  ~PassthroughFilterNode() {}
 
   void
   dynReconfCallback(pcl_tutorial::voxel_filter_nodeConfig &config, uint32_t level)
   {
-
+    vg_.setLeafSize(config.leafsize, config.leafsize, config.leafsize);
   }
 
   void
@@ -60,7 +59,7 @@ int main (int argc, char** argv)
 {
   ros::init (argc, argv, "voxel_filter_node");
 
-  VoxelFilterNode vf;
+  PassthroughFilterNode vf;
 
   ros::spin();
 }
