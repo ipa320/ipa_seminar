@@ -16,6 +16,8 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 #set the default path for built libraries to the "lib" directory
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/include)
+
 #uncomment if you have defined messages
 #rosbuild_genmsg()
 #uncomment if you have defined services
@@ -32,4 +34,5 @@ gencfg()
 #rosbuild_link_boost(${PROJECT_NAME} thread)
 rosbuild_add_executable(voxel_filter_node src/voxel_filter_node.cpp)
 rosbuild_add_executable(passthrough_filter_node src/passthrough_filter_node.cpp)
+rosbuild_add_executable(plane_segmentation_node src/plane_segmentation_node.cpp)
 #target_link_libraries(example ${PROJECT_NAME})
