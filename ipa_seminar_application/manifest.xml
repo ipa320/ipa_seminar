@@ -1,0 +1,15 @@
+<package>
+  <description brief="ipa_seminar_application">
+
+     ipa_seminar_application
+
+  </description>
+  <author>Florian Weisshardt</author>
+  <license>LGPL</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/ipa_seminar_application</url>
+
+  <depend package="rospy"/>
+  <depend package="smach"/>
+
+</package>
