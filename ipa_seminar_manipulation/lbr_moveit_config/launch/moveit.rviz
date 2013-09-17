@@ -5,10 +5,12 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /MotionPlanning1
+        - /MotionPlanning1/Scene Geometry1
         - /MotionPlanning1/Planning Request1
         - /MotionPlanning1/Planned Path1
+        - /PointCloud21
       Splitter Ratio: 0.74256
-    Tree Height: 156
+    Tree Height: 352
   - Class: rviz/Help
     Name: Help
   - Class: rviz/Views
@@ -92,11 +94,31 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          arm_ee_link:
+          base_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
-          base_link:
+            Value: true
+          cam3d_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          cam3d_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          gripper_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          wall_left_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          wall_right_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -184,11 +206,31 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          arm_ee_link:
+          base_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
-          base_link:
+            Value: true
+          cam3d_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          cam3d_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          gripper_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          wall_left_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          wall_right_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -196,6 +238,57 @@ Visualization Manager:
         Robot Alpha: 0.5
         Show Scene Robot: true
       Value: true
+    - Class: rviz/Axes
+      Enabled: false
+      Length: 0.1
+      Name: Axes
+      Radius: 0.01
+      Reference Frame: /arm_0_link
+      Value: false
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: Intensity
+      Decay Time: 0
+      Enabled: false
+      Max Color: 255; 255; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: PointCloud2
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.01
+      Style: Points
+      Topic: /cam3d/depth/points
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: false
+    - Alpha: 0.5
+      Class: rviz/RobotModel
+      Collision Enabled: false
+      Enabled: false
+      Links:
+        All Links Enabled: true
+        Expand Joint Details: false
+        Expand Link Details: false
+        Expand Tree: false
+        Link Tree Style: Links in Alphabetic Order
+      Name: RobotModel
+      Robot Description: robot_description
+      TF Prefix: ""
+      Update Interval: 0
+      Value: false
+      Visual Enabled: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -210,31 +303,31 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 3.44552
+      Distance: 5.22861
       Focal Point:
-        X: -0.486928
-        Y: -0.30819
-        Z: 2.23518e-07
+        X: -0.548425
+        Y: -0.201048
+        Z: 9.99704e-07
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.489797
+      Pitch: 0.644795
       Target Frame: /base_link
       Value: XYOrbit (rviz)
-      Yaw: 3.93994
+      Yaw: 3.84178
     Saved: ~
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 680
+  Height: 876
   Help:
     collapsed: false
   Hide Left Dock: false
   Hide Right Dock: false
   Motion Planning:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000100000000000002a200000262fc0200000005fb000000100044006900730070006c0061007900730100000028000000dd000000dd00fffffffb0000000800480065006c00700000000342000000bb0000007600fffffffb0000000a0056006900650077007300000003b0000000b0000000b000fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e0067010000010b0000017f0000017400ffffff000000ea0000026200000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000100000000000002a200000326fc0200000005fb000000100044006900730070006c0061007900730100000028000001a1000000dd00fffffffb0000000800480065006c00700000000342000000bb0000007600fffffffb0000000a0056006900650077007300000003b0000000b0000000b000fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e006701000001cf0000017f0000017400ffffff000001670000032600000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Views:
     collapsed: false
-  Width: 914
-  X: 628
-  Y: 173
+  Width: 1039
+  X: 554
+  Y: 24

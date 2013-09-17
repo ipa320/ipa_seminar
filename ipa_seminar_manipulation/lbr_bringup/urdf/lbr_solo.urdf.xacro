@@ -11,24 +11,28 @@
 
   <!-- calibration -->
   <!-- arm mount positions | relative to base_link -->
-  <property name="arm_x" value="0.5"/>
-  <property name="arm_y" value="0.5"/>
-  <property name="arm_z" value="0.94"/>
-  <property name="arm_roll" value="0.0"/>
+  <property name="arm_x" value="0.272"/>
+  <property name="arm_y" value="0.326"/>
+  <property name="arm_z" value="1.07"/>
+  <property name="arm_roll" value="0.0"/>s
   <property name="arm_pitch" value="0.0"/>
-  <property name="arm_yaw" value="0.0"/>
-  
-  <property name="cam_x" value="-0.0170912083"/>
-  <property name="cam_y" value="-0.0921082478"/>
-  <property name="cam_z" value="0.8766602432"/>
-  <property name="cam_roll" value="0.7815978927"/>
-  <property name="cam_pitch" value="-0.0011338404"/>
-  <property name="cam_yaw" value="-0.2715640362"/>
+  <property name="arm_yaw" value="-1.87"/>
 
+  <!-- kinect mount positions | relative to base_link -->
+  <property name="cam3d_x" value="0.5"/>
+  <property name="cam3d_y" value="0.5"/>
+  <property name="cam3d_z" value="2.49"/>
+  <property name="cam3d_roll" value="3.67"/>
+  <property name="cam3d_pitch" value="0"/>
+  <property name="cam3d_yaw" value="-3.93"/>  
+
+  
+  
   <!-- arm -->
   <include filename="$(find cob_description)/urdf/lbr/lbr.urdf.xacro" />
   
   <!-- cameras -->
+  <include filename="$(find cob_description)/urdf/sensors/kinect.urdf.xacro" />
   
 
   <!-- generic simulator_gazebo plugins for starting mechanism control, ros time, ros battery -->
@@ -59,17 +63,109 @@
       </geometry>
     </collision>
   </link>
- 
+  
+  <joint name="wall_left_joint" type="fixed" >
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="wall_left_link" />
+  </joint>
+  
+  <link name="wall_left_link">
+    <inertial>
+       <origin xyz="0 0 0" rpy="0 0 0"/>
+       <mass value="1.0"/>
+       <inertia ixx="1.0"  ixy="0"  ixz="0" iyy="1.0" iyz="0" izz="1.0" />
+    </inertial>
+    
+    <visual>
+      <origin xyz="0 0.65 1.95" rpy="0 0 0" />
+      <geometry>
+        <box size="1.4 0.1 2.0"/>
+      </geometry>
+      <material name="IPA/Base">
+        <color rgba="0.4 0.4 0.4 1.0"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0.65 1.95" rpy="0 0 0" />
+      <geometry>
+        <box size="1.4 0.1 2.0"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <joint name="wall_right_joint" type="fixed" >
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="wall_right_link" />
+  </joint>
+  
+  <link name="wall_right_link">
+    <inertial>
+       <origin xyz="0 0 0" rpy="0 0 0"/>
+       <mass value="1.0"/>
+       <inertia ixx="1.0"  ixy="0"  ixz="0" iyy="1.0" iyz="0" izz="1.0" />
+    </inertial>
+    
+    <visual>
+      <origin xyz="0.65 -0.05 1.95" rpy="0 0 0" />
+      <geometry>
+        <box size="0.1 1.3 2.0"/>
+      </geometry>
+      <material name="IPA/Base">
+        <color rgba="0.4 0.4 0.4 1.0"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0.65 0 1.95" rpy="0 0 0" />
+      <geometry>
+        <box size="0.1 1.3 2.0"/>
+      </geometry>
+    </collision>
+  </link>
+  
+   
   <xacro:cob_lbr name="arm" parent="base_link">
     <origin xyz="${arm_x} ${arm_y} ${arm_z}" rpy="${arm_roll} ${arm_pitch} ${arm_yaw}" />
   </xacro:cob_lbr>
   
-  <link name="arm_ee_link"/>
+
+  <link name="gripper_link">
+    <inertial>
+       <origin xyz="0 0 0" rpy="0 0 0"/>
+       <mass value="1.0"/>
+       <inertia ixx="1.0"  ixy="0"  ixz="0" iyy="1.0" iyz="0" izz="1.0" />
+    </inertial>
+    
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://lbr_bringup/urdf/gripper.stl"/>
+      </geometry>
+      <material name="IPA/Base">
+        <color rgba="0.4 0.4 0.4 1.0"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://lbr_bringup/urdf/gripper.stl"/>
+      </geometry>
+    </collision>
+  </link>
   
-  <joint name="arm_ee_joint" type="fixed" >
+  <joint name="gripper_joint" type="fixed" >
     <origin xyz="0 0 0.0" rpy="0 0 0" />
     <parent link="arm_7_link" />
-    <child link="arm_ee_link" />
+    <child link="gripper_link" />
   </joint>
+  
+  
+  <xacro:cob_kinect_v0 name="cam3d" ros_topic="cam3d" parent="base_link">
+    <origin xyz="${cam3d_x} ${cam3d_y} ${cam3d_z}" rpy="${cam3d_roll} ${cam3d_pitch} ${cam3d_yaw}" />
+  </xacro:cob_kinect_v0>
   
 </robot>

@@ -1,12 +1,14 @@
 <?xml version="1.0"?>
 <launch>
 
-	<!-- controller_manager -->
+        <!-- controller_manager -->
         <include file="$(find cob_controller_configuration_gazebo)/ros/launch/controller_manager.launch" />
 
+<!--
         <include file="$(find cob_bringup)/components/relayboard.launch">
                 <arg name="sim" value="true"/>
         </include>
+-->
 
         <rosparam file="$(find lbr_bringup)/config/arm_controller_lbr_solo.yaml" command="load"/>
 
