@@ -1,4 +1,9 @@
 ros_seminar_manipulation
 ===========
 
-TODO: fill in tutorial instructions here
+Prerequesites
+
+![Gazebo Simulation](https://github.com/ipa-fxm/ipa_seminar/blob/master/ipa_seminar_manipulation/doc/gazebo_simulation.png)
+
+
+![Command GUI](https://github.com/ipa-fxm/ipa_seminar/blob/master/ipa_seminar_manipulation/doc/command_gui.png)
