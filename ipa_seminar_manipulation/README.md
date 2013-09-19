@@ -77,7 +77,27 @@ Similar to simulation, the cob_command_gui can be used to perform __unplanned__ 
 
 ### 2. MoveIt! - Setup Assistant  
 
+MoveIt! requires a little  configuration before offering its capabilities to your robot. The configuration can easily be done with the MoveIt! Setup Assistant - a graphical tool that comes shipped with MoveIt! automatically.
+
+The following steps will lead you to a valid MoveIt!-configuration for the KUKA LBR.  
+A PR2-specific tutorial can be found [here](http://moveit.ros.org/wiki/PR2/Setup_Assistant/Quick_Start "PR2-SetupAssistant")  
+
 #### 2.1. Start  
+
+First run 
+```
+roslaunch moveit_setup_assistant setup_assistant.launch
+```
+to start the MoveIt-SetupAssistant GUI. You should see the screen below.
+
+
+
+In the first tap, we need to load the robot model (URDF) on which basis the configuration is generated.  
+Browse to _URDF-LOCATION_ and load the lbr_solo.urdf.xacro file.  
+You should now see our robot within the SetupAssistant.  
+
+
+
 
 #### 2.2. Self-Collision  
 
