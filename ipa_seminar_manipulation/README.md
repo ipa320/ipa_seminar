@@ -32,7 +32,7 @@ Changes can be made within the [setup file](https://github.com/ipa-fxm/ipa_semin
 
 #### 1.1. Simulation
 
---> call sim alias  
+# call sim alias  
 
 In order to use MoveIt! with a simulated robot, simply run:
 ```
@@ -42,6 +42,8 @@ This will start up the [Gazebo](http://gazebosim.org "Gazebo") simulation with t
 Use the mouse to rotate/translate the view or zoom.
 
 ![Gazebo Simulation](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/gazebo_simulation.png?login=ipa-fxm&token=36e39b9f21a46033bd0331aeb8be8c5f "Gazebo Simulation")
+
+# make sure configs are safe -- check arm_1_joint!
 
 The simplest way of moving the robot is by using the cob_commmand_gui. Therefore run in a new terminal:
 ```
@@ -54,14 +56,14 @@ __NOTE:__ This is __unplanned__ motion!
 
 #### 1.2 Robot Hardware
 
-![CAUTION](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/yellow-warning.gif?login=ipa-fxm&token=de7de97c787a393b6b8acf19dd87890e "CAUTIOIN")  
+![CAUTION](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/yellow-warning.gif?login=ipa-fxm&token=de7de97c787a393b6b8acf19dd87890e "CAUTIOIN")![CAUTION](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/yellow-warning.gif?login=ipa-fxm&token=de7de97c787a393b6b8acf19dd87890e "CAUTIOIN")![CAUTION](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/yellow-warning.gif?login=ipa-fxm&token=de7de97c787a393b6b8acf19dd87890e "CAUTIOIN")  
 __CAUTION:__
 * Only use the robot under supervision of your tutor
 * Make sure you have a clear view to the robot and the emergency button is in your hands before executing a command 
 * In case of unexpected behavior or in case the robot is about to collide hit the emergency button immediately
-* After the emergency button has been pressed, ask your tutor to recover the robot first
+* After the emergency button has been pressed, ask your tutor to recover the robot
 
---> call robot alias  
+# call robot alias  
 
 
 In order to use MoveIt! with the real robot hardware, the robot needs to be initialized first. Ask your tutor to do so.  
