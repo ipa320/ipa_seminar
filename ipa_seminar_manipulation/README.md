@@ -19,10 +19,10 @@
 3. MoveIt! - RVIZ-Plugin  
   3.1. Plugin Environment Basics  
   3.2. Planning Request  
-4. MoveIt! - Enhanced Configuration
-  4.1. Perception
-  4.2. Control
-  4.3. Enhanced Usage
+4. MoveIt! - Enhanced Configuration  
+  4.1. Perception  
+  4.2. Control  
+  4.3. Enhanced Usage  
 5. MoveIt! - CommandLine Tool  
 6. MoveIt! - Scripting API  
   6.1. PlanningSceneInterface  
@@ -218,15 +218,55 @@ Get used with the RVIZ environment and the plugins by:
 
 # Screenshot of example RVIZ config - start + goal + trail!!!
 
-### 4. MoveIt! - Enhanced Configuration
+### 4. MoveIt! - Enhanced Configuration  
 
 #### 4.1 Perception  
 
-#### 4.2 Control
+#### 4.2 Control  
 
-#### 4.3 Enhanced Usage
+#### 4.3 Enhanced Usage  
 
-### 5. MoveIt! - CommmandLine Tool
+### 5. MoveIt! - CommmandLine Tool  
+
+Another possibility for quickly sending planning problems to MoveIt! and execute them either in simulation or on a real robot is provided through the MoveIt! - CommandLine Tool. This terminal-based interface provides MoveIt!'s capabilities by using the MoveIt! Python API (more details in next section).  
+
+To start the CommandLine Tool run:
+```
+rosrun moveit_commander moveit_commander_cmdline.py
+```
+This changes the look of you terminal to the following prompt.
+
+# Screenshot CommandLineTool
+
+First, we specify which group we would like to work with by typing:
+```
+use arm
+```
+Next we can move to one of the pre-defined robot poses by typing: 
+```
+go <name_of_robot_pose>
+```
+If we would like to see whether a plan can be found without execution, we can do this by typing:
+```
+plan <name_of_robot_pose>
+```
+The last trajectory can later be executed by typing:
+```
+execute
+```
+
+There are more helpfull commands within the CommandLine Tool. A complete list can be seen by typing:
+```
+help
+```
+
+Get familar with the CommandLine Tool by also using:  
+* `current` show the current state of the active group
+* `record <name>` record the current joint values under the name <name>. <name> can then be used as any other pre-defined robot pose.
+* `show` display the names and values of the known states
+* `go <dir> <dx>` plan and execute a motion in direction up|down|left|right|forward|backward for distance <dx>
+
+
 
 ### 6. MoveIt! - Scripting API  
 
