@@ -19,11 +19,15 @@
 3. MoveIt! - RVIZ-Plugin  
   3.1. Plugin Environment Basics  
   3.2. Planning Request  
-4. MoveIt! - CommandLine Tool  
-5. MoveIt! - Scripting API  
-  5.1. PlanningSceneInterface  
-  5.2. MoveGroupCommander  
-6. Help  
+4. MoveIt! - Enhanced Configuration
+  4.1. Perception
+  4.2. Control
+  4.3. Enhanced Usage
+5. MoveIt! - CommandLine Tool  
+6. MoveIt! - Scripting API  
+  6.1. PlanningSceneInterface  
+  6.2. MoveGroupCommander  
+7. Help  
 
 
 ### 1.  Prerequesites
@@ -214,13 +218,21 @@ Get used with the RVIZ environment and the plugins by:
 
 # Screenshot of example RVIZ config - start + goal + trail!!!
 
-### 4. MoveIt! - CommandLine Tool  
+### 4. MoveIt! - Enhanced Configuration
 
-### 5. MoveIt! - Scripting API  
+#### 4.1 Perception  
 
-#### 5.1. PlanningSceneInterface  
+#### 4.2 Control
 
-#### 5.2. MoveGroupCommander  
+#### 4.3 Enhanced Usage
 
-### 6. Help  
+### 5. MoveIt! - CommmandLine Tool
+
+### 6. MoveIt! - Scripting API  
+
+#### 6.1. PlanningSceneInterface  
+
+#### 6.2. MoveGroupCommander  
+
+### 7. Help  
 
