@@ -198,6 +198,8 @@ In order to get familar with MoveIt! step-by-step, we will first use MoveIt! in 
 ```
 roslaunch lbr_moveit_config demo.launch config:=true
 ```
+The following will explain the main important points about the MoveIt! RVIZ Plugin.  
+A PR2-specific tutorial can be found [here](http://moveit.ros.org/wiki/PR2/Rviz_Plugin/Quick_Start).
 
 #### 3.1. Plugin Environment Basics  
 
