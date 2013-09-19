@@ -117,6 +117,8 @@ After about 10 seconds you will see a list of pairs of links which never or alwa
 The next tap "Virutal Joints" is less important for our scenario.  
 This tap gets important in case you want to use MoveIt! with a mobile robot. A _virtual joint_ connects the robot to the world. While mobile robots would have _planar_ (2d) or _floating_ (6d) virtual joints, we simply define a _fixed_ virtual joint stating that our robot does not move.  
 
+![SetupAssistant5](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/SetupAssistant5.png?login=ipa-fxm&token=232f90b281c043158520e71cf8d46934 "SetupAssistant5")
+
 #### 2.4. Planning Groups  
 
 In step four ("Planning Groups") we define collections of links and joints of the robot and declare them as _Planning Groups_. Each Planning Group defines semantically related parts of the robot. For each Planning Group defined here MoveIt! will generate a configuration in order to perform motion planning later.  
@@ -130,6 +132,10 @@ Use the _Add Kin. Chain_ option to assign the kinematic chain starting with _arm
 2. Group "gripper"  
 For the gripper does not need a kinematic solver. Thus we leave it _None_.  
 As the gripper group consists of just one link (_gripper_link_), we use the _Add Links_ option for assigning.  
+
+![SetupAssistant6](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/SetupAssistant6.png?login=ipa-fxm&token=8e7c227e3436b613fbfae736f409f2e6 "SetupAssistant6")  
+
+![SetupAssistant7](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/SetupAssistant7.png?login=ipa-fxm&token=7b8c8aebe83686659b6743c843923ba7 "SetupAssistant7")
 
 
 #### 2.5. Robot Poses  
