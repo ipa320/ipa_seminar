@@ -182,8 +182,15 @@ The package includes the following files (amongst others):
 
 Both of these launch files combine other launch files contained in the launch folder. Those other files start up a specific module for MoveIt! respectively.
 
+Whenever something needs to be changed within the MoveIt! configuration package, the Setup Assistant can simply be run again with the already existing package being loaded instead of creating a new package. Running the Setup Assistant again will only update files where changes apply.  
+
+The configuration files can also be modified manually. In fact, we will do so during the remainder of this tutorial.  
+In such case the Setup Assistant will notify you that configuratin files have been edited outside the Setup Assistant.  
+
 
 ### 3. MoveIt! - RVIZ-Plugin  
+
+We will now use MoveIt! in its 
 
 #### 3.1. Plugin Environment Basics  
 
