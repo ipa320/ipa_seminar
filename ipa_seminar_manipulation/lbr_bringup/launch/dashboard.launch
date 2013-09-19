@@ -1,19 +1,10 @@
 <?xml version="1.0"?>
 <launch>
-
-	<arg name="robot" default="$(optenv ROBOT !!NO_ROBOT_SET!!)"/>
-	<arg name="robot_env" default="$(optenv ROBOT_ENV !!NO_ROBOT_ENV_SET!!)"/>
-	<arg name="pkg_robot_config" default="$(find cob_default_robot_config)"/>
-	<arg name="pkg_env_config" default="$(find cob_default_env_config)"/>
-
-	<!-- start dashboard -->
-	<node pkg="cob_dashboard" type="cob_dashboard" name="$(anon dashboard_node)" cwd="node" respawn="false" output="screen" />
 	
 	<!-- start command_gui -->
 	<node ns="command_gui" pkg="cob_command_gui" type="knoeppkes.py" name="$(anon command_gui_node)" cwd="node" respawn="false" output="screen" >
 		<!-- upload button parameters, but delete the old ones before -->
 		<rosparam command="load" ns="control_buttons" file="$(find lbr_bringup)/config/command_gui_buttons_robot.yaml"/>
-		<rosparam command="load" ns="nav_buttons" file="$(find lbr_bringup)/config/command_gui_buttons_navigation.yaml"/>
 	</node>
 
 </launch>
