@@ -3,7 +3,7 @@ ros_seminar_manipulation
 
 Prerequesites
 
-![Gazebo Simulation](https://github.com/ipa-fxm/ipa_seminar/blob/master/ipa_seminar_manipulation/doc/gazebo_simulation.png)
+![Gazebo Simulation](https://github.com/ipa-fxm/ipa_seminar/blob/master/ipa_seminar_manipulation/doc/gazebo_simulation.png "Gazebo Simulation")
 
 
-![Command GUI](https://github.com/ipa-fxm/ipa_seminar/blob/master/ipa_seminar_manipulation/doc/command_gui.png)
+![Command GUI](https://github.com/ipa-fxm/ipa_seminar/blob/master/ipa_seminar_manipulation/doc/command_gui.png "Command GUI")
