@@ -144,22 +144,19 @@ The tap "Robot Poses" allows us to define some _robot poses_. These robot poses 
 Now define some poses for the group "arm". Use the sliders to set the joint values of each joint within the group.  
 In the view you can see what the currently set configuration would look like. In case the current configuration is in collision a notification is displayed.  
 
+![SetupAssistant8](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/SetupAssistant8.png?login=ipa-fxm&token=6056b6fa7b6f593a86dcc178c2fcb185 "SetupAssistant8")
 
-
-
+![SetupAssistant9](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/SetupAssistant9.png?login=ipa-fxm&token=190bf7b0c962fee77f22f29368b0314a "SetupAssistant9")
 #### 2.6. End Effectors  
 
 Next, we define our gripper to be the _End Effector_ for our arm.  
 This will give us an _Interactive Marker_ for moving the arm in the RVIZ Plugin. This is also important for High(er)-Level Capabilities of MoveIt! - such as _Pick-and-Place_.  
 
-
+![SetupAssistant10](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/SetupAssistant10.png?login=ipa-fxm&token=ba81dec7bb9bb0a460540a901e99a080 "SetupAssistant10")
 
 #### 2.7. Passive Joints  
 
 This tap ("Passive Joints") is not relevant for our scenario. So we can just skip it.
-
-
-
 
 #### 2.8. Configuration Files  
 
@@ -168,7 +165,7 @@ You can see a list of the files to be generated below. It comprises configuratio
 The only thing we need to do is to specify a location where the files should be stored. Then press _Generate Package__.  
 After the files have been generated, we can click _Exit Setup Assistant_.
 
-
+![SetupAssistant12](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/SetupAssistant12.png?login=ipa-fxm&token=484c5aed30d0d5cb393fe1bbf8c6be84 "SetupAssistant12")
 
 
 #### 2.9 Summary  
@@ -176,13 +173,12 @@ After the files have been generated, we can click _Exit Setup Assistant_.
 We now created a MoveIt! configuration package that provides us with all configuration files and basic startup files.  
 The ROS package can be found at _MOVEIT_CONFIG_LOCATION_.  
 The package includes the following files (amongst others):  
-* config/joint_limits.yaml: This file specifies velocity and acceleration limits for all joints of the robot. Position limits are defined in the URDF already.
-* config/kinematics.yaml: This file specifies the kinematic solvers to be used with each group.
-* config/ompl_planning.yaml: This file specifies a set of several (sampling-based) motion planner from the OMPL motion library with according default settings.
-* config/lbr_solo.srdf: This SRDF (Semantic Robot Description Format) file holds the main configuration to be used with MoveIt!
-
-* launch/demo.launch: This is the most basic startup file. It opens RVIZ where the planning capability can be tested without needing to run either a simulation nor a robot hardware.
-* launch/move_group.launch: This file will be used when MoveIt! is to be used in connection with a simulation or a robot hardware
+* __config/joint_limits.yaml__: This file specifies velocity and acceleration limits for all joints of the robot. Position limits are defined in the URDF already.
+* __config/kinematics.yaml__: This file specifies the kinematic solvers to be used with each group.
+* __config/ompl_planning.yaml__: This file specifies a set of several (sampling-based) motion planner from the OMPL motion library with according default settings.
+* __config/lbr_solo.srdf__: This SRDF (Semantic Robot Description Format) file holds the main configuration to be used with MoveIt!
+* __launch/demo.launch__: This is the most basic startup file. It opens RVIZ where the planning capability can be tested without needing to run either a simulation nor a robot hardware.
+* __launch/move_group.launch__: This file will be used when MoveIt! is to be used in connection with a simulation or a robot hardware
 
 Both of these launch files combine other launch files contained in the launch folder. Those other files start up a specific module for MoveIt! respectively.
 
