@@ -190,11 +190,29 @@ In such case the Setup Assistant will notify you that configuratin files have be
 
 ### 3. MoveIt! - RVIZ-Plugin  
 
-We will now use MoveIt! in its 
+In order to get familar with MoveIt! step-by-step, we will first use MoveIt! in its most basic form:
+```
+roslaunch lbr_moveit_config demo.launch config:=true
+```
 
 #### 3.1. Plugin Environment Basics  
 
+This will start up the main MoveIt! node - _move_group_ - and an RVIZ window with the MoveIt!-Plugin loaded. The window consists of three main parts:
+
+# Screenshot of original RVIZ config - annotated!!!
+
+* On the right you can see a visualization of the robot augmented with various additional (virtual) information.
+* Within the _Displays_ section additional plugins can be added, removed or configured.
+* On the lower left you can see the MoveIt! control panel. 
+
 #### 3.2. Planning Request  
+
+Get used with the RVIZ environment and the plugins by:
+* Move between pre-defined robot poses
+* Move using Start-/Goal-InteractiveMarker
+* Configure your visualization as you like (e.g. show trail)
+
+# Screenshot of example RVIZ config - start + goal + trail!!!
 
 ### 4. MoveIt! - CommandLine Tool  
 
