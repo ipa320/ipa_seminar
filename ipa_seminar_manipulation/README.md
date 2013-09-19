@@ -220,7 +220,15 @@ Get used with the RVIZ environment and the plugins by:
 
 ### 4. MoveIt! - Enhanced Configuration  
 
+In this step we will enhance the basic MoveIt! configuration generated in step 3.  
+We will add support for visual sensors to be able to consider the dynamic environment duriing collision checking.  
+Also we will add controllers that allow us to use MoveIt! with the real robot hardware. 
+
 #### 4.1 Perception  
+
+Out of the box, MoveIt! considers the robot model's own geometric model (URDF) during collision checking to prevent self-collision.  
+Also, (known) static obstacles given as geometric primitives (i.e. box, cylinder, sphere) or meshes (i.e. from CAD data) can be added to thee _Planning Scene_ at runtime. This will be shown in the last chapter ("Scripting API").  
+As in most cases, the environment is not completely known, it changes over time or simply cannot be modeled accurately. Then visual sensors can be used to detect the current scene. 
 
 #### 4.2 Control  
 
