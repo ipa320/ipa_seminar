@@ -84,22 +84,33 @@ A PR2-specific tutorial can be found [here](http://moveit.ros.org/wiki/PR2/Setup
 
 #### 2.1. Start  
 
-First run 
+To start the MoveIt-SetupAssistant GUI, first run: 
 ```
 roslaunch moveit_setup_assistant setup_assistant.launch
 ```
-to start the MoveIt-SetupAssistant GUI. You should see the screen below.
+You should see the screen below.
 
+![SetupAssistant1](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/SetupAssistant1.png?login=ipa-fxm&token=88811838d3283279087c8437b58604e8 "SetupAssistant1")
 
-
-In the first tap, we need to load the robot model (URDF) on which basis the configuration is generated.  
+As we are creating the configuration for the first time, select "Create New MoveIt Configuratin Package".  
+Now we need to load the robot model (URDF) on which basis the configuration is generated.  
 Browse to _URDF-LOCATION_ and load the lbr_solo.urdf.xacro file.  
 You should now see our robot within the SetupAssistant.  
 
-
+![SetupAssistant2](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/SetupAssistant2.png?login=ipa-fxm&token=4badbe3dec86cf96f070bb4638e0255b "SetupAssistant2")
 
 
 #### 2.2. Self-Collision  
+
+In order to speed up later collision checking, a _SelfCollisionMatrix_ can be computed in the next tap ("Self Collision").  
+Select the highest _Sampling Density_ and click "Regenerate Default Collision Matrix".  
+
+![SetupAssistant3](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/SetupAssistant3.png?login=ipa-fxm&token=81361c40216514f1463a42152d612d9f "SetupAssistant3")
+
+After about 10 seconds you will see a list of pairs of links which never or always collide within the robot model. This knowledge is used to speed up Self-CollisionChecking as these checks need not to be done during a planning step again.
+
+![SetupAssistant4](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/SetupAssistant4.png?login=ipa-fxm&token=545970dafcf3398c9571fe160220335a "SetupAssistant4")
+
 
 #### 2.3. Virtual Joints  
 
