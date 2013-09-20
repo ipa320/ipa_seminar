@@ -19,5 +19,31 @@ if __name__ == '__main__':
 	rospy.init_node('scripting_example')
 	while rospy.get_time() == 0.0: pass
 	
-	### Add your code here ###
+	### Create a handle for the Planning Scene Interface
+	psi = PlanningSceneInterface()
+	rospy.sleep(1.0)
 	
+	### Create a handle for the Move Group Commander
+	mgc = MoveGroupCommander("arm")
+	rospy.sleep(1.0)
+	
+	
+	### Add virtual obstacle
+	pose = gen_pose(pos=[-0.2, -0.1, 1.2])
+	psi.add_box("box", pose, size=(0.15, 0.15, 0.6))
+	rospy.sleep(1.0)
+	
+	### Move to stored joint position
+	mgc.set_named_target("left")
+	mgc.go()
+	
+	### Move to Cartesian position
+	goal_pose = gen_pose(pos=[0.123, -0.417, 1.361], euler=[3.1415, 0.0, 1.5707])
+	mgc.go(goal_pose.pose)
+	
+	### Move Cartesian linear
+	goal_pose.pose.position.z -= 0.1
+	(traj,frac) = mgc.compute_cartesian_path([goal_pose.pose], 0.01, 4, True)
+	mgc.execute(traj)
+	
+	print "Done"

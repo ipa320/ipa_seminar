@@ -11,6 +11,10 @@
   <depend package="cob_description"/>  
   <depend package="cob_default_env_config"/>
   <depend package="cob_gazebo_worlds"/>
+  <depend package="rospy"/>
+  <depend package="geometry_msgs"/>
+  <depend package="tf"/>
+  <depend package="moveit_commander"/>
 
 </package>
 
