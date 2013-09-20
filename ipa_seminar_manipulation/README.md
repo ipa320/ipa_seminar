@@ -4,7 +4,7 @@
 
 ### Contents
 
-1. Prerequesites  
+1. Prerequisites  
   1.1. Simulation  
   1.2. Robot Hardware 
 2. MoveIt! - Setup Assistant  
@@ -31,7 +31,9 @@
 7. Help  
 
 
-### 1.  Prerequesites
+<a href="#end">end</a> 
+
+### 1.  Prerequisites
 
 For convenience, all required ROS packages are already installed and the environment (i.e. environment variables) is set up correctly.
 Changes can be made within the [setup file](./setup_env_manipulation.bash "Setup Shell").
@@ -79,7 +81,6 @@ roslaunch lbr_bringup robot.launch
 This will start up all necessary drivers.  
 
 <a href="#top">top</a> 
-
 
 
 
@@ -533,7 +534,7 @@ phone: +49 711 970-1452
 <a href="#top">top</a> 
 
 
-
+<a id="end"/> 
 
 ### 7. Help  
 
