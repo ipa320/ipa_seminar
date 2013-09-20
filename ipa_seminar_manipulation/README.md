@@ -451,6 +451,16 @@ It first adds an additional (virtual) obstacle to the Planning Scene. Then it pe
 * move to a given Cartedsian goal pose using linear motion
 
 
+### This concludes this tutorial on Motion Planning with ROS. 
+
+In case of questions - now or later - do not hestate to contact your tutor at Fraunhofer IPA:  
+
+Dip.-Inform. Felix Meßmer  
+e-mail: [felix.messmer@ipa.fraunhofer.de](mailto: felix.messmer@ipa.fraunhofer.de)  
+phone: +49 711 970-1452  
+
+
+
 
 ### 7. Help  
 
