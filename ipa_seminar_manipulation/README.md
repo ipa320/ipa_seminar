@@ -359,9 +359,70 @@ Get familar with the CommandLine Tool by also using:
 
 ### 6. MoveIt! - Scripting API  
 
+Beside the helpful tools - MoveIt!-RVIZ-Plugin and MoveIt!-CommandLine-Tool - MoveIt! offers powerful and easy-to-use APIs that can be used to easily implement complex manipulation applications. APIs are provided both for C++ and Python. The full C++ API can be found [here](http://docs.ros.org/hydro/api/moveit_core/html/).  
+
+For this tutorial we will use the Python API to implement an example script in which we add virtual objects to the Planning Scene and perform various movements with our robot. As we will see, the same script can be used with our simulated robot as well as with the real robot hardware without any changes (see also IPA-Seminar-Application).
+
 #### 6.1. PlanningSceneInterface  
 
+We first 
+
 #### 6.2. MoveGroupCommander  
+
+
+
+
+The following example shows a script that combines everything we learned in this section.
+```python
+#!/usr/bin/env python
+import roslib; roslib.load_manifest('cob_moveit_interface')
+import rospy
+
+from tf.transformations import *
+from geometry_msgs.msg import PoseStamped
+import simple_moveit_interface as smi
+
+### Helper function 
+def gen_pose(frame_id="/base_link", pos=[0,0,0], euler=[0,0,0]):
+	pose = PoseStamped()
+	pose.header.frame_id = frame_id
+	pose.header.stamp = rospy.Time.now()
+	pose.pose.position.x, pose.pose.position.y, pose.pose.position.z = pos
+	pose.pose.orientation.x, pose.pose.orientation.y, pose.pose.orientation.z, pose.pose.orientation.w = quaternion_from_euler(*euler)
+	return pose
+
+
+
+if __name__ == '__main__':
+	rospy.init_node('scripting_example')
+	while rospy.get_time() == 0.0: pass
+	
+	psi = smi.get_planning_scene_interface()
+	rospy.sleep(1.0)
+	
+	### Add virtual obstacle
+	pose = gen_pose(pos=[-0.2, -0.1, 1.2])
+	psi.add_box("box", pose, size=(0.15, 0.15, 0.6))
+	rospy.sleep(1.0)
+	
+	### Move to stored joint position
+	config = smi.get_goal_from_server("arm", "left")
+	success = smi.moveit_joint_goal("arm", config)
+	
+	### Move to Cartesian position
+	goal_pose = gen_pose(pos=[0.123, -0.417, 1.361], euler=[3.1415, 0.0, 1.5707])
+	success = smi.moveit_pose_goal("arm", "base_link", goal_pose.pose)
+	
+	### Move Cartesian linear
+	goal_pose.pose.position.z -= 0.1
+	success = smi.moveit_cart_goals("arm", "base_link", [goal_pose.pose])
+```
+It first adds an additional (virtual) obstacle to the Planning Scene. Then it performs three different kinds of __planned__ motion:
+* move to a pre-defined robot configuration
+* move to a given Cartesian goal pose
+* move to a given Cartedsian goal pose using linear motion
+
+
 
 ### 7. Help  
 
