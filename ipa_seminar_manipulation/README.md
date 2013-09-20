@@ -22,7 +22,7 @@
   3.2. <a href="#32-planning-request">Planning Request</a>  
 4. <a href="#4-moveit---enhanced-configuration">MoveIt! - Enhanced Configuration</a>  
   4.1. <a href="#41-perception">Perception</a>  
-  4.2. <a href="#42-congrol">Control</a>  
+  4.2. <a href="#42-control">Control</a>  
   4.3. <a href="#43-enhanced-usage">Enhanced Usage</a>  
 5. <a href="#5-moveit---commandline-tool">MoveIt! - CommandLine Tool</a>  
 6. <a href="#6-moveit---scripting-api">MoveIt! - Scripting API</a>  
@@ -364,7 +364,7 @@ When using this mode - ___only in this mode!___ - also _reactive_ planning is ac
 
 
 
-### 5. MoveIt! - CommmandLine Tool  
+### 5. MoveIt! - CommandLine Tool  
 
 Another possibility for quickly sending planning problems to MoveIt! and execute them either in simulation or on a real robot is provided through the MoveIt! - CommandLine Tool. This terminal-based interface provides MoveIt!'s capabilities by using the MoveIt! Python API (more details in next section).  
 
@@ -526,21 +526,24 @@ It first adds an additional (virtual) obstacle to the Planning Scene. Then it pe
 
 ### This concludes this tutorial on Motion Planning with ROS. 
 
-In case of questions - now or later - do not hestate to contact your manipulation expert at Fraunhofer IPA:  
-
-Dipl.-Inform. Felix Meßmer  
-e-mail: [felix.messmer@ipa.fraunhofer.de](mailto: felix.messmer@ipa.fraunhofer.de)  
-phone: +49 711 970-1452  
-
 <a href="#top">top</a> 
 
-
-<a id="end"/> 
 
 ### 7. Help  
 
 * Official Website: [http://moveit.ros.org/wiki/MoveIt!](http://moveit.ros.org/wiki/MoveIt!)
 * MoveIt!-ROS-Wiki: [http://wiki.ros.org/moveit](http://wiki.ros.org/moveit)
 * MoveIt!-Tutorials: [http://moveit.ros.org/wiki/Tutorials](http://moveit.ros.org/wiki/Tutorials)
-* API-Documentation: [http://docs.ros.org/hydro/api/moveit_core/html/](http://docs.ros.org/hydro/api/moveit_core/html/)
+* API-Documentation: [http://docs.ros.org/hydro/api/moveit_core/html/](http://docs.ros.org/hydro/api/moveit_core/html/)  
+
+
+===
+
+In case of questions - now or later - do not hestate to contact your manipulation expert at Fraunhofer IPA:  
+
+Dipl.-Inform. Felix Meßmer  
+e-mail: [felix.messmer@ipa.fraunhofer.de](mailto: felix.messmer@ipa.fraunhofer.de)  
+phone: +49 711 970-1452  
+
+
 
