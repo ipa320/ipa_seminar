@@ -1,3 +1,4 @@
+<a id="top"/> 
 # Motion Planning with ROS
 ## Tutorial
 
@@ -76,6 +77,12 @@ Then, simply run:
 roslaunch lbr_bringup robot.launch
 ```
 This will start up all necessary drivers.  
+
+<a href="#top">top</a> 
+
+
+
+
 
 
 ### 2. MoveIt! - Setup Assistant  
@@ -193,6 +200,11 @@ Whenever something needs to be changed within the MoveIt! configuration package,
 The configuration files can also be modified manually. In fact, we will do so during the remainder of this tutorial.  
 In such case the Setup Assistant will notify you that configuratin files have been edited outside the Setup Assistant.  
 
+<a href="#top">top</a> 
+
+
+
+
 
 ### 3. MoveIt! - RVIZ-Plugin  
 
@@ -223,6 +235,11 @@ Get used with the RVIZ environment and the plugins by:
 * Configure your visualization as you like (e.g. show trail)
 
 ![RVIZ-Plugin-Trail](./doc/rviz_plugin_trail_annotated.png "RVIZ-Plugin-Trail")
+
+<a href="#top">top</a> 
+
+
+
 
 
 ### 4. MoveIt! - Enhanced Configuration  
@@ -339,6 +356,12 @@ The resulting trajectory can be executed on the robot by clicking _Execute_ in t
 By clicking _Plan and Execute_, MoveIt! will directly execute your Planning Request - if planned successfully.  
 When using this mode - ___only in this mode!___ - also _reactive_ planning is activated. This means that MoveIt! monitors the execution of the trajectory, updating the Planning Scene continuously. As soon as changes in the environment, e.g. a new obstacle, crosses the trajectory thus leading to a collision, MoveIt! stops the execution and tries to replan, i.e. find another trajectory to the specified goal considering the new environment situation.  
 
+<a href="#top">top</a> 
+
+
+
+
+
 ### 5. MoveIt! - CommmandLine Tool  
 
 Another possibility for quickly sending planning problems to MoveIt! and execute them either in simulation or on a real robot is provided through the MoveIt! - CommandLine Tool. This terminal-based interface provides MoveIt!'s capabilities by using the MoveIt! Python API (more details in next section).  
@@ -379,6 +402,9 @@ Get familar with the CommandLine Tool by also using:
 * `show` display the names and values of the known states
 * `go <dir> <dx>` plan and execute a motion in direction up|down|left|right|forward|backward for distance <dx>
 
+<a href="#top">top</a> 
+
+
 
 
 ### 6. MoveIt! - Scripting API  
@@ -407,7 +433,6 @@ This brings in a handle `psi` for the PlanningSceneInterface. `psi.add_box()` ad
 * __name__ a unique name for the box objects
 * __pose__ the pose of the object in the world. Use the helper function to generate the according type
 * __size__ the size of the box, i.e. the extension in x-, y- and z-direction
-
 
 #### 6.2. MoveGroupCommander  
 
@@ -504,6 +529,8 @@ In case of questions - now or later - do not hestate to contact your manipulatio
 Dipl.-Inform. Felix Meßmer  
 e-mail: [felix.messmer@ipa.fraunhofer.de](mailto: felix.messmer@ipa.fraunhofer.de)  
 phone: +49 711 970-1452  
+
+<a href="#top">top</a> 
 
 
 
