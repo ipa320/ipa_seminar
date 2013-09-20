@@ -235,12 +235,53 @@ Also we will add controllers that allow us to use MoveIt! with the real robot ha
 #### 4.1 Perception  
 
 Out of the box, MoveIt! considers the robot model's own geometric model (URDF) during collision checking to prevent self-collision.  
-Also, (known) static obstacles given as geometric primitives (i.e. box, cylinder, sphere) or meshes (i.e. from CAD data) can be added to thee _Planning Scene_ at runtime. This will be shown in the last chapter ("Scripting API").  
-As in most cases, the environment is not completely known, it changes over time or simply cannot be modeled accurately. Then visual sensors can be used to detect the current scene. 
+Also, (known) static obstacles given as geometric primitives (i.e. box, cylinder, sphere) or meshes (i.e. from CAD data) can be added to the _Planning Scene_ at runtime. This will be shown in the last chapter of this tutorial ("Scripting API").  
+As in most real worl scenarios, the environment is not completely known, it changes over time or simply cannot be modeled accurately. Then visual sensors can be used to detect the current scene.  
+
+MoveIt! uses a concept called _Planning Scene_ to provide information about an environment situation. The Planning Scene combines the following information:  
+* __Robot State:__ The state of the robot, i.e. its joint configuration
+* __Collision Objects:__ A set of (known) collision objects. A collision object is defined by its geometry and its pose
+* __Visual Information:__ Information retrieved from a visual sensor
+
+The following image gives an overview of the Planning Scene concept.  
+
+![PlanningSceneConcept](http://moveit.ros.org/distros/current/w/images/9/9b/Planning_scene_monitor_diagram.png "PlanningSceneConcept")
+
+Now, in order to consider visual information within the Planning Scene, we need to specify on which ROS topics such sensor information can be received. Therefore we will add a new configuration file within the lbr_moveit_config that specifies all required information.
+
+Create a new file `sensor_kinect.yaml` with the following content and save it in `lbr_moveit_config/config`.  
+```
+sensors:
+  - sensor_plugin: occupancy_map_monitor/PointCloudOctomapUpdater
+    point_cloud_topic: /cam3d/depth/points
+    max_range: 2.0
+    point_subsample: 1
+    shape_padding: 0.05
+    shape_scale: 1.0
+```
+
+In order to use this new configuration file, we will add the following to `lbr_solo_moveit_sensor_manager.launch` in `lbr_moveit_config/launch`:  
+```
+<launch>
+  <param name="octomap_frame" type="string" value="base_link" />
+  <param name="octomap_resolution" type="double" value="0.05" />
+  <param name="max_range" type="double" value="2.0" />
+  <rosparam file="$(find lbr_moveit_config)/config/sensor_kinect.yaml"/>
+</launch>
+```
+
+This tells MoveIt! to load an additional plugin (i.e. _sensor_plugin_) during startup. The configuration for this new plugin is given by the yaml file. 
 
 #### 4.2 Control  
 
+
+
+More about the concept of executing trajectories with MoveIt! can be found [here](http://moveit.ros.org/wiki/Executing_Trajectories_with_MoveIt! "ExecuteTrajectories").  
+
 #### 4.3 Enhanced Usage  
+
+
+
 
 ### 5. MoveIt! - CommmandLine Tool  
 
