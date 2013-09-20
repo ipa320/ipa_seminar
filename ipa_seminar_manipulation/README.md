@@ -33,7 +33,7 @@
 ### 1.  Prerequesites
 
 For convenience, all required ROS packages are already installed and the environment (i.e. environment variables) is set up correctly.
-Changes can be made within the [setup file](https://github.com/ipa-fxm/ipa_seminar/blob/master/ipa_seminar_manipulation/setup_env_manipulation.bash "Setup Shell").
+Changes can be made within the [setup file](./setup_env_manipulation.bash "Setup Shell").
 
 #### 1.1. Simulation
 
@@ -46,7 +46,7 @@ roslaunch lbr_bringup sim.launch
 This will start up the [Gazebo](http://gazebosim.org "Gazebo") simulation with the [KUKA LBR](http://www.kuka-labs.com/en/medical_robotics/lightweight_robotics/start.htm "KUKA LBR") model.  
 Use the mouse to rotate/translate the view or zoom.
 
-![Gazebo Simulation](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/gazebo_simulation.png?login=ipa-fxm&token=36e39b9f21a46033bd0331aeb8be8c5f "Gazebo Simulation")
+![Gazebo Simulation](./doc/gazebo_simulation.png "Gazebo Simulation")
 
 __ToDo: make sure configs are safe -- check arm_1_joint!__  
 
@@ -57,12 +57,11 @@ roslaunch lbr_bringup dashboard.launch
 Clicking one of the buttons will move the robot to the according (pre-defined) configuration.  
 __NOTE:__ This is __unplanned__ motion!
 
-![Command GUI](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/command_gui_lbr.png?login=ipa-fxm&token=85d23ec80df4c8404c58809cc869f31c "Command GUI")
+![Command GUI](./doc/command_gui_lbr.png "Command GUI")
 
 #### 1.2 Robot Hardware
 
-![CAUTION](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/yellow-warning.gif?login=ipa-fxm&token=de7de97c787a393b6b8acf19dd87890e "CAUTIOIN")![CAUTION](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/yellow-warning.gif?login=ipa-fxm&token=de7de97c787a393b6b8acf19dd87890e "CAUTIOIN")![CAUTION](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/yellow-warning.gif?login=ipa-fxm&token=de7de97c787a393b6b8acf19dd87890e "CAUTIOIN")  
-__CAUTION:__
+![CAUTION](./doc/yellow-warning.gif "CAUTIOIN") CAUTION ZONE ![CAUTION](./doc/yellow-warning.gif "CAUTIOIN")  
 * Only use the robot under supervision of your tutor
 * Make sure you have a clear view to the robot and the emergency button is in your hands before executing a command 
 * In case of unexpected behavior or in case the robot is about to collide hit the emergency button immediately
@@ -94,14 +93,14 @@ roslaunch moveit_setup_assistant setup_assistant.launch
 ```
 You should see the screen below.
 
-![SetupAssistant1](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/SetupAssistant1.png?login=ipa-fxm&token=88811838d3283279087c8437b58604e8 "SetupAssistant1")
+![SetupAssistant1](./doc/SetupAssistant1.png "SetupAssistant1")
 
 As we are creating the configuration for the first time, select "Create New MoveIt Configuration Package".  
 Now we need to load the robot model (URDF) on which basis the configuration is generated.  
 Browse to _URDF-LOCATION_ and load the lbr_solo.urdf.xacro file.  
 You should now see our robot within the SetupAssistant.  
 
-![SetupAssistant2](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/SetupAssistant2.png?login=ipa-fxm&token=4badbe3dec86cf96f070bb4638e0255b "SetupAssistant2")
+![SetupAssistant2](./doc/SetupAssistant2.png "SetupAssistant2")
 
 
 #### 2.2. Self-Collision  
@@ -109,11 +108,11 @@ You should now see our robot within the SetupAssistant.
 In order to speed up later collision checking, a _SelfCollisionMatrix_ can be computed in the next tap ("Self Collision").  
 Select the highest _Sampling Density_ and click "Regenerate Default Collision Matrix".  
 
-![SetupAssistant3](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/SetupAssistant3.png?login=ipa-fxm&token=81361c40216514f1463a42152d612d9f "SetupAssistant3")
+![SetupAssistant3](./doc/SetupAssistant3.png "SetupAssistant3")
 
 After about 10 seconds you will see a list of pairs of links which never or always collide within the robot model. This knowledge is used to speed up Self-CollisionChecking as these checks need not to be done during a planning step again.
 
-![SetupAssistant4](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/SetupAssistant4.png?login=ipa-fxm&token=545970dafcf3398c9571fe160220335a "SetupAssistant4")
+![SetupAssistant4](./doc/SetupAssistant4.png "SetupAssistant4")
 
 
 #### 2.3. Virtual Joints  
@@ -121,7 +120,7 @@ After about 10 seconds you will see a list of pairs of links which never or alwa
 The next tap "Virtual Joints" is less important for our scenario.  
 This tap gets important in case you want to use MoveIt! with a mobile robot. A _virtual joint_ connects the robot to the world. While mobile robots would have _planar_ (2d) or _floating_ (6d) virtual joints, we simply define a _fixed_ virtual joint stating that our robot does not move.  
 
-![SetupAssistant5](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/SetupAssistant5.png?login=ipa-fxm&token=232f90b281c043158520e71cf8d46934 "SetupAssistant5")
+![SetupAssistant5](./doc/SetupAssistant5.png "SetupAssistant5")
 
 #### 2.4. Planning Groups  
 
@@ -137,9 +136,9 @@ For this tutorial we add two Planning Groups:
   * For the gripper does not need a kinematic solver. Thus we leave it `None`.  
   * As the gripper group only consists of just one link (i.e. _gripper_link_), we use the _Add Links_ option for assigning.  
 
-![SetupAssistant6](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/SetupAssistant6.png?login=ipa-fxm&token=8e7c227e3436b613fbfae736f409f2e6 "SetupAssistant6")  
+![SetupAssistant6](./doc/SetupAssistant6.png "SetupAssistant6")  
 
-![SetupAssistant7](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/SetupAssistant7.png?login=ipa-fxm&token=7b8c8aebe83686659b6743c843923ba7 "SetupAssistant7")
+![SetupAssistant7](./doc/SetupAssistant7.png "SetupAssistant7")
 
 #### 2.5. Robot Poses  
 
@@ -147,15 +146,15 @@ The tap "Robot Poses" allows us to define some _robot poses_. These robot poses 
 Now define some poses for the group "arm". Use the sliders to set the joint values of each joint within the group.  
 In the view you can see what the current configuration would look like. In case the current configuration is in collision a notification is displayed.  
 
-![SetupAssistant8](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/SetupAssistant8.png?login=ipa-fxm&token=6056b6fa7b6f593a86dcc178c2fcb185 "SetupAssistant8")
+![SetupAssistant8](./doc/SetupAssistant8.png "SetupAssistant8")
 
-![SetupAssistant9](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/SetupAssistant9.png?login=ipa-fxm&token=190bf7b0c962fee77f22f29368b0314a "SetupAssistant9")
+![SetupAssistant9](./doc/SetupAssistant9.png "SetupAssistant9")
 #### 2.6. End Effectors  
 
 Next, we define our gripper to be the _End Effector_ for our arm.  
 This will give us an _Interactive Marker_ for moving the arm in the RVIZ Plugin. This is also important for High(er)-Level Capabilities of MoveIt! - such as _Pick-and-Place_.  
 
-![SetupAssistant10](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/SetupAssistant10.png?login=ipa-fxm&token=ba81dec7bb9bb0a460540a901e99a080 "SetupAssistant10")
+![SetupAssistant10](./doc/SetupAssistant10.png "SetupAssistant10")
 
 #### 2.7. Passive Joints  
 
@@ -168,7 +167,7 @@ You can see a list of the files to be generated below. It comprises configuratio
 The only thing we need to do is to specify a location where the files should be stored. Then press _Generate Package_.  
 After the files have been generated, we can click _Exit Setup Assistant_.
 
-![SetupAssistant12](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/SetupAssistant12.png?login=ipa-fxm&token=484c5aed30d0d5cb393fe1bbf8c6be84 "SetupAssistant12")
+![SetupAssistant12](./doc/SetupAssistant12.png "SetupAssistant12")
 
 
 #### 2.9 Summary  
@@ -223,7 +222,7 @@ Get used with the RVIZ environment and the plugins by:
 * Move using Start-/Goal-InteractiveMarker
 * Configure your visualization as you like (e.g. show trail)
 
-![RVIZ-Plugin-Trail](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/rviz_plugin_trail_annotated.png?login=ipa-fxm&token=a244bd17da7c94fe78160d4ccc5e4a18 "RVIZ-Plugin-Trail")
+![RVIZ-Plugin-Trail](./doc/rviz_plugin_trail_annotated.png "RVIZ-Plugin-Trail")
 
 
 ### 4. MoveIt! - Enhanced Configuration  
@@ -333,7 +332,7 @@ __ToDo: Screenshot RVIZ with real robot and CollisionMap - annotated!__
 As in the previous step we can compose Planning Requests in RVIZ using the InteractiveMarkers or move to pre-defined robot poses.  
 Once you composed a new Planning Request, click _Plan_ in the control panel of the plugin. MoveIt! starts to solve your request and - if successfull - you should see the resulting trajectory.  
 
-![CAUTION](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/yellow-warning.gif?login=ipa-fxm&token=de7de97c787a393b6b8acf19dd87890e "CAUTIOIN") CAUTION ZONE ![CAUTION](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/yellow-warning.gif?login=ipa-fxm&token=de7de97c787a393b6b8acf19dd87890e "CAUTIOIN")  
+![CAUTION](./doc/yellow-warning.gif "CAUTIOIN") CAUTION ZONE ![CAUTION](./doc/yellow-warning.gif "CAUTIOIN")  
 
 The resulting trajectory can be executed on the robot by clicking _Execute_ in the control panel.  
 
@@ -350,7 +349,7 @@ rosrun moveit_commander moveit_commander_cmdline.py
 ```
 This changes the look of you terminal to the following prompt.
 
-![CommandLineTool](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/CommandLineTool.png?login=ipa-fxm&token=6b510f990f3b5752b2b4ab6c76e330eb "CommandLineTool")
+![CommandLineTool](./doc/CommandLineTool.png "CommandLineTool")
 
 First, we specify which group we would like to work with by typing:
 ```
@@ -453,7 +452,7 @@ It first adds an additional (virtual) obstacle to the Planning Scene. Then it pe
 
 ### This concludes this tutorial on Motion Planning with ROS. 
 
-In case of questions - now or later - do not hestate to contact your tutor at Fraunhofer IPA:  
+In case of questions - now or later - do not hestate to contact your manipulation expert at Fraunhofer IPA:  
 
 Dip.-Inform. Felix Meßmer  
 e-mail: [felix.messmer@ipa.fraunhofer.de](mailto: felix.messmer@ipa.fraunhofer.de)  
