@@ -391,7 +391,26 @@ For your script(s) you can use the template file `scripting_template.py` in `lbr
 
 #### 6.1. PlanningSceneInterface  
 
-We first will 
+This part of the API allows you to add and remove (virtual) static obstacles (geometric primitives or meshes) to the Planning Scene. Also objects can be attached and detached to the robot. This is particularly interesting when grasping objects as attached objects become _part of the robot_ itself and thus are considered during motion planning.  
+In this tutorial we will use the following to functions in our script:  
+```python
+def add_box(name, pose, size = (1, 1, 1))   ### add a box	
+
+def remove_world_object(name)               ### remove an object from scene
+```
+
+In order to use one of these functions in your script, add the following lines of code to your script:  
+```python
+psi = smi.get_planning_scene_interface()
+rospy.sleep(1.0)
+```
+This brings in a handle `psi` for the PlanningSceneInterface. `psi.add_box()` adds a box the the Planning Scene. Give the function calls appropriate parameters:  
+* __name__ a unique name for the box objects
+* __pose__ the pose of the object in the world. Use the helper function to generate the according type
+* __size__ the size of the box, i.e. the extension in x-, y- and z-direction
+
+
+
 
 #### 6.2. MoveGroupCommander  
 
@@ -454,7 +473,7 @@ It first adds an additional (virtual) obstacle to the Planning Scene. Then it pe
 
 In case of questions - now or later - do not hestate to contact your manipulation expert at Fraunhofer IPA:  
 
-Dip.-Inform. Felix Meßmer  
+Dipl.-Inform. Felix Meßmer  
 e-mail: [felix.messmer@ipa.fraunhofer.de](mailto: felix.messmer@ipa.fraunhofer.de)  
 phone: +49 711 970-1452  
 
