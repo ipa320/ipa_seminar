@@ -325,7 +325,7 @@ rosrun moveit_commander moveit_commander_cmdline.py
 ```
 This changes the look of you terminal to the following prompt.
 
-# Screenshot CommandLineTool
+![CommandLineTool](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/CommandLineTool.png?login=ipa-fxm&token=6b510f990f3b5752b2b4ab6c76e330eb "CommandLineTool")
 
 First, we specify which group we would like to work with by typing:
 ```
