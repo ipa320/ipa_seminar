@@ -311,9 +311,34 @@ More about the concept of executing trajectories with MoveIt! can be found [here
 #### 4.3 Enhanced Usage  
 
 Finally, we have all together to use MoveIt! on our KUKA LBR!  
-The following explains the new capabilities we just configured.  
+We will use the MoveIt! RVIZ-Plugin again to experience the new capabilities we just configured.  
 
+Bring up the robot as descriped in section 1.2.
+```
+roslaunch lbr_bringup robot.launch
+```
+Next we will start MoveIt! with the new capabilities by running (in new terminal):
+```
+roslaunch lbr_moveit_config move_group.launch
+```
+And to start RVIZ (in new terminal):
+```
+roslaunch lbr_moveit_config moveit_rviz.launch
+```
 
+We will see our robot in its current Planning Scene. 
+
+__ToDo: Screenshot RVIZ with real robot and CollisionMap - annotated!__
+
+As in the previous step we can compose Planning Request using the InteractiveMarkers or move to pre-defined robot poses.
+Once you composed a Planning Request, click _Plan_ in the control panel of the plugin. MoveIt! starts to solve your request and - if successfull - you should see the resulting trajectory.  
+
+![CAUTION](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/yellow-warning.gif?login=ipa-fxm&token=de7de97c787a393b6b8acf19dd87890e "CAUTIOIN")  
+
+The resulting trajectory can be executed on the robot by clicking _Execute_ in the control panel.  
+
+By clicking _Plan and Execute_, MoveIt! will directly execute your Planning Request - if successfull.  
+When using this mode - ___only in this mode!___ - also _reactive_ planning is activated. This means that MoveIt! monitors the execution of the trajectory, updating the Planning Scene continuously. As soon as changes in the environment, e.g. a new obstacle, crosses the trajectory thus leading to a collision, MoveIt! stops the execution and tries to replan, i.e. find another trajectory to the specified goal considering the new environment situation.  
 
 ### 5. MoveIt! - CommmandLine Tool  
 
@@ -363,13 +388,16 @@ Beside the helpful tools - MoveIt!-RVIZ-Plugin and MoveIt!-CommandLine-Tool - Mo
 
 For this tutorial we will use the Python API to implement an example script in which we add virtual objects to the Planning Scene and perform various movements with our robot. As we will see, the same script can be used with our simulated robot as well as with the real robot hardware without any changes (see also IPA-Seminar-Application).
 
+For your script(s) you can use the template file `scripting_template.py` in `lbr_bringup/scripts`. Create a copy of this script in the same folder. 
+
 #### 6.1. PlanningSceneInterface  
 
-We first 
+We first will 
 
 #### 6.2. MoveGroupCommander  
 
 
+#### 6.3. Script-Execution
 
 
 The following example shows a script that combines everything we learned in this section.
