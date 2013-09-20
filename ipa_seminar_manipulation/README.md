@@ -394,8 +394,7 @@ For your script(s) you can use the template file `scripting_template.py` in `lbr
 This part of the API allows you to add and remove (virtual) static obstacles (geometric primitives or meshes) to the Planning Scene. Also objects can be attached and detached to the robot. This is particularly interesting when grasping objects as attached objects become _part of the robot_ itself and thus are considered during motion planning.  
 In this tutorial we will use the following to functions in our script:  
 ```python
-def add_box(name, pose, size = (1, 1, 1))   ### add a box	
-
+def add_box(name, pose, size = (1, 1, 1))   ### add a box  
 def remove_world_object(name)               ### remove an object from scene
 ```
 
@@ -410,13 +409,14 @@ This brings in a handle `psi` for the PlanningSceneInterface. `psi.add_box()` ad
 * __size__ the size of the box, i.e. the extension in x-, y- and z-direction
 
 
-
-
 #### 6.2. MoveGroupCommander  
+
+This part of the API provides a huge set of functions to interact with your robot. It consists of functions for retrieving information about your robot and its current state as well as various commands for moving the robot. An excerpt from the API is shown below:  
+```python
+```
 
 
 #### 6.3. Script-Execution
-
 
 The following example shows a script that combines everything we learned in this section.
 ```python
