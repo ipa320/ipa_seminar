@@ -330,14 +330,14 @@ We will see our robot in its current Planning Scene.
 
 __ToDo: Screenshot RVIZ with real robot and CollisionMap - annotated!__
 
-As in the previous step we can compose Planning Request using the InteractiveMarkers or move to pre-defined robot poses.
-Once you composed a Planning Request, click _Plan_ in the control panel of the plugin. MoveIt! starts to solve your request and - if successfull - you should see the resulting trajectory.  
+As in the previous step we can compose Planning Requests in RVIZ using the InteractiveMarkers or move to pre-defined robot poses.  
+Once you composed a new Planning Request, click _Plan_ in the control panel of the plugin. MoveIt! starts to solve your request and - if successfull - you should see the resulting trajectory.  
 
-![CAUTION](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/yellow-warning.gif?login=ipa-fxm&token=de7de97c787a393b6b8acf19dd87890e "CAUTIOIN")  
+![CAUTION](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/yellow-warning.gif?login=ipa-fxm&token=de7de97c787a393b6b8acf19dd87890e "CAUTIOIN") CAUTION ZONE ![CAUTION](https://raw.github.com/ipa-fxm/ipa_seminar/master/ipa_seminar_manipulation/doc/yellow-warning.gif?login=ipa-fxm&token=de7de97c787a393b6b8acf19dd87890e "CAUTIOIN")  
 
 The resulting trajectory can be executed on the robot by clicking _Execute_ in the control panel.  
 
-By clicking _Plan and Execute_, MoveIt! will directly execute your Planning Request - if successfull.  
+By clicking _Plan and Execute_, MoveIt! will directly execute your Planning Request - if planned successfully.  
 When using this mode - ___only in this mode!___ - also _reactive_ planning is activated. This means that MoveIt! monitors the execution of the trajectory, updating the Planning Scene continuously. As soon as changes in the environment, e.g. a new obstacle, crosses the trajectory thus leading to a collision, MoveIt! stops the execution and tries to replan, i.e. find another trajectory to the specified goal considering the new environment situation.  
 
 ### 5. MoveIt! - CommmandLine Tool  
