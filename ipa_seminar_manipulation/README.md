@@ -274,12 +274,44 @@ This tells MoveIt! to load an additional plugin (i.e. _sensor_plugin_) during st
 
 #### 4.2 Control  
 
+In order to be able to use MoveIt! with a real robot hardware we need to tell MoveIt!:
+1. where from it can receive information about the robot's current configuration (i.e. the joint states)
+2. where the planned trajectory should be executed
 
+Both of this can be achieved by configuring an according controller for our KUKA LBR.
+
+Therefore, we create a new file `controllers.yaml` with the following content and save it in `lbr_moveit_config/config`.  
+```
+controller_list:
+  - name: arm_controller
+    ns: follow_joint_trajectory
+    default: true
+    joints:
+      - arm_1_joint
+      - arm_2_joint
+      - arm_3_joint
+      - arm_4_joint
+      - arm_5_joint
+      - arm_6_joint
+      - arm_7_joint
+```
+
+In order to use this new configuration file, we will add the following to `lbr_solo_moveit_controller_manager.launch` in `lbr_moveit_config/launch`:  
+```
+<launch>
+  <rosparam file="$(find lbr_moveit_config)/config/controllers.yaml"/>
+  <param name="use_controller_manager" value="false"/>
+  <param name="trajectory_execution/execution_duration_monitoring" value="false"/>
+  <param name="moveit_controller_manager" value="pr2_moveit_controller_manager/Pr2MoveItControllerManager"/>
+</launch>
+```
 
 More about the concept of executing trajectories with MoveIt! can be found [here](http://moveit.ros.org/wiki/Executing_Trajectories_with_MoveIt! "ExecuteTrajectories").  
 
 #### 4.3 Enhanced Usage  
 
+Finally, we have all together to use MoveIt! on our KUKA LBR!  
+The following explains the new capabilities we just configured.  
 
 
 
