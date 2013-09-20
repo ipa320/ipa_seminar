@@ -391,16 +391,16 @@ For your script(s) you can use the template file `scripting_template.py` in `lbr
 
 #### 6.1. PlanningSceneInterface  
 
-This part of the API allows you to add and remove (virtual) static obstacles (geometric primitives or meshes) to the Planning Scene. Also objects can be attached and detached to the robot. This is particularly interesting when grasping objects as attached objects become _part of the robot_ itself and thus are considered during motion planning.  
-In this tutorial we will use the following to functions in our script:  
+This part of the API allows you to add and remove (virtual) static obstacles (geometric primitives or meshes) to the Planning Scene. Also objects can be attached and detached to the robot. This is particularly interesting when grasping objects as attached objects become _part of the robot_ itself and thus are considered during motion planning. The full API can be found [here](https://github.com/ros-planning/moveit_commander/blob/groovy-devel/src/moveit_commander/planning_scene_interface.py "PlanningSceneInterface").  
+In this tutorial we will only use the following functions in our script:  
 ```python
 def add_box(name, pose, size = (1, 1, 1))   ### add a box  
 def remove_world_object(name)               ### remove an object from scene
 ```
 
-In order to use one of these functions in your script, add the following lines of code to your script:  
+In order to use one of these functions in your script, add the following lines of code to your script once:  
 ```python
-psi = smi.get_planning_scene_interface()
+psi = PlanningSceneInterface()
 rospy.sleep(1.0)
 ```
 This brings in a handle `psi` for the PlanningSceneInterface. `psi.add_box()` adds a box the the Planning Scene. Give the function calls appropriate parameters:  
@@ -411,23 +411,44 @@ This brings in a handle `psi` for the PlanningSceneInterface. `psi.add_box()` ad
 
 #### 6.2. MoveGroupCommander  
 
-This part of the API provides a huge set of functions to interact with your robot. It consists of functions for retrieving information about your robot and its current state as well as various commands for moving the robot. An excerpt from the API is shown below:  
+This part of the API provides a huge set of functions to interact with your robot. It consists of functions for retrieving information about your robot as well as various commands for moving the robot. The full API can be found [here](https://github.com/ros-planning/moveit_commander/blob/groovy-devel/src/moveit_commander/move_group.py "MoveGroupCommander").  
+An excerpt that can be used within our script can be seen below:  
 ```python
+def set_named_target(name)          ### sets the goal configuration to the pre-defined robot pose name
+def plan(joints = None)             ### plan to the given goal (JointState or Pose)
+def execute(plan_msg)               ### execute a previously planned trajectory
+def go(joints = None, wait = True)  ### plan to the given goal (JointState or Pose) and then execute the trajectory.
+def compute_cartesian_path(waypoints, eef_step, jump_threshold, avoid_collisions = True)   ### plan a linear trajectory via the given waypoints
 ```
-
+In order to use one of these functions in your script, add the following lines of code to your script once:  
+```python
+mgc = MoveGroupCommander()
+rospy.sleep(1.0)
+```
+This brings in a handle `mgc` for the MoveGroupCommander.  
+The functions mentioned above can now be used as `mgc.<function_name>()` with the according parameters given.  
 
 #### 6.3. Script-Execution
+
+In order to run your script, either a simulation or the real robot hardware needs to be running (see Section 1).  Also MoveIt! needs to be started (in new terminal):  
+```
+roslaunch lbr_moveit_config move_group.launch
+```
+and in another new terminal:
+```
+roslaunch lbr_moveit_config moveit_rviz.launch
+```
 
 The following example shows a script that combines everything we learned in this section.
 ```python
 #!/usr/bin/env python
-import roslib; roslib.load_manifest('cob_moveit_interface')
+import roslib; roslib.load_manifest('lbr_bringup')
 import rospy
 
 from tf.transformations import *
 from geometry_msgs.msg import PoseStamped
-import simple_moveit_interface as smi
-
+from moveit_commander import MoveGroupCommander, PlanningSceneInterface
+ 
 ### Helper function 
 def gen_pose(frame_id="/base_link", pos=[0,0,0], euler=[0,0,0]):
 	pose = PoseStamped()
@@ -437,14 +458,18 @@ def gen_pose(frame_id="/base_link", pos=[0,0,0], euler=[0,0,0]):
 	pose.pose.orientation.x, pose.pose.orientation.y, pose.pose.orientation.z, pose.pose.orientation.w = quaternion_from_euler(*euler)
 	return pose
 
-
-
 if __name__ == '__main__':
 	rospy.init_node('scripting_example')
 	while rospy.get_time() == 0.0: pass
 	
-	psi = smi.get_planning_scene_interface()
+	### Create a handle for the Planning Scene Interface
+	psi = PlanningSceneInterface()
 	rospy.sleep(1.0)
+	
+	### Create a handle for the Move Group Commander
+	mgc = MoveGroupCommander("arm")
+	rospy.sleep(1.0)
+	
 	
 	### Add virtual obstacle
 	pose = gen_pose(pos=[-0.2, -0.1, 1.2])
@@ -452,18 +477,21 @@ if __name__ == '__main__':
 	rospy.sleep(1.0)
 	
 	### Move to stored joint position
-	config = smi.get_goal_from_server("arm", "left")
-	success = smi.moveit_joint_goal("arm", config)
+	mgc.set_named_target("left")
+	mgc.go()
 	
 	### Move to Cartesian position
 	goal_pose = gen_pose(pos=[0.123, -0.417, 1.361], euler=[3.1415, 0.0, 1.5707])
-	success = smi.moveit_pose_goal("arm", "base_link", goal_pose.pose)
+	mgc.go(goal_pose.pose)
 	
 	### Move Cartesian linear
 	goal_pose.pose.position.z -= 0.1
-	success = smi.moveit_cart_goals("arm", "base_link", [goal_pose.pose])
+	(traj,frac) = mgc.compute_cartesian_path([goal_pose.pose], 0.01, 4, True)
+	mgc.execute(traj)
+	
+	print "Done"
 ```
-It first adds an additional (virtual) obstacle to the Planning Scene. Then it performs three different kinds of __planned__ motion:
+It first adds an additional (virtual) obstacle to the Planning Scene. Then it performs three different kinds of __planned__ motion:  
 * move to a pre-defined robot configuration
 * move to a given Cartesian goal pose
 * move to a given Cartedsian goal pose using linear motion
