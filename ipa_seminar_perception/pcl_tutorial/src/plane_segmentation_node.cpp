@@ -30,6 +30,7 @@ public:
   PlaneSegmentationNode()
   {
     pub_ = nh_.advertise<PointCloud>("point_cloud_out",1);
+    pub_2_ = nh_.advertise<PointCloud>("point_cloud_out_2",1);
     pub_marker_ = nh_.advertise<visualization_msgs::Marker>("marker",1);
     sub_ = nh_.subscribe ("point_cloud_in", 1,  &PlaneSegmentationNode::cloudCallback, this);
     config_server_.setCallback(boost::bind(&PlaneSegmentationNode::dynReconfCallback, this, _1, _2));
@@ -53,22 +54,33 @@ public:
   void
   publishMarker(pcl::ModelCoefficients::Ptr& coefficients, PointCloud inliers, const std_msgs::Header& header)
   {
+    Eigen::Vector3f centroid = Eigen::Vector3f::Zero();
+    for( unsigned int i = 0; i < inliers.points.size(); i++)
+    {
+      centroid += inliers.points[i].getVector3fMap();
+    }
+    centroid /= inliers.points.size();
+
     Eigen::Vector3f normal;
     normal << coefficients->values[0], coefficients->values[1], coefficients->values[2];
-    Eigen::Vector3f origin = -coefficients->values[3] * normal;
+    if(coefficients->values[3] < 0)
+    {
+      normal *= -1;
+    }
+    //Eigen::Vector3f origin = -coefficients->values[3] * normal;
     visualization_msgs::Marker marker_normal;
     marker_normal.type = visualization_msgs::Marker::ARROW;
     marker_normal.header = header;
     marker_normal.id = 0;
     marker_normal.action = visualization_msgs::Marker::ADD;
     geometry_msgs::Point pt;
-    pt.x = origin(0);
-    pt.y = origin(1);
-    pt.z = origin(2);
+    pt.x = centroid(0);
+    pt.y = centroid(1);
+    pt.z = centroid(2);
     marker_normal.points.push_back(pt);
-    pt.x = origin(0) + normal(0);
-    pt.y = origin(1) + normal(1);
-    pt.z = origin(2) + normal(2);
+    pt.x = centroid(0) + normal(0);
+    pt.y = centroid(1) + normal(1);
+    pt.z = centroid(2) + normal(2);
     marker_normal.points.push_back(pt);
     marker_normal.color.r = 1.0;
     marker_normal.color.a = 1.0;
@@ -77,12 +89,6 @@ public:
     marker_normal.scale.z = 0.1;
     pub_marker_.publish(marker_normal);
 
-    Eigen::Vector3f centroid = Eigen::Vector3f::Zero();
-    for( unsigned int i = 0; i < inliers.points.size(); i++)
-    {
-      centroid += inliers.points[i].getVector3fMap();
-    }
-    centroid /= inliers.points.size();
     visualization_msgs::Marker marker_centroid;
     marker_centroid.type = visualization_msgs::Marker::SPHERE;
     marker_centroid.header = header;
@@ -93,10 +99,9 @@ public:
     marker_centroid.pose.position.z = centroid(2);
     marker_centroid.color.b = 1.0;
     marker_centroid.color.a = 1.0;
-    marker_centroid.scale.x = 0.05;
-    marker_centroid.scale.y = 0.05;
+    marker_centroid.scale.x = 0.1;
+    marker_centroid.scale.y = 0.1;
     pub_marker_.publish(marker_centroid);
-
   }
 
   void
@@ -111,14 +116,19 @@ public:
     seg_.segment (*inliers, *coefficients);
 
     //extract indices
-    PointCloud cloud_out;
+    PointCloud cloud_out, cloud_out_2;
     extract_.setInputCloud(cloud_in);
     extract_.setIndices(inliers);
     extract_.filter(cloud_out);
 
+    extract_.setNegative(true);
+    extract_.filter(cloud_out_2);
+    extract_.setNegative(false);
+
     ROS_INFO("Segmentation took %f s.", sw.precisionStop());
 
     pub_.publish(cloud_out);
+    pub_2_.publish(cloud_out_2);
     publishMarker(coefficients, cloud_out, cloud_in->header);
   }
 
@@ -126,6 +136,7 @@ private:
   ros::NodeHandle nh_;
   ros::Subscriber sub_;
   ros::Publisher pub_;
+  ros::Publisher pub_2_;
   ros::Publisher pub_marker_;
   dynamic_reconfigure::Server<pcl_tutorial::plane_segmentation_nodeConfig> config_server_;
 
