@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+
+	<arg name="robot"/>
+
+    <!-- upload script server parameters -->
+    <rosparam command="load" ns="/script_server/arm" file="$(find ipa_seminar_application)/config/arm_joint_configurations_$(arg robot).yaml"/>
+
+    <!-- send lwa urdf to param server -->
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find ipa_seminar_application)/helper/$(arg robot).urdf.xacro'" />
+
+	<!-- teleop -->
+    <include file="$(find schunk_bringup)/tools/teleop.launch" />
+
+</launch>
