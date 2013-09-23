@@ -1,4 +1,2 @@
-ros_seminar
-===========
-
-Documents and code for the ROS semiar at Fraunhofer IPA.
+# 3D Perception with ROS and PCL
+## Tutorial
