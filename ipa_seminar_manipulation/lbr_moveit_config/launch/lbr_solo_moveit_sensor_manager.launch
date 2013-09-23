@@ -1,0 +1,6 @@
+<launch>
+  <param name="octomap_frame" type="string" value="base_link" />
+  <param name="octomap_resolution" type="double" value="0.05" />
+  <param name="max_range" type="double" value="2.0" />
+  <rosparam file="$(find lbr_moveit_config)/config/sensor_kinect.yaml"/>
+</launch>

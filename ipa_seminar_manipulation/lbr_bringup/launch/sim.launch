@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<launch>
+	
+	<!-- define arguments -->
+	<arg name="robot" default="lbr_solo"/>
+	<arg name="robot_env" default="empty"/>
+	<arg name="pkg_robot_config" default="$(find cob_default_robot_config)"/>
+	<arg name="pkg_env_config" default="$(find cob_default_env_config)"/>
+	
+	<arg name="paused" default="false"/>
+	<arg name="use_sim_time" default="true"/>
+	<arg name="gui" default="true"/>
+	<arg name="throttled" default="false"/>
+	
+	
+	
+	<!-- upload params -->
+	<include file="$(find lbr_bringup)/launch/upload_param_lbr_solo.launch" />
+	
+	<!-- startup simulated world -->
+	<include file="$(find cob_gazebo_worlds)/launch/$(arg robot_env).launch">
+		<arg name="paused" value="$(arg paused)" />
+		<arg name="use_sim_time" value="$(arg use_sim_time)" />
+		<arg name="gui" value="$(arg gui)" />
+		<arg name="throttled" value="$(arg throttled)" />
+	</include>
+	
+	
+	<!-- send cob urdf to param server -->
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find lbr_bringup)/urdf/lbr_solo.urdf.xacro'" />
+	
+	<!-- push robot_description to factory and spawn robot in gazebo -->
+	<group if="$(arg paused)">
+		<node name="spawn_gazebo_model" pkg="gazebo" type="spawn_model" args="-ros_namespace /gazebo -urdf -param robot_description -model robot -z 0.01 -Y 1.5707" respawn="false" output="screen" />  
+	</group>
+	<group unless="$(arg paused)">
+		<node name="spawn_gazebo_model" pkg="gazebo" type="spawn_model" args="-ros_namespace /gazebo -unpause -urdf -param robot_description -model robot -z 0.01 -Y 1.5707" respawn="false" output="screen" />  
+	</group>
+	
+	
+	<!-- start cam3d -->
+	<node name="cam3d_relay" pkg="topic_tools" type="relay" args="/cam3d/rgb/image_raw /cam3d/rgb/image_color" respawn="false" output="screen"/>
+    <include file="$(find cob_cam3d_throttle)/launch/cam3d_throttle.launch" >
+        <arg name="namespace" value="/cam3d" />
+        <arg name="rate" value="1.0" />
+        <arg name="start_manager" value="true"/>
+        <arg name="nodelet_manager" value="cam3d_nodelet_manager"/>
+    </include>
+ 
+	<!-- start gazebo controllers -->
+	<include file="$(find lbr_bringup)/launch/default_controllers_lbr_solo.launch" />
+	
+	<!-- services for simulation (e.g.: stop for simulation)-->
+	<node pkg="cob_gazebo" type="gazebo_services.py" name="gazebo_services" cwd="node" respawn="false" output="screen" />
+	
+	
+</launch>

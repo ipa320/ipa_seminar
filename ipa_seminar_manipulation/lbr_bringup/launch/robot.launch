@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+
+	<arg name="robot" default="lbr_solo" />
+
+	<!-- upload params -->
+	<include file="$(find lbr_bringup)/launch/upload_param_lbr_solo.launch" />
+
+	<!-- send cob urdf to param server -->
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find lbr_bringup)/urdf/lbr_solo.urdf.xacro'" />
+
+	<!-- start robot_state_publisher -->
+	<node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher"/>
+
+	<!-- start arm -->
+	<include file="$(find lbr_bringup)/launch/lbr.launch" />
+	
+	<!-- start kinect -->
+	<include file="$(find lbr_bringup)/launch/kinect.launch" />
+
+</launch>
