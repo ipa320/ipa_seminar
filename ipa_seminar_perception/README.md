@@ -93,3 +93,21 @@ Change the marker topic to "/marker". You should see a sphere and an arrow marke
 ![rviz6](./doc/rviz6.png "Plane marker")
 
 ### 4.  Voxel filter (optional)
+
+In the terminal for the plane segmentation, you can see the processing time which is quite long. In order to speed up the computation we are going to add a voxel filter as pre-processing step.
+
+#### 4.1. Configure the launch files
+
+The voxel filter should be added as a first processing step. Thus, you have to modify the launch file for the passthrough filter so that it is connected to the output of the voxel filter. Use ROS tools like rostopic or rxgraph to find out how to change the launch file.
+
+#### 4.2. Run the voxel filter
+
+Now you can run the filter node by
+```
+roslaunch pcl_tutorial voxel_filter.launch
+```
+You can change the leaf size parameters of the node using dynamic reconfigure.
+
+#### 4.3. Check the results
+
+In console, observe the computation time of the plane segmentation if you change the parameters of the voxel filter. Also, visualize the downsampled point cloud in RVIZ.
