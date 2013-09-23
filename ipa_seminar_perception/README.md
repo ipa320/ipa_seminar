@@ -80,7 +80,8 @@ The next step is to start the plane segmentation, using
 ```
 roslaunch pcl_tutorial plane_segmentation.launch
 ```
-The node will find the dominant plane in the point cloud and output markers for the centroid and the normal of the plane. It will also output the inliers of the plane as point cloud (/plane_segmentation/point_cloud_out) 
+The node will find the dominant plane in the point cloud and output markers for the centroid and the normal of the plane.
+It will also output the inliers of the plane (/plane_segmentation/plane) and the remainder of the scene (/plane_segmentation/above_plane) as point cloud  
 
 #### 3.2. Visualize the marker
 
