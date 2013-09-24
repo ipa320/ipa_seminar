@@ -34,7 +34,7 @@ Start the robot on a terminal:
 
 	roslaunch seminar_navigation robot_bringup.launch
 	
-No start the prepared rviz configuration to show the current state of the robot.
+Now start the prepared rviz configuration to show the current state of the robot.
 
 	roslaunch seminar_navigation rviz_joystick.launch
 
@@ -52,9 +52,18 @@ You can now move around the robot using the joystick. Use the deadman button and
 <a href="#top">top</a> 
 ### 3. Mapping the environment
 
-Start bringup
-Start gmapping 
+Start the robot on a terminal:
+
+	roslaunch seminar_navigation robot_bringup.launch
+	
+In a second terminal you can start the gmapping localization using:
+
+	roslaunch cob_mapping_slam 2dslam.launch
+	
 Start rviz config
+
+	roslaunch seminar_navigation rviz_gmapping.launch
+
 Note following rviz settings:
 
 * map origin
@@ -62,10 +71,15 @@ Note following rviz settings:
 * Activated Laserscanner plugins for front and rear
 * Activated robot_model plugin
 
-Move around using joystick
-When finished save the map with rosrun map_server map_saver
-Analyse created files map.yaml and map.pgm
-Copy map into scenario folder
+After initialization of the base (deadman + start) you can move around using the joystick. Notice the map getting created step by step.
+
+When finished go into the scenario folder and save the map by running the following commands
+
+	roscd seminar_navi_scenario/map
+	rosrun map_server map_saver
+
+Analyse created files map.yaml and map.pgm.
+
 
 <a href="#top">top</a> 
 ### 4. Localizing in the environment
