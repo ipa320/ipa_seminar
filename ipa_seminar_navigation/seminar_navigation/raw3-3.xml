@@ -26,7 +26,7 @@
 		<node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher"/>
 
 		<!-- start phidget driver -->
-		<node pkg="cob_phidgets" type="phidget_sensors" name="phidget_driver"/>
+		<!--node pkg="cob_phidgets" type="phidget_sensors" name="phidget_driver"/-->
 
 		<!-- startup hardware -->
 		<include file="$(find cob_bringup)/components/laser_front.launch" >
