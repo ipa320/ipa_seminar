@@ -231,35 +231,35 @@ Visualization Manager:
       Update Interval: 0
       Value: false
     - Class: rviz/Marker
-      Enabled: false
+      Enabled: true
       Marker Topic: /move_base/EBandPlannerROS/eband_visualization
       Name: EBandVisual
       Namespaces:
         {}
       Queue Size: 100
-      Value: false
+      Value: true
     - Alpha: 1
       Buffer Length: 2
       Class: rviz/Path
       Color: 255; 170; 0
-      Enabled: false
+      Enabled: true
       Name: GlobalPath
       Topic: /move_base/NavfnROS/plan
-      Value: false
+      Value: true
     - Alpha: 1
       Class: rviz/GridCells
       Color: 255; 0; 0
-      Enabled: false
+      Enabled: true
       Name: CostmapObstacles
       Topic: /move_base/local_costmap/obstacles
-      Value: false
+      Value: true
     - Alpha: 1
       Class: rviz/GridCells
       Color: 255; 255; 127
-      Enabled: false
+      Enabled: true
       Name: CostmapInflated
       Topic: /move_base/local_costmap/inflated_obstacles
-      Value: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -283,17 +283,17 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 6.55479
+      Distance: 7.34136
       Focal Point:
-        X: 0.201345
-        Y: 0.856836
-        Z: 3.09944e-06
+        X: 1.11801
+        Y: 2.69352
+        Z: 2.6226e-06
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.386545
+      Pitch: 0.956545
       Target Frame: <Fixed Frame>
       Value: XYOrbit (rviz)
-      Yaw: 1.14396
+      Yaw: 1.20396
     Saved: ~
 Window Geometry:
   Displays:
@@ -311,5 +311,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1264
-  X: 325
-  Y: 172
+  X: 315
+  Y: 164
