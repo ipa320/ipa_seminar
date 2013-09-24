@@ -1,0 +1,7 @@
+joint_names: ["arm_1_joint","arm_2_joint","arm_3_joint","arm_4_joint","arm_5_joint","arm_6_joint","arm_7_joint"]
+
+# back side positions
+home: [[0,0,0,0,0,0,0]]
+left: [[1.7609, -0.8197, 0, 0.7962, 0, -0.9368, 0]]
+right: [[2.8573, -0.8197, 0, 1.0539, 0, -0.9368, 0]]
+center: [[2.3922, -1.5222, 0, -0.7026, 0, 1.2881, 0]]
