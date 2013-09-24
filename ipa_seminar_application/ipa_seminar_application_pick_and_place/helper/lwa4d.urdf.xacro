@@ -3,7 +3,7 @@
        xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
        xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
        xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
-       name="lbr" >
+       name="lwa4d" >
 
   <!-- common stuff -->
   <include filename="$(find cob_description)/urdf/common.xacro" />
@@ -11,10 +11,10 @@
   <include filename="$(find cob_description)/gazebo/gazebo.urdf.xacro" />
 
   <!-- calibration -->
-  <!--include filename="$(find ipa_seminar_application)/helper/calibration_lbr.urdf.xacro" /-->
+  <include filename="$(find ipa_seminar_application_pick_and_place)/helper/calibration_lwa4d.urdf.xacro" />
 
-  <!-- lbr -->
-  <include filename="$(find cob_description)/urdf/lbr/lbr.urdf.xacro" />
+  <!-- lwa4d -->
+  <include filename="$(find schunk_description)/urdf/lwa4d/lwa4d.urdf.xacro" />
 
   <!-- foot for arm -->
 	<link name="base_link">
@@ -41,8 +41,8 @@
 	</link>
 
   <!-- arm -->
-  <xacro:cob_lbr name="arm" parent="base_link">
-    <origin xyz="0 0 1" rpy="0 0 0" />
-  </xacro:cob_lbr>
+  <xacro:schunk_lwa4d name="arm" parent="base_link">
+    <origin xyz="0 0 2" rpy="3.1415926 0 0" />
+  </xacro:schunk_lwa4d>
 
 </robot>

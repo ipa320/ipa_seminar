@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import roslib; roslib.load_manifest('ipa_seminar_application')
+import roslib; roslib.load_manifest('ipa_seminar_application_pick_and_place')
 import rospy
 
 import smach
@@ -11,7 +11,7 @@ from pick_and_place_states import *
 
 # main
 def main():
-	rospy.init_node('ipa_seminar_application')
+	rospy.init_node('ipa_seminar_application_pick_and_place')
 
 	# create a SMACH state machine
 	SM = smach.StateMachine(outcomes=['overall_succeeded','overall_failed'])

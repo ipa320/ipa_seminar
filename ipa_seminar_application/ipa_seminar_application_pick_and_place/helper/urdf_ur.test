@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+
+  <test test-name="ur_test" pkg="cob_description" type="test_urdf.py" args="$(find ipa_seminar_application_pick_and_place)/helper/ur.urdf.xacro"/>
+
+</launch> 

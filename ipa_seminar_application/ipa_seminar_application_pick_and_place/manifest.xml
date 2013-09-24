@@ -1,13 +1,13 @@
 <package>
-  <description brief="ipa_seminar_application">
+  <description brief="ipa_seminar_application_pick_and_place">
 
-     ipa_seminar_application
+     ipa_seminar_application_pick_and_place
 
   </description>
   <author>Florian Weisshardt</author>
   <license>LGPL</license>
   <review status="unreviewed" notes=""/>
-  <url>http://ros.org/wiki/ipa_seminar_application</url>
+  <url>http://ros.org/wiki/ipa_seminar_application_pick_and_place</url>
 
   <depend package="rospy"/>
   <depend package="rostopic"/>

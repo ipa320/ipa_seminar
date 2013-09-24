@@ -4,10 +4,10 @@
 	<arg name="robot"/>
 
 	<!-- upload default configuration parameters -->
-	<rosparam command="load" ns="/script_server/arm" file="$(find ipa_seminar_application)/config/arm_joint_configurations_$(arg robot).yaml"/>
+	<rosparam command="load" ns="/script_server/arm" file="$(find ipa_seminar_application_pick_and_place)/config/arm_joint_configurations_$(arg robot).yaml"/>
 
 	<!-- upload robot_description -->
-	<param name="robot_description" command="$(find xacro)/xacro.py '$(find ipa_seminar_application)/helper/$(arg robot).urdf.xacro'" />
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find ipa_seminar_application_pick_and_place)/helper/$(arg robot).urdf.xacro'" />
 
 	<!-- launch an empty world -->
 	<include file="$(find gazebo_worlds)/launch/empty_world.launch" />
@@ -19,7 +19,7 @@
 	<include file="$(find cob_controller_configuration_gazebo)/ros/launch/controller_manager.launch" />
 
 	<!-- arm controllers -->
-	<rosparam file="$(find ipa_seminar_application)/helper/arm_controller_$(arg robot).yaml" command="load"/>
+	<rosparam file="$(find ipa_seminar_application_pick_and_place)/helper/arm_controller_$(arg robot).yaml" command="load"/>
 	<node name="arm_controller_spawner" pkg="cob_controller_configuration_gazebo" type="spawner" args="arm_controller" />
 	<group ns="arm_controller">
 		<node name="arm_joint_trajectory_action_node" pkg="joint_trajectory_action" type="joint_trajectory_action" />

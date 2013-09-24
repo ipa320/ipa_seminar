@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import roslib; roslib.load_manifest('ipa_seminar_application')
+import roslib; roslib.load_manifest('ipa_seminar_application_pick_and_place')
 import rospy
 
 import smach
