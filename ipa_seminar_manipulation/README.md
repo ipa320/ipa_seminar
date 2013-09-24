@@ -1,36 +1,40 @@
+<a id="top"/> 
 # Motion Planning with ROS
 ## Tutorial
 
 ### Contents
 
-1. Prerequesites  
-  1.1. Simulation  
-  1.2. Robot Hardware 
-2. MoveIt! - Setup Assistant  
-  2.1. Start  
-  2.2. Self-Collision  
-  2.3. Virtual Joints  
-  2.4. Planning Groups  
-  2.5. Robot Poses  
-  2.6. End Effectors  
-  2.7. Passive Joints  
-  2.8. Configuration Files  
-  2.9. Summary  
-3. MoveIt! - RVIZ-Plugin  
-  3.1. Plugin Environment Basics  
-  3.2. Planning Request  
-4. MoveIt! - Enhanced Configuration  
-  4.1. Perception  
-  4.2. Control  
-  4.3. Enhanced Usage  
-5. MoveIt! - CommandLine Tool  
-6. MoveIt! - Scripting API  
-  6.1. PlanningSceneInterface  
-  6.2. MoveGroupCommander  
-7. Help  
+1. <a href="#1--prerequisites">Prerequisites</a>   
+  1.1. <a href="#11-simulation">Simulation</a>  
+  1.2. <a href="#12-robot-hardware">Robot Hardware</a>  
+2. <a href="#2-moveit---setup-assistant">MoveIt! - Setup Assistant</a>  
+  2.1. <a href="#21-start">Start</a>  
+  2.2. <a href="#22-self-collision">Self-Collision</a>  
+  2.3. <a href="#23-virtual-joints">Virtual Joints</a>  
+  2.4. <a href="#24-planning-groups">Planning Groups</a>  
+  2.5. <a href="#25-robot-poses">Robot Poses</a>  
+  2.6. <a href="#26-end-effectors">End Effectors</a>  
+  2.7. <a href="#27-passive-joints">Passive Joints</a>  
+  2.8. <a href="#28-configuration-files">Configuration Files</a>  
+  2.9. <a href="#29-summary">Summary</a>  
+3. <a href="#3-moveit---rviz-plugin">MoveIt! - RVIZ-Plugin</a>  
+  3.1. <a href="#31-plugin-environment-basics">Plugin Environment Basics</a>  
+  3.2. <a href="#32-planning-request">Planning Request</a>  
+4. <a href="#4-moveit---enhanced-configuration">MoveIt! - Enhanced Configuration</a>  
+  4.1. <a href="#41-perception">Perception</a>  
+  4.2. <a href="#42-control">Control</a>  
+  4.3. <a href="#43-enhanced-usage">Enhanced Usage</a>  
+5. <a href="#5-moveit---commandline-tool">MoveIt! - CommandLine Tool</a>  
+6. <a href="#6-moveit---scripting-api">MoveIt! - Scripting API</a>  
+  6.1. <a href="#61-planningsceneinterface">PlanningSceneInterface</a>  
+  6.2. <a href="#62-movegroupcommander">MoveGroupCommander</a>  
+  6.3. <a href="#63-script-execution">Script-Execution</a>  
+7. <a href="#7-help">Help</a>  
 
 
-### 1.  Prerequesites
+
+
+### 1.  Prerequisites
 
 For convenience, all required ROS packages are already installed and the environment (i.e. environment variables) is set up correctly.
 Changes can be made within the [setup file](./setup_env_manipulation.bash "Setup Shell").
@@ -76,6 +80,11 @@ Then, simply run:
 roslaunch lbr_bringup robot.launch
 ```
 This will start up all necessary drivers.  
+
+<a href="#top">top</a> 
+
+
+
 
 
 ### 2. MoveIt! - Setup Assistant  
@@ -193,6 +202,11 @@ Whenever something needs to be changed within the MoveIt! configuration package,
 The configuration files can also be modified manually. In fact, we will do so during the remainder of this tutorial.  
 In such case the Setup Assistant will notify you that configuratin files have been edited outside the Setup Assistant.  
 
+<a href="#top">top</a> 
+
+
+
+
 
 ### 3. MoveIt! - RVIZ-Plugin  
 
@@ -223,6 +237,11 @@ Get used with the RVIZ environment and the plugins by:
 * Configure your visualization as you like (e.g. show trail)
 
 ![RVIZ-Plugin-Trail](./doc/rviz_plugin_trail_annotated.png "RVIZ-Plugin-Trail")
+
+<a href="#top">top</a> 
+
+
+
 
 
 ### 4. MoveIt! - Enhanced Configuration  
@@ -339,7 +358,13 @@ The resulting trajectory can be executed on the robot by clicking _Execute_ in t
 By clicking _Plan and Execute_, MoveIt! will directly execute your Planning Request - if planned successfully.  
 When using this mode - ___only in this mode!___ - also _reactive_ planning is activated. This means that MoveIt! monitors the execution of the trajectory, updating the Planning Scene continuously. As soon as changes in the environment, e.g. a new obstacle, crosses the trajectory thus leading to a collision, MoveIt! stops the execution and tries to replan, i.e. find another trajectory to the specified goal considering the new environment situation.  
 
-### 5. MoveIt! - CommmandLine Tool  
+<a href="#top">top</a> 
+
+
+
+
+
+### 5. MoveIt! - CommandLine Tool  
 
 Another possibility for quickly sending planning problems to MoveIt! and execute them either in simulation or on a real robot is provided through the MoveIt! - CommandLine Tool. This terminal-based interface provides MoveIt!'s capabilities by using the MoveIt! Python API (more details in next section).  
 
@@ -379,6 +404,9 @@ Get familar with the CommandLine Tool by also using:
 * `show` display the names and values of the known states
 * `go <dir> <dx>` plan and execute a motion in direction up|down|left|right|forward|backward for distance <dx>
 
+<a href="#top">top</a> 
+
+
 
 
 ### 6. MoveIt! - Scripting API  
@@ -391,16 +419,16 @@ For your script(s) you can use the template file `scripting_template.py` in `lbr
 
 #### 6.1. PlanningSceneInterface  
 
-This part of the API allows you to add and remove (virtual) static obstacles (geometric primitives or meshes) to the Planning Scene. Also objects can be attached and detached to the robot. This is particularly interesting when grasping objects as attached objects become _part of the robot_ itself and thus are considered during motion planning.  
-In this tutorial we will use the following to functions in our script:  
+This part of the API allows you to add and remove (virtual) static obstacles (geometric primitives or meshes) to the Planning Scene. Also objects can be attached and detached to the robot. This is particularly interesting when grasping objects as attached objects become _part of the robot_ itself and thus are considered during motion planning. The full API can be found [here](https://github.com/ros-planning/moveit_commander/blob/groovy-devel/src/moveit_commander/planning_scene_interface.py "PlanningSceneInterface").  
+In this tutorial we will only use the following functions in our script:  
 ```python
 def add_box(name, pose, size = (1, 1, 1))   ### add a box  
 def remove_world_object(name)               ### remove an object from scene
 ```
 
-In order to use one of these functions in your script, add the following lines of code to your script:  
+In order to use one of these functions in your script, add the following lines of code to your script once:  
 ```python
-psi = smi.get_planning_scene_interface()
+psi = PlanningSceneInterface()
 rospy.sleep(1.0)
 ```
 This brings in a handle `psi` for the PlanningSceneInterface. `psi.add_box()` adds a box the the Planning Scene. Give the function calls appropriate parameters:  
@@ -408,26 +436,46 @@ This brings in a handle `psi` for the PlanningSceneInterface. `psi.add_box()` ad
 * __pose__ the pose of the object in the world. Use the helper function to generate the according type
 * __size__ the size of the box, i.e. the extension in x-, y- and z-direction
 
-
 #### 6.2. MoveGroupCommander  
 
-This part of the API provides a huge set of functions to interact with your robot. It consists of functions for retrieving information about your robot and its current state as well as various commands for moving the robot. An excerpt from the API is shown below:  
+This part of the API provides a huge set of functions to interact with your robot. It consists of functions for retrieving information about your robot as well as various commands for moving the robot. The full API can be found [here](https://github.com/ros-planning/moveit_commander/blob/groovy-devel/src/moveit_commander/move_group.py "MoveGroupCommander").  
+An excerpt that can be used within our script can be seen below:  
 ```python
+def set_named_target(name)          ### sets the goal configuration to the pre-defined robot pose name
+def plan(joints = None)             ### plan to the given goal (JointState or Pose)
+def execute(plan_msg)               ### execute a previously planned trajectory
+def go(joints = None, wait = True)  ### plan to the given goal (JointState or Pose) and then execute the trajectory.
+def compute_cartesian_path(waypoints, eef_step, jump_threshold, avoid_collisions = True)   ### plan a linear trajectory via the given waypoints
 ```
-
+In order to use one of these functions in your script, add the following lines of code to your script once:  
+```python
+mgc = MoveGroupCommander()
+rospy.sleep(1.0)
+```
+This brings in a handle `mgc` for the MoveGroupCommander.  
+The functions mentioned above can now be used as `mgc.<function_name>()` with the according parameters given.  
 
 #### 6.3. Script-Execution
+
+In order to run your script, either a simulation or the real robot hardware needs to be running (see Section 1).  Also MoveIt! needs to be started (in new terminal):  
+```
+roslaunch lbr_moveit_config move_group.launch
+```
+and in another new terminal:
+```
+roslaunch lbr_moveit_config moveit_rviz.launch
+```
 
 The following example shows a script that combines everything we learned in this section.
 ```python
 #!/usr/bin/env python
-import roslib; roslib.load_manifest('cob_moveit_interface')
+import roslib; roslib.load_manifest('lbr_bringup')
 import rospy
 
 from tf.transformations import *
 from geometry_msgs.msg import PoseStamped
-import simple_moveit_interface as smi
-
+from moveit_commander import MoveGroupCommander, PlanningSceneInterface
+ 
 ### Helper function 
 def gen_pose(frame_id="/base_link", pos=[0,0,0], euler=[0,0,0]):
 	pose = PoseStamped()
@@ -437,14 +485,18 @@ def gen_pose(frame_id="/base_link", pos=[0,0,0], euler=[0,0,0]):
 	pose.pose.orientation.x, pose.pose.orientation.y, pose.pose.orientation.z, pose.pose.orientation.w = quaternion_from_euler(*euler)
 	return pose
 
-
-
 if __name__ == '__main__':
 	rospy.init_node('scripting_example')
 	while rospy.get_time() == 0.0: pass
 	
-	psi = smi.get_planning_scene_interface()
+	### Create a handle for the Planning Scene Interface
+	psi = PlanningSceneInterface()
 	rospy.sleep(1.0)
+	
+	### Create a handle for the Move Group Commander
+	mgc = MoveGroupCommander("arm")
+	rospy.sleep(1.0)
+	
 	
 	### Add virtual obstacle
 	pose = gen_pose(pos=[-0.2, -0.1, 1.2])
@@ -452,24 +504,40 @@ if __name__ == '__main__':
 	rospy.sleep(1.0)
 	
 	### Move to stored joint position
-	config = smi.get_goal_from_server("arm", "left")
-	success = smi.moveit_joint_goal("arm", config)
+	mgc.set_named_target("left")
+	mgc.go()
 	
 	### Move to Cartesian position
 	goal_pose = gen_pose(pos=[0.123, -0.417, 1.361], euler=[3.1415, 0.0, 1.5707])
-	success = smi.moveit_pose_goal("arm", "base_link", goal_pose.pose)
+	mgc.go(goal_pose.pose)
 	
 	### Move Cartesian linear
 	goal_pose.pose.position.z -= 0.1
-	success = smi.moveit_cart_goals("arm", "base_link", [goal_pose.pose])
+	(traj,frac) = mgc.compute_cartesian_path([goal_pose.pose], 0.01, 4, True)
+	mgc.execute(traj)
+	
+	print "Done"
 ```
-It first adds an additional (virtual) obstacle to the Planning Scene. Then it performs three different kinds of __planned__ motion:
+It first adds an additional (virtual) obstacle to the Planning Scene. Then it performs three different kinds of __planned__ motion:  
 * move to a pre-defined robot configuration
 * move to a given Cartesian goal pose
 * move to a given Cartedsian goal pose using linear motion
 
 
 ### This concludes this tutorial on Motion Planning with ROS. 
+
+<a href="#top">top</a> 
+
+
+### 7. Help  
+
+* Official Website: [http://moveit.ros.org/wiki/MoveIt!](http://moveit.ros.org/wiki/MoveIt!)
+* MoveIt!-ROS-Wiki: [http://wiki.ros.org/moveit](http://wiki.ros.org/moveit)
+* MoveIt!-Tutorials: [http://moveit.ros.org/wiki/Tutorials](http://moveit.ros.org/wiki/Tutorials)
+* API-Documentation: [http://docs.ros.org/hydro/api/moveit_core/html/](http://docs.ros.org/hydro/api/moveit_core/html/)  
+
+
+===
 
 In case of questions - now or later - do not hestate to contact your manipulation expert at Fraunhofer IPA:  
 
@@ -478,12 +546,4 @@ e-mail: [felix.messmer@ipa.fraunhofer.de](mailto: felix.messmer@ipa.fraunhofer.d
 phone: +49 711 970-1452  
 
 
-
-
-### 7. Help  
-
-* Official Website: [http://moveit.ros.org/wiki/MoveIt!](http://moveit.ros.org/wiki/MoveIt!)
-* MoveIt!-ROS-Wiki: [http://wiki.ros.org/moveit](http://wiki.ros.org/moveit)
-* MoveIt!-Tutorials: [http://moveit.ros.org/wiki/Tutorials](http://moveit.ros.org/wiki/Tutorials)
-* API-Documentation: [http://docs.ros.org/hydro/api/moveit_core/html/](http://docs.ros.org/hydro/api/moveit_core/html/)
 
