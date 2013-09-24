@@ -15,4 +15,7 @@
 	<!-- move it -->
 	<include file="$(find ipa_seminar_application_moveit_config_ur)/launch/move_group.launch" />
 
+	<!-- gripper -->
+	<node pkg="brics_showcase_industry_schunk_gripper" type="schunk_gripper" name="gripper" output="screen"/>
+
 </launch>
