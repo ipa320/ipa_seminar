@@ -1,0 +1,24 @@
+<package>
+  <description brief="ipa_seminar_application">
+
+     ipa_seminar_application
+
+  </description>
+  <author>Florian Weisshardt</author>
+  <license>LGPL</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/ipa_seminar_application</url>
+
+  <depend package="rospy"/>
+  <depend package="rostopic"/>
+  <depend package="smach"/>
+  <depend package="smach_ros"/>
+  <depend package="cob_controller_configuration_gazebo"/>
+  <depend package="joint_trajectory_action"/>
+  <depend package="gazebo"/>
+  <depend package="gazebo_worlds"/>
+  <depend package="tf2_ros"/>
+  <depend package="ur_driver"/>
+  <depend package="robot_state_publisher"/>
+
+</package>
