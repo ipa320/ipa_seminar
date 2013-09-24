@@ -22,7 +22,7 @@ def main():
 	# open the container
 	with SM:
 		# add states to the container
-#		smach.StateMachine.add('TEST1', move_ptp("pick_position"),
+#		smach.StateMachine.add('TEST1', move_planned("pick_position"),
 #			transitions={	'succeeded':'TEST2',
 #							'failed':'overall_failed'})
 #
@@ -31,25 +31,17 @@ def main():
 #							'failed':'overall_failed'})
 
 		smach.StateMachine.add('PREPARE_ROBOT', prepare_robot(),
-			transitions={	'succeeded':'MOVE_TO_PICK_POSITION',
-							'failed':'overall_failed'})
-
-		smach.StateMachine.add('MOVE_TO_PICK_POSITION', move_ptp("pick_position"),
 			transitions={	'succeeded':'PICK_OBJECT',
 							'failed':'overall_failed'})
 
-		smach.StateMachine.add('PICK_OBJECT', pick_object(),
-			transitions={	'object_picked':'MOVE_TO_PLACE_POSITION',
-							'object_not_picked':'MOVE_TO_PICK_POSITION',
-							'failed':'overall_failed'})
-		
-		smach.StateMachine.add('MOVE_TO_PLACE_POSITION', move_ptp("place_position"),
-			transitions={	'succeeded':'PLACE_OBJECT',
+		smach.StateMachine.add('PICK_OBJECT', pick_object(prefix="left_"),
+			transitions={	'object_picked':'PLACE_OBJECT',
+							'object_not_picked':'overall_failed',
 							'failed':'overall_failed'})
 
-		smach.StateMachine.add('PLACE_OBJECT', place_object(),
-			transitions={	'object_placed':'overall_succeeded',
-							'object_not_placed':'MOVE_TO_PLACE_POSITION',
+		smach.StateMachine.add('PLACE_OBJECT', place_object(prefix="right_"),
+			transitions={	'object_placed':'PICK_OBJECT',
+							'object_not_placed':'overall_failed',
 							'failed':'overall_failed'})
 
 	# Start SMACH viewer
