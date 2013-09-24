@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+  <node pkg="pcl_tutorial" type="voxel_filter_node" name="voxel_filter" output="screen">
+    <remap from="point_cloud_in" to="/camera/depth_registered/points"/>
+    <remap from="point_cloud_out" to="/voxel_filter/points_cloud_out"/>
+    <param name="leafsize" type="double" value="0.005" />
+  </node>
+</launch>
