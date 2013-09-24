@@ -12,4 +12,7 @@
 		<param name="buffer_size" value="120.0"/>
 	</node>
 
+	<!-- move it -->
+	<include file="$(find ipa_seminar_application_moveit_config_ur)/launch/move_group.launch" />
+
 </launch>

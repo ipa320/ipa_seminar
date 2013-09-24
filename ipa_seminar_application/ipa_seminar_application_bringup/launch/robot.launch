@@ -3,9 +3,6 @@
 
 	<arg name="robot"/>
 
-	<!-- upload default configuration parameters -->
-	<rosparam command="load" ns="/script_server/arm" file="$(find ipa_seminar_application_bringup)/config/arm_joint_configurations_$(arg robot).yaml"/>
-
 	<!-- upload robot_description -->
 	<param name="robot_description" command="$(find xacro)/xacro.py '$(find ipa_seminar_application_bringup)/helper/$(arg robot).urdf.xacro'" />
 
@@ -14,9 +11,5 @@
 
 	<!-- start specific arm driver -->
 	<include file="$(find ipa_seminar_application_bringup)/launch/$(arg robot).launch" />
-
-	<!-- move it -->
-	<arg name="pkg_moveit_config" value="ipa_seminar_application_bringup_moveit_config_$(arg robot)"/>
-	<include file="$(find pkg_moveit_config)/launch/move_group.launch" />
 
 </launch>
