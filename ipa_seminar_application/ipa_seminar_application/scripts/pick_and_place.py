@@ -22,31 +22,39 @@ def main():
 	# open the container
 	with SM:
 		# add states to the container
-		smach.StateMachine.add('PREPARE_ROBOT', prepare_robot(),
-			transitions={	'succeeded':'MOVE_TO_PICK_POSITION',
+		smach.StateMachine.add('TEST1', move_ptp("pick_position"),
+			transitions={	'succeeded':'TEST2',
 							'failed':'overall_failed'})
 
-		smach.StateMachine.add('MOVE_TO_PICK_POSITION', move_ptp("pick_position"),
-			transitions={	'succeeded':'PICK_OBJECT',
+		smach.StateMachine.add('TEST2', move_lin("pick2_position"),
+			transitions={	'succeeded':'TEST1',
 							'failed':'overall_failed'})
 
-		smach.StateMachine.add('PICK_OBJECT', pick_object(),
-			transitions={	'object_picked':'MOVE_TO_PLACE_POSITION',
-							'object_not_picked':'MOVE_TO_PICK_POSITION',
-							'failed':'overall_failed'})
-		
-		smach.StateMachine.add('MOVE_TO_PLACE_POSITION', move_ptp("place_position"),
-			transitions={	'succeeded':'PLACE_OBJECT',
-							'failed':'overall_failed'})
-
-		smach.StateMachine.add('PLACE_OBJECT', place_object(),
-			transitions={	'object_placed':'MOVE_TO_HOME_POSITION',
-							'object_not_placed':'MOVE_TO_PLACE_POSITION',
-							'failed':'overall_failed'})
-
-		smach.StateMachine.add('MOVE_TO_HOME_POSITION', move_ptp("home"),
-			transitions={	'succeeded':'overall_succeeded', 
-							'failed':'overall_failed'})
+#		smach.StateMachine.add('PREPARE_ROBOT', prepare_robot(),
+#			transitions={	'succeeded':'MOVE_TO_PICK_POSITION',
+#							'failed':'overall_failed'})
+#
+#		smach.StateMachine.add('MOVE_TO_PICK_POSITION', move_ptp("pick_position"),
+#			transitions={	'succeeded':'PICK_OBJECT',
+#							'failed':'overall_failed'})
+#
+#		smach.StateMachine.add('PICK_OBJECT', pick_object(),
+#			transitions={	'object_picked':'MOVE_TO_PLACE_POSITION',
+#							'object_not_picked':'MOVE_TO_PICK_POSITION',
+#							'failed':'overall_failed'})
+#		
+#		smach.StateMachine.add('MOVE_TO_PLACE_POSITION', move_ptp("place_position"),
+#			transitions={	'succeeded':'PLACE_OBJECT',
+#							'failed':'overall_failed'})
+#
+#		smach.StateMachine.add('PLACE_OBJECT', place_object(),
+#			transitions={	'object_placed':'MOVE_TO_HOME_POSITION',
+#							'object_not_placed':'MOVE_TO_PLACE_POSITION',
+#							'failed':'overall_failed'})
+#
+#		smach.StateMachine.add('MOVE_TO_HOME_POSITION', move_ptp("home"),
+#			transitions={	'succeeded':'overall_succeeded', 
+#							'failed':'overall_failed'})
 
 	# Start SMACH viewer
 	smach_viewer = smach_ros.IntrospectionServer('PICK_AND_PLACE', SM, 'PICK_AND_PLACE')
