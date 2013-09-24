@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<launch>
+
+	<!-- upload default configuration parameters -->
+	<rosparam command="load" ns="/script_server/arm" file="$(find ipa_seminar_application)/config/arm_joint_configurations_$(arg robot).yaml"/>
+
+	<!-- upload robot_description -->
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find ipa_seminar_application)/helper/$(arg robot).urdf.xacro'" />
+
+	<!-- start robot_state_publisher -->
+	<node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher"/>
+
+	<!-- universal robot arm -->
+	<node name="ur_driver" ns="arm_controller" pkg="ur_driver" type="driver.py" args="192.168.141.40" output="screen" >
+		<remap from="/arm_controller/joint_states" to="/joint_states"/>
+		<param name="prefix" value="arm_"/>
+	</node>
+
+	<!-- TF Buffer Server -->
+	<node pkg="tf2_ros" type="buffer_server" name="tf2_buffer_server">
+		<param name="buffer_size" value="120.0"/>
+	</node>
+
+</launch>
