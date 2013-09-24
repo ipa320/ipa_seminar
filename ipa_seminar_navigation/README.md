@@ -4,14 +4,14 @@ ros_seminar_navigation
 
 ### Contents
 
-1. <a href="#1--prerequisites">Prerequisites</a>
-2. <a href="#2-moveit---setup-assistant">MoveIt! - Setup Assistant</a>
-3. <a href="#3-moveit---rviz-plugin">MoveIt! - RVIZ-Plugin</a>
-4. <a href="#4-moveit---enhanced-configuration">MoveIt! - Enhanced Configuration</a>
-5. <a href="#5-moveit---commandline-tool">MoveIt! - CommandLine Tool</a>
-6. <a href="#6-moveit---scripting-api">MoveIt! - Scripting API</a>
-7. <a href="#7-help">Help</a>
-8. <a href="#7-help">Help</a>
+1. <a href="#1-prerequisites">Prerequisites</a>
+2. <a href="#2-using-the-mobile-robot">Using the mobile robot</a>
+3. <a href="#3-mapping-the-environment">Mapping the environment</a>
+4. <a href="#4-localizing-in-the-environment">Localizing in the environment</a>
+5. <a href="#5-path-planning-using-elastic-band">Path planning using Elastic Band</a>
+6. <a href="#6-writing-a-small-application">Writing a small application</a>
+7. <a href="#7-optional-using-3d-sensors-in-navigation">Optional: Using 3D sensors in navigation</a>
+8. <a href="#8-help">Help</a>
 
 
 ### 1. Prerequisites
