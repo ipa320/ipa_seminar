@@ -35,9 +35,9 @@ class pick_object(smach.State):
 		print "picking object"
 
 		### Add virtual obstacle
-		pose = gen_pose(pos=[0.2, 0.1, 1.2])
-		self.psi.add_box("box", pose, size=(0.15, 0.15, 0.6))
-		rospy.sleep(1.0)
+		#pose = gen_pose(pos=[0.2, 0.1, 1.2])
+		#self.psi.add_box("box", pose, size=(0.15, 0.15, 0.6))
+		#rospy.sleep(1.0)
 	
 		### Move to Cartesian position
 		goal_pose = gen_pose(pos=[0.117, -0.600, 1.738], euler=[3.047, 1.568, 3.047])
@@ -79,15 +79,8 @@ class move_ptp(smach.State):
 	def execute(self, userdata):
 		print "move ptp to " + self.position
 
-		# get joint_names from parameter server
-		param_string = "/pick_and_place/" + self.position
-		if not rospy.has_param(param_string):
-			rospy.logerr("parameter %s does not exist on ROS Parameter Server, aborting...",param_string)
-			return 'failed'
-		param = rospy.get_param(param_string)
-		
 		# plan trajectory
-		goal_pose = gen_pose(pos=param[0], euler=param[1])
+		goal_pose = get_pose_from_parameter_server(self.position)
 		traj = self.mgc.plan(goal_pose.pose)
 		if len(traj.joint_trajectory.points) == 0: # TODO is there a better way to know if planning failed or not?
 			return 'failed'
@@ -95,7 +88,7 @@ class move_ptp(smach.State):
 		# execute trajectory
 		self.mgc.execute(traj)
 
-		print "moved ptp to " + str(param)
+		print "moved ptp to " + str(self.position)
 		return 'succeeded'
 
 class move_lin(smach.State):
@@ -111,25 +104,16 @@ class move_lin(smach.State):
 	def execute(self, userdata):
 		print "move lin to " + self.position
 
-		# get joint_names from parameter server
-		param_string = "/pick_and_place/" + self.position
-		if not rospy.has_param(param_string):
-			rospy.logerr("parameter %s does not exist on ROS Parameter Server, aborting...",param_string)
-			return 'failed'
-		param = rospy.get_param(param_string)
-		
 		# plan trajectory
-		goal_pose = gen_pose(pos=param[0], euler=param[1])
+		goal_pose = get_pose_from_parameter_server(self.position)
 		(traj,frac) = self.mgc.compute_cartesian_path([goal_pose.pose], 0.01, 4, True)
-		
-		# execute trajectory
 		if len(traj.joint_trajectory.points) == 0: # TODO is there a better way to know if planning failed or not?
 			return 'failed'
-
+		
+		# execute trajectory
 		self.mgc.execute(traj)
 
-
-		print "moved lin to " + str(param)
+		print "moved lin to " + str(self.position)
 		return 'succeeded'
 
 ### Helper function 
@@ -140,3 +124,14 @@ def gen_pose(frame_id="/base_link", pos=[0,0,0], euler=[0,0,0]):
 	pose.pose.position.x, pose.pose.position.y, pose.pose.position.z = pos
 	pose.pose.orientation.x, pose.pose.orientation.y, pose.pose.orientation.z, pose.pose.orientation.w = quaternion_from_euler(*euler)
 	return pose
+
+def get_pose_from_parameter_server(param_name):
+	# get joint_names from parameter server
+	param_string = "/pick_and_place/" + param_name
+	if not rospy.has_param(param_string):
+		rospy.logerr("parameter %s does not exist on ROS Parameter Server, aborting...",param_string)
+		return 'failed'
+	param = rospy.get_param(param_string)
+
+	# fill pose message
+	return gen_pose(pos = param[0], euler = param[1])
