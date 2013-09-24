@@ -30,18 +30,24 @@ To run the real mobile robot make sure you have the "robot flag", that means you
 <a href="#top">top</a> 
 ### 2. Using the mobile robot
 
+Start the robot on a terminal:
 
-Start bringup launch file
+	roslaunch seminar_navigation robot_bringup.launch
+	
+No start the prepared rviz configuration to show the current state of the robot.
 
-Start prepared rviz config
+	roslaunch seminar_navigation rviz_joystick.launch
+
 Note following rviz settings:
 
 * base_link origin
 * Activated Laserscanner plugins for front and rear
 * Activated robot_model plugin
 
-Move around with a joystick
-Picture of joystick controls
+To initialize the mobile base press the deadman button on the joystick (see picture below) and the start button at the same time. (not required in simulation)
+
+You can now move around the robot using the joystick. Use the deadman button and the two analog joysticks. You will notice how the laser scans show the environment and that you can move tranlational and rotational at the same time. Try to get a feeling how the platform move, as you need to move the robot lateron during mapping.
+
 
 <a href="#top">top</a> 
 ### 3. Mapping the environment
