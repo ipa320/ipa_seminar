@@ -1,4 +1,111 @@
 ros_seminar_navigation
 ===========
+<a id="top"/>
 
-TODO: fill in tutorial instructions here
+### Contents
+
+1. <a href="#1--prerequisites">Prerequisites</a>
+2. <a href="#2-moveit---setup-assistant">MoveIt! - Setup Assistant</a>
+3. <a href="#3-moveit---rviz-plugin">MoveIt! - RVIZ-Plugin</a>
+4. <a href="#4-moveit---enhanced-configuration">MoveIt! - Enhanced Configuration</a>
+5. <a href="#5-moveit---commandline-tool">MoveIt! - CommandLine Tool</a>
+6. <a href="#6-moveit---scripting-api">MoveIt! - Scripting API</a>
+7. <a href="#7-help">Help</a>
+8. <a href="#7-help">Help</a>
+
+
+### 1. Prerequisites
+Environment settings
+Using simulation
+Using real robot
+
+<a href="#top">top</a> 
+### 2. Using the mobile robot
+
+Start bringup launch file
+
+Start prepared rviz config
+Note following rviz settings:
+
+* base_link origin
+* Activated Laserscanner plugins for front and rear
+* Activated robot_model plugin
+
+Move around with a joystick
+Picture of joystick controls
+
+<a href="#top">top</a> 
+### 3. Mapping the environment
+
+Start bringup
+Start gmapping 
+Start rviz config
+Note following rviz settings:
+
+* map origin
+* Activated map plugin with topic /map
+* Activated Laserscanner plugins for front and rear
+* Activated robot_model plugin
+
+Move around using joystick
+When finished save the map with rosrun map_server map_saver
+Analyse created files map.yaml and map.pgm
+Copy map into scenario folder
+
+<a href="#top">top</a> 
+### 4. Localizing in the environment
+
+Start bringup
+Start amcl with just created map
+Start rviz config
+Note following rviz settings:
+
+* map origin
+* Activated map plugin with topic /map
+* Activated Laserscanner plugins for front and rear
+* Activated pose estimate plugin
+* Activated robot_model plugin
+
+Use set_position estimate tool in rviz to set initial localization
+Move around using joystick and see the localization converge
+Analyze tf frames by activating tf plugin. Find and watch frame /map, /odom_combined and /base_link
+
+<a href="#top">top</a> 
+### 5. Path planning using Elastic Band
+
+Start bringup
+Start amcl and move_base with just created map
+Start rviz config
+Note following rviz settings:
+
+* map origin
+* Activated map plugin with topic /map
+* Activated Laserscanner plugins for front and rear
+* Activated pose estimate plugin
+* Activated costmap plugin
+* Activated marker plugin
+* Activated robot_model plugin
+
+Use set_position estimate tool in rviz to set initial localization
+
+<a href="#top">top</a> 
+### 6. Writing a small application
+<a href="#top">top</a> 
+### 7. Optional: Using 3D sensors in navigation
+
+
+
+<a href="#top">top</a> 
+### 8. Help  
+
+
+
+===
+
+In case of questions - now or later - do not hestate to contact your navigation expert at Fraunhofer IPA:
+
+Dipl.-Ing. Alexander Bubeck
+e-mail: [alexander.bubeck@ipa.fraunhofer.de](mailto: alexander.bubeck@ipa.fraunhofer.de)
+phone: +49 711 970-1314
+
+<a href="#top">top</a> 
