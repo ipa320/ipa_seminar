@@ -1,4 +1,4 @@
-ros_seminar_navigation
+Mobile robot navigation with ROS
 ===========
 <a id="top"/>
 
@@ -15,12 +15,21 @@ ros_seminar_navigation
 
 
 ### 1. Prerequisites
-Environment settings
-Using simulation
-Using real robot
+The navigation tasks in this tutorial can be run both on the real robot and in simulation. Depending on where you want to run the task you have to start different prepared bringup scripts. The ROS Master will always be the local PC.
+
+To run the robot in simulation please use:
+
+	roslaunch seminar_navigation simulation_bringup.launch
+
+This launchfile will start a gazebo simulation of the robot and the environment with the necessary hardware and sensor interfaces.
+
+To run the real mobile robot make sure you have the "robot flag", that means you tell the others that you take control of the robot. Afterwards you can start the drivers of the mobile platform running:
+
+	roslaunch seminar_navigation robot_bringup.launch
 
 <a href="#top">top</a> 
 ### 2. Using the mobile robot
+
 
 Start bringup launch file
 
