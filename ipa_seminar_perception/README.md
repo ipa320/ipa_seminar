@@ -37,7 +37,9 @@ In order to visualize correctly, you have to choose the reference coordinate fra
 
 ![rviz4](./doc/rviz4.png "Set frame")
 
-Now you can change the visualization options, such as "Style", "Size", "Alpha" and "Color Transform" in order to alter the visualizaiton appearance.
+Now you can change the visualization options, such as "Style", "Size", "Alpha" and "Color Transform" in order to alter the visualization appearance.
+
+#### 1.3.  PointCloud2 message
 
 ### 2.  Passthrough filter
 
