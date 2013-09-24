@@ -101,6 +101,7 @@ public:
     marker_centroid.color.a = 1.0;
     marker_centroid.scale.x = 0.1;
     marker_centroid.scale.y = 0.1;
+    marker_centroid.scale.z = 0.1;
     pub_marker_.publish(marker_centroid);
   }
 
