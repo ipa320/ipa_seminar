@@ -71,6 +71,10 @@ class move_ptp(smach.State):
 		smach.State.__init__(self, 
 			outcomes=['succeeded', 'failed'])
 		self.position = position
+		### Create a handle for the Planning Scene Interface
+		self.psi = PlanningSceneInterface()
+		### Create a handle for the Move Group Commander
+		self.mgc = MoveGroupCommander("arm")
 
 	def execute(self, userdata):
 		print "move ptp to " + self.position
@@ -81,9 +85,51 @@ class move_ptp(smach.State):
 			rospy.logerr("parameter %s does not exist on ROS Parameter Server, aborting...",param_string)
 			return 'failed'
 		param = rospy.get_param(param_string)
-		print param
+		
+		# plan trajectory
+		goal_pose = gen_pose(pos=param[0], euler=param[1])
+		traj = self.mgc.plan(goal_pose.pose)
+		if len(traj.joint_trajectory.points) == 0: # TODO is there a better way to know if planning failed or not?
+			return 'failed'
+		
+		# execute trajectory
+		self.mgc.execute(traj)
 
-		print "object picked"
+		print "moved ptp to " + str(param)
+		return 'succeeded'
+
+class move_lin(smach.State):
+	def __init__(self, position):
+		smach.State.__init__(self, 
+			outcomes=['succeeded', 'failed'])
+		self.position = position
+		### Create a handle for the Planning Scene Interface
+		self.psi = PlanningSceneInterface()
+		### Create a handle for the Move Group Commander
+		self.mgc = MoveGroupCommander("arm")
+
+	def execute(self, userdata):
+		print "move lin to " + self.position
+
+		# get joint_names from parameter server
+		param_string = "/pick_and_place/" + self.position
+		if not rospy.has_param(param_string):
+			rospy.logerr("parameter %s does not exist on ROS Parameter Server, aborting...",param_string)
+			return 'failed'
+		param = rospy.get_param(param_string)
+		
+		# plan trajectory
+		goal_pose = gen_pose(pos=param[0], euler=param[1])
+		(traj,frac) = self.mgc.compute_cartesian_path([goal_pose.pose], 0.01, 4, True)
+		
+		# execute trajectory
+		if len(traj.joint_trajectory.points) == 0: # TODO is there a better way to know if planning failed or not?
+			return 'failed'
+
+		self.mgc.execute(traj)
+
+
+		print "moved lin to " + str(param)
 		return 'succeeded'
 
 ### Helper function 

@@ -15,7 +15,6 @@
   <depend package="smach_ros"/>
   <depend package="cob_controller_configuration_gazebo"/>
   <depend package="joint_trajectory_action"/>
-  <depend package="schunk_bringup"/>
   <depend package="gazebo"/>
   <depend package="gazebo_worlds"/>
 
