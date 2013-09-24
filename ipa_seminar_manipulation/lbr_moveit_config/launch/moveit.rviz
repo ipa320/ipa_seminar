@@ -4,13 +4,11 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /MotionPlanning1
+        - /Status1
         - /MotionPlanning1/Scene Geometry1
-        - /MotionPlanning1/Planning Request1
-        - /MotionPlanning1/Planned Path1
         - /Camera1/Visibility1
       Splitter Ratio: 0.74256
-    Tree Height: 350
+    Tree Height: 713
   - Class: rviz/Help
     Name: Help
   - Class: rviz/Views
@@ -40,7 +38,7 @@ Visualization Manager:
       Reference Frame: <Fixed Frame>
       Value: true
     - Class: moveit_rviz_plugin/MotionPlanning
-      Enabled: true
+      Enabled: false
       MoveIt_Goal_Tolerance: 0
       MoveIt_Planning_Time: 5
       MoveIt_Use_Constraint_Aware_IK: true
@@ -54,75 +52,6 @@ Visualization Manager:
           Expand Link Details: false
           Expand Tree: false
           Link Tree Style: Links in Alphabetic Order
-          arm_0_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_1_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_2_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_3_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_4_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_5_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_6_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_7_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          base_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          cam3d_frame:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          cam3d_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          gripper_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          wall_left_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          wall_right_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
         Loop Animation: false
         Robot Alpha: 0.5
         Show Robot Collision: false
@@ -166,78 +95,9 @@ Visualization Manager:
           Expand Link Details: false
           Expand Tree: false
           Link Tree Style: Links in Alphabetic Order
-          arm_0_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_1_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_2_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_3_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_4_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_5_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_6_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_7_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          base_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          cam3d_frame:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          cam3d_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          gripper_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          wall_left_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          wall_right_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
         Robot Alpha: 0.5
         Show Scene Robot: true
-      Value: true
+      Value: false
     - Class: rviz/Axes
       Enabled: false
       Length: 0.1
@@ -248,20 +108,20 @@ Visualization Manager:
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
+        Max Value: 2.09058
+        Min Value: -9.53674e-07
         Value: true
       Axis: Z
-      Channel Name: intensity
+      Channel Name: rgb
       Class: rviz/PointCloud2
       Color: 255; 255; 255
-      Color Transformer: Intensity
+      Color Transformer: AxisColor
       Decay Time: 0
       Enabled: false
-      Max Color: 255; 255; 255
-      Max Intensity: 4096
+      Max Color: 180; 180; 180
+      Max Intensity: 2.35099e-38
       Min Color: 0; 0; 0
-      Min Intensity: 0
+      Min Intensity: 3.50343e-39
       Name: PointCloud2
       Position Transformer: XYZ
       Queue Size: 10
@@ -290,14 +150,14 @@ Visualization Manager:
       Value: false
       Visual Enabled: true
     - Class: rviz/Camera
-      Enabled: true
+      Enabled: false
       Image Rendering: background and overlay
       Image Topic: /cam3d/rgb/image_color
       Name: Camera
-      Overlay Alpha: 0.5
+      Overlay Alpha: 0.3
       Queue Size: 2
       Transport Hint: raw
-      Value: true
+      Value: false
       Visibility:
         Axes: true
         Grid: true
@@ -308,37 +168,9 @@ Visualization Manager:
         Value: true
       Zoom Factor: 1
     - Class: rviz/TF
-      Enabled: true
+      Enabled: false
       Frame Timeout: 15
       Frames:
-        /arm_0_link:
-          Value: true
-        /arm_1_link:
-          Value: true
-        /arm_2_link:
-          Value: true
-        /arm_3_link:
-          Value: true
-        /arm_4_link:
-          Value: true
-        /arm_5_link:
-          Value: true
-        /arm_6_link:
-          Value: true
-        /arm_7_link:
-          Value: true
-        /base_link:
-          Value: true
-        /cam3d_frame:
-          Value: true
-        /cam3d_link:
-          Value: true
-        /gripper_link:
-          Value: true
-        /wall_left_link:
-          Value: true
-        /wall_right_link:
-          Value: true
         All Enabled: true
       Marker Scale: 1
       Name: TF
@@ -346,26 +178,9 @@ Visualization Manager:
       Show Axes: true
       Show Names: false
       Tree:
-        /base_link:
-          /arm_0_link:
-            /arm_1_link:
-              /arm_2_link:
-                /arm_3_link:
-                  /arm_4_link:
-                    /arm_5_link:
-                      /arm_6_link:
-                        /arm_7_link:
-                          /gripper_link:
-                            {}
-          /cam3d_link:
-            /cam3d_frame:
-              {}
-          /wall_left_link:
-            {}
-          /wall_right_link:
-            {}
+        {}
       Update Interval: 0
-      Value: true
+      Value: false
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -380,17 +195,17 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 4.12112
+      Distance: 3.21307
       Focal Point:
-        X: 0.558977
-        Y: 0.651686
-        Z: 4.03658e-07
+        X: -0.526559
+        Y: -0.398873
+        Z: -1.03684e-06
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.444796
+      Pitch: 0.300204
       Target Frame: /base_link
       Value: XYOrbit (rviz)
-      Yaw: 3.94178
+      Yaw: 4.52178
     Saved: ~
 Window Geometry:
   Camera:
@@ -404,9 +219,9 @@ Window Geometry:
   Hide Right Dock: false
   Motion Planning:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000200000000000002a200000326fc0200000005fb0000000800480065006c00700000000342000000bb0000007600fffffffb0000000a0056006900650077007300000003b0000000b0000000b000fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e006701000000280000017f0000017400fffffffb0000000c00430061006d00650072006101000001ad000001a10000001600ffffff00000002000003570000019ffc0100000001fb000000100044006900730070006c00610079007301000002a8000003570000010f00ffffff000003570000018100000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000003000000000000010f00000326fc0200000005fb0000000800480065006c00700000000342000000bb0000007600fffffffb0000000a0056006900650077007300000003b0000000b0000000b000fffffffb000000100044006900730070006c00610079007301000000280000030a000000dd00fffffffb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000338000000160000001600000016fb00000018004d0061006e006900700075006c006100740069006f006e00000001e6000001680000000000000000000000020000034d00000195fc0100000001fb0000000c00430061006d0065007200610000000311000002ee0000006500ffffff000000030000034d00000106fc0100000001fb0000000c00430061006d00650072006101000002a80000034d0000000000000000000004ea0000032600000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Views:
     collapsed: false
   Width: 1535
-  X: 57
-  Y: -4
+  X: 65
+  Y: 24
