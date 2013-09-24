@@ -2,6 +2,7 @@
 
 import roslib; roslib.load_manifest('ipa_seminar_application_pick_and_place')
 import rospy
+import copy
 
 import smach
 import smach_ros
@@ -33,19 +34,34 @@ class pick_object(smach.State):
 
 	def execute(self, userdata):
 		print "picking object"
+		
+		# get joint_names from parameter server
+		param_string = "/pick_and_place/pick_offset"
+		if not rospy.has_param(param_string):
+			rospy.logerr("parameter %s does not exist on ROS Parameter Server, aborting...",param_string)
+			return 'failed'
+		pick_offset = rospy.get_param(param_string)
+	
+		# plan trajectory
+		goal_pose_down = get_pose_from_parameter_server("pick_position")
+		goal_pose_up = copy.deepcopy(goal_pose_down)
+		goal_pose_up.pose.position.z += pick_offset
 
-		### Add virtual obstacle
-		#pose = gen_pose(pos=[0.2, 0.1, 1.2])
-		#self.psi.add_box("box", pose, size=(0.15, 0.15, 0.6))
-		#rospy.sleep(1.0)
-	
-		### Move to Cartesian position
-		goal_pose = gen_pose(pos=[0.117, -0.600, 1.738], euler=[3.047, 1.568, 3.047])
-		self.mgc.go(goal_pose.pose)
-	
-		### Move Cartesian linear
-		goal_pose.pose.position.z -= 0.1
-		(traj,frac) = self.mgc.compute_cartesian_path([goal_pose.pose], 0.01, 4, True)
+		### Move_lin down
+		(traj,frac) = self.mgc.compute_cartesian_path([goal_pose_up.pose, goal_pose_down.pose], 0.01, 4, True)
+		if len(traj.joint_trajectory.points) == 0: # TODO is there a better way to know if planning failed or not?
+			return 'failed'
+		self.mgc.execute(traj)
+
+		# close gripper
+		#TODO
+		print "close gripper"
+		rospy.sleep(3)
+		
+		### Move_lin up
+		(traj,frac) = self.mgc.compute_cartesian_path([goal_pose_up.pose], 0.01, 4, True)
+		if len(traj.joint_trajectory.points) == 0: # TODO is there a better way to know if planning failed or not?
+			return 'failed'
 		self.mgc.execute(traj)
 
 		print "object picked"
@@ -62,6 +78,35 @@ class place_object(smach.State):
 
 	def execute(self, userdata):
 		print "placing object"
+
+		# get joint_names from parameter server
+		param_string = "/pick_and_place/place_offset"
+		if not rospy.has_param(param_string):
+			rospy.logerr("parameter %s does not exist on ROS Parameter Server, aborting...",param_string)
+			return 'failed'
+		pick_offset = rospy.get_param(param_string)
+	
+		# plan trajectory
+		goal_pose_down = get_pose_from_parameter_server("place_position")
+		goal_pose_up = copy.deepcopy(goal_pose_down)
+		goal_pose_up.pose.position.z += pick_offset
+
+		### Move_lin down
+		(traj,frac) = self.mgc.compute_cartesian_path([goal_pose_up.pose, goal_pose_down.pose], 0.01, 4, True)
+		if len(traj.joint_trajectory.points) == 0: # TODO is there a better way to know if planning failed or not?
+			return 'failed'
+		self.mgc.execute(traj)
+
+		# open gripper
+		#TODO
+		print "open gripper"
+		rospy.sleep(3)
+		
+		### Move_lin up
+		(traj,frac) = self.mgc.compute_cartesian_path([goal_pose_up.pose], 0.01, 4, True)
+		if len(traj.joint_trajectory.points) == 0: # TODO is there a better way to know if planning failed or not?
+			return 'failed'
+		self.mgc.execute(traj)
 
 		print "object placed"
 		return 'object_placed'
@@ -115,6 +160,9 @@ class move_lin(smach.State):
 
 		print "moved lin to " + str(self.position)
 		return 'succeeded'
+
+
+
 
 ### Helper function 
 def gen_pose(frame_id="/base_link", pos=[0,0,0], euler=[0,0,0]):
