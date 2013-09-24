@@ -10,7 +10,7 @@ import smach_ros
 from tf.transformations import *
 from geometry_msgs.msg import PoseStamped
 from moveit_commander import MoveGroupCommander, PlanningSceneInterface
-
+from brics_showcase_industry_interfaces.srv import *
 
 class prepare_robot(smach.State):
 	def __init__(self):
@@ -104,10 +104,22 @@ class open_gripper(smach.State):
 	def __init__(self):
 		smach.State.__init__(self, 
 			outcomes=['succeeded', 'failed'])
+		self.service_name = "/MoveGripper"
+		self.client = rospy.ServiceProxy(self.service_name, MoveGripper)
 
 	def execute(self, userdata):
 		print "open gripper"
-		rospy.sleep(3)
+
+		try:		
+			# check if gripper service is available
+			rospy.wait_for_service(self.service_name, 5)
+
+			# move gripper
+			self.client(1)
+		except rospy.ServiceException, e:
+			print "Service call failed: %s"%e
+			return 'failed'
+
 		print "gripper opened"
 		return 'succeeded'
 
@@ -115,10 +127,22 @@ class close_gripper(smach.State):
 	def __init__(self):
 		smach.State.__init__(self, 
 			outcomes=['succeeded', 'failed'])
+		self.service_name = "/MoveGripper"
+		self.client = rospy.ServiceProxy(self.service_name, MoveGripper)
 
 	def execute(self, userdata):
 		print "close gripper"
-		rospy.sleep(3)
+
+		try:		
+			# check if gripper service is available
+			rospy.wait_for_service(self.service_name, 5)
+
+			# move gripper
+			self.client(0)
+		except rospy.ServiceException, e:
+			print "Service call failed: %s"%e
+			return 'failed'
+
 		print "gripper closed"
 		return 'succeeded'
 
