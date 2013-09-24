@@ -29,5 +29,16 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #rosbuild_add_executable(example examples/example.cpp)
 #target_link_libraries(example ${PROJECT_NAME})
 
-# rostest
-rosbuild_add_rostest(helper/urdf_ur.test)
+# rostest for robots
+SET(robotlist
+ur5
+lbr
+#kr16
+)
+
+# loop through list of robots for testing
+FOREACH(robot ${robotlist})
+	MESSAGE("testing for robot: ${robot}")
+	rosbuild_add_roslaunch_check(launch robot:=${robot})
+	rosbuild_add_rostest(helper/urdf_${robot}.test)
+ENDFOREACH(robot)
