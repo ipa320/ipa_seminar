@@ -38,6 +38,10 @@ Now start the prepared rviz configuration to show the current state of the robot
 
 	roslaunch seminar_navigation rviz_joystick.launch
 
+The rviz window should look like this:
+
+![RVIZ during free moving of robot](/doc/rviz_joystick.png)
+
 Note following rviz settings:
 
 * base_link origin
@@ -64,6 +68,11 @@ Start rviz config
 
 	roslaunch seminar_navigation rviz_gmapping.launch
 
+The rviz window should look like this:
+
+![RVIZ during map creation](/doc/rviz_gmapping.png)
+
+
 Note following rviz settings:
 
 * map origin
@@ -83,10 +92,18 @@ Analyse created files map.yaml and map.pgm.
 
 <a href="#top">top</a> 
 ### 4. Localizing in the environment
+Start the robot on a terminal:
 
-Start bringup
-Start amcl with just created map
+	roslaunch seminar_navigation robot_bringup.launch
+	
+In a second terminal you can start the amcl with the just created map:
+
+	roslaunch seminar_navigation amcl.launch
+	
 Start rviz config
+
+	roslaunch seminar_navigation rviz_amcl.launch
+
 Note following rviz settings:
 
 * map origin
@@ -95,9 +112,13 @@ Note following rviz settings:
 * Activated pose estimate plugin
 * Activated robot_model plugin
 
-Use set_position estimate tool in rviz to set initial localization
-Move around using joystick and see the localization converge
-Analyze tf frames by activating tf plugin. Find and watch frame /map, /odom_combined and /base_link
+Use set_position estimate tool in rviz to set initial localization. See the picture below:
+
+![RVIZ during localization with amcl](/doc/rviz_amcl.png)
+
+Move around using joystick and see the localization converge.
+
+Analyze tf frames by activating tf plugin. Find and watch frame /map, /odom\_combined and /base\_link.
 
 <a href="#top">top</a> 
 ### 5. Path planning using Elastic Band
