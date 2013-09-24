@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(ur_moveit_config)
+project(ipa_seminar_application_moveit_config_ur)
 
 find_package(catkin REQUIRED)
 

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+
+	<arg name="robot"/>
+
+	<!-- upload default configuration parameters -->
+	<rosparam command="load" ns="/script_server/arm" file="$(find ipa_seminar_application)/config/arm_joint_configurations_$(arg robot).yaml"/>
+
+	<!-- upload robot_description -->
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find ipa_seminar_application)/helper/$(arg robot).urdf.xacro'" />
+
+	<!-- start robot_state_publisher -->
+	<node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher"/>
+
+	<!-- start specific arm driver -->
+	<include file="$(find ipa_seminar_application)/launch/$(arg robot).launch" />
+
+	<!-- move it -->
+	<include file="$(find ipa_seminar_application_moveit_$(arg robot))/move_group.launch" />
+
+</launch>
