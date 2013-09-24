@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+
+	<!--- Start Navigation with map from scenario -->
+	<include file="$(find cob_navigation_global)/launch/2dnav_ros_eband.launch" >
+		<arg name="map" default="$(find seminar_navi_scenario)/map/map.yaml" />
+	</include>
+	
+</launch>
