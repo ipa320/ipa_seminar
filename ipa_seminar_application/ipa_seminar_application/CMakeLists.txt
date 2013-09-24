@@ -31,7 +31,7 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
 # rostest for robots
 SET(robotlist
-ur5
+ur
 lbr
 #kr16
 )

@@ -17,5 +17,8 @@
   <depend package="joint_trajectory_action"/>
   <depend package="gazebo"/>
   <depend package="gazebo_worlds"/>
+  <depend package="tf2_ros"/>
+  <depend package="ur_driver"/>
+  <depend package="robot_state_publisher"/>
 
 </package>
