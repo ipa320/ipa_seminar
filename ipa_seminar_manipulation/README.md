@@ -4,9 +4,9 @@
 
 ### Contents
 
-1. <a href="#1--prerequisites">Prerequisites</a>   
-  1.1. <a href="#11-simulation">Simulation</a>  
-  1.2. <a href="#12-robot-hardware">Robot Hardware</a>  
+1. <a href="#1--introduction">Introduction</a>   
+  1.1. <a href="#11-tools">Tools</a>  
+  1.2. <a href="#12-helpful-commands">Helpful Commands</a>  
 2. <a href="#2-moveit---setup-assistant">MoveIt! - Setup Assistant</a>  
   2.1. <a href="#21-start">Start</a>  
   2.2. <a href="#22-self-collision">Self-Collision</a>  
@@ -34,34 +34,29 @@
 
 
 
-### 1.  Prerequisites
+### 1.  Introduction
 
-For convenience, all required ROS packages are already installed and the environment (i.e. environment variables) is set up correctly.
-Changes can be made within the [setup file](./setup_env_manipulation.bash "Setup Shell").
+This section quickly introduces basic tools used within this tutorial.  
+It also lists several helpful (terminal) commands that are used frequently throughout this tutorial.  
 
-#### 1.1. Simulation
+#### 1.1. Tools  
 
-__ToDo: call sim alias?__  
+We use _Terminator_ as a command prompt. You can find a shortcut on the left bar of your screen. Commands given in the following can be copied into the _Terminator_ window. During the tutorial sometimes several terminal windows are needed. The terminal can be split into several sub-windows by using the _Split Horizontically/Vertically_ feature after a right-click on the _Terminator_ window.  
 
-In order to use MoveIt! with a simulated robot, simply run:
-```
-roslaunch lbr_bringup sim.launch
-```
-This will start up the [Gazebo](http://gazebosim.org "Gazebo") simulation with the [KUKA LBR](http://www.kuka-labs.com/en/medical_robotics/lightweight_robotics/start.htm "KUKA LBR") model.  
-Use the mouse to rotate/translate the view or zoom.
+We wil use _gedit_ as a text edior. You can find a shortcut on the left bar of your screen as well. The editor can also be opened by running `gedit` in a terminal window.  
 
-![Gazebo Simulation](./doc/gazebo_simulation.png "Gazebo Simulation")
+#### 1.2. Helpful Commands
 
-__ToDo: make sure configs are safe -- check arm_1_joint!__  
+For navigating to specific ROS packages or files, the easiest way to do so is to use the command `roscd <package_name>` where `<package_name>` is the name of the ROS package you want to navigate to, e.g. `lbr_bringup`.  `roscd` brings you to the desired package from any previous location. After the `<package_name>`, pressing `TAB` can be used for auto-completion in order to navigate further within the ROS package.  
 
-The simplest way of moving the robot is by using the cob_commmand_gui. Therefore run in a new terminal:
-```
-roslaunch lbr_bringup dashboard.launch
-```
-Clicking one of the buttons will move the robot to the according (pre-defined) configuration.  
-__NOTE:__ This is __unplanned__ motion!
+For editing a file simply use `roscd` to navigate to the folder of the file and then type `gedit <file_name>` where `<file_name>` is the name of the file you want to edit.  
 
-![Command GUI](./doc/command_gui_lbr.png "Command GUI")
+For more helpful ROS commands have a look at the [ROS Cheat Sheet](http://download.ros.org/downloads/ROScheatsheet.pdf "ROS Cheat Sheet").  
+
+For convenience, all required ROS packages are already installed and the environment (i.e. environment variables) is set up correctly. Whenever an environment variable (e.g. ROS_MASTER_URI) needs to be changed this is stated below.  
+Also, an example solution for this tutorial is already available. Whenever you want to have a look at the solution files or you want to run the solution, simply type `solution` in the terminal before opening the respective file or running the command.  
+
+
 
 #### 1.2 Robot Hardware
 
