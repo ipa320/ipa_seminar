@@ -4,7 +4,7 @@ import rospy
 import time
 from sensor_msgs.msg import JointState
 
-def fake_ur_connector():
+def fake_publisher():
         rospy.init_node('fake_joint_state_publisher_connector')
 
         # emergency_stop topic
@@ -22,7 +22,7 @@ def fake_ur_connector():
 
 if __name__ == '__main__':
         try:
-                fake_ur_connector()
+                fake_publisher()
         except rospy.ROSInterruptException:
                 print "Interupted"
                 pass

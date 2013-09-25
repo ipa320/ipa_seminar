@@ -19,5 +19,6 @@
   <depend package="tf2_ros"/>
   <depend package="ur_driver"/>
   <depend package="robot_state_publisher"/>
+  <depend package="brics_showcase_industry_interfaces"/>
 
 </package>
