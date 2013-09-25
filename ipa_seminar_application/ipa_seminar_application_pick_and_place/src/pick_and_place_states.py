@@ -56,14 +56,13 @@ class move_lin(smach.State):
 		### Create a handle for the Planning Scene Interface
 		self.psi = PlanningSceneInterface()
 		### Create a handle for the Move Group Commander
-		self.mgc = MoveGroupCommander("arm")
+		self.mgc = MoveGroupCommander("arm_gripper")
 
 	def execute(self, userdata):
 		print "move lin to " + self.position
 
 		# plan trajectory
 		goal_pose = get_pose_from_parameter_server(self.position)
-		self.mgc.set_pose_reference_frame("gripper_palm_link")
 		(traj,frac) = self.mgc.compute_cartesian_path([goal_pose.pose], 0.01, 4, False)
 		if len(traj.joint_trajectory.points) == 0: # TODO is there a better way to know if planning failed or not?
 			return 'failed'
