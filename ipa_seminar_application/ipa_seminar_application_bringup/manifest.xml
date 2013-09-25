@@ -11,8 +11,7 @@
 
   <depend package="rospy"/>
   <depend package="rostopic"/>
-  <depend package="smach"/>
-  <depend package="smach_ros"/>
+  <depend package="rviz"/>
   <depend package="cob_controller_configuration_gazebo"/>
   <depend package="joint_trajectory_action"/>
   <depend package="gazebo"/>

@@ -33,7 +33,7 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 SET(robotlist
 ur
 lbr
-#kr16
+lwa4d
 )
 
 # loop through list of robots for testing

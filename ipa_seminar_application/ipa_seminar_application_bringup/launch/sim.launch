@@ -4,7 +4,7 @@
 	<arg name="robot"/>
 
 	<!-- upload robot_description -->
-	<param name="robot_description" command="$(find xacro)/xacro.py '$(find ipa_seminar_application_bringup)/helper/$(arg robot).urdf.xacro'" />
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find ipa_seminar_application_bringup)/urdf/$(arg robot).urdf.xacro'" />
 
 	<!-- launch an empty world -->
 	<include file="$(find gazebo_worlds)/launch/empty_world.launch" />
@@ -15,11 +15,27 @@
 	<!-- Controller Manager -->
 	<include file="$(find cob_controller_configuration_gazebo)/ros/launch/controller_manager.launch" />
 
-	<!-- arm controllers -->
-	<rosparam file="$(find ipa_seminar_application_bringup)/helper/arm_controller_$(arg robot).yaml" command="load"/>
+	<!-- start arm -->
+	<rosparam file="$(find ipa_seminar_application_bringup)/controller/arm_controller_$(arg robot).yaml" command="load"/>
 	<node name="arm_controller_spawner" pkg="cob_controller_configuration_gazebo" type="spawner" args="arm_controller" />
 	<group ns="arm_controller">
 		<node name="arm_joint_trajectory_action_node" pkg="joint_trajectory_action" type="joint_trajectory_action" />
 	</group>
+	
+	<!-- start gripper -->
+	<rosparam file="$(find ipa_seminar_application_bringup)/controller/pg70_controller.yaml" command="load" />
+	<node name="gripper_controller_spawner" pkg="cob_controller_configuration_gazebo" type="spawner" args="gripper_controller" />
+	<group ns="gripper_controller">
+		<node name="gripper_joint_trajectory_action_node" pkg="joint_trajectory_action" type="joint_trajectory_action" />
+	</group>
+
+	<!-- move it -->
+	<include file="$(find ipa_seminar_application_bringup)/../ipa_seminar_application_moveit_config_$(arg robot)/launch/move_group.launch" />
+
+	<!-- load default configuration -->
+	<rosparam command="load" ns="/script_server/arm" file="$(find ipa_seminar_application_bringup)/config/arm_joint_configurations_$(arg robot).yaml"/>
+
+	<!-- prepare robot -->
+	<node pkg="ipa_seminar_application_bringup" name="prepare_robot" type="prepare_robot.py" />
 
 </launch>
