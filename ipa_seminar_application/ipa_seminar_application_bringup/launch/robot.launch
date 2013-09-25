@@ -4,7 +4,7 @@
 	<arg name="robot"/>
 
 	<!-- upload robot_description -->
-	<param name="robot_description" command="$(find xacro)/xacro.py '$(find ipa_seminar_application_bringup)/helper/$(arg robot).urdf.xacro'" />
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find ipa_seminar_application_bringup)/urdf/$(arg robot).urdf.xacro'" />
 
 	<!-- start robot_state_publisher -->
 	<node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher"/>
