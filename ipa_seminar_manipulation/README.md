@@ -54,27 +54,8 @@ For editing a file simply use `roscd` to navigate to the folder of the file and 
 For more helpful ROS commands have a look at the [ROS Cheat Sheet](http://download.ros.org/downloads/ROScheatsheet.pdf "ROS Cheat Sheet").  
 
 For convenience, all required ROS packages are already installed and the environment (i.e. environment variables) is set up correctly. Whenever an environment variable (e.g. ROS_MASTER_URI) needs to be changed this is stated below.  
+
 Also, an example solution for this tutorial is already available. Whenever you want to have a look at the solution files or you want to run the solution, simply type `solution` in the terminal before opening the respective file or running the command.  
-
-
-
-#### 1.2 Robot Hardware
-
-![CAUTION](./doc/yellow-warning.gif "CAUTIOIN") CAUTION ZONE ![CAUTION](./doc/yellow-warning.gif "CAUTIOIN")  
-* Only use the robot under supervision of your tutor
-* Make sure you have a clear view to the robot and the emergency button is in your hands before executing a command 
-* In case of unexpected behavior or in case the robot is about to collide hit the emergency button immediately
-* After the emergency button has been pressed, ask your tutor to recover the robot
-
-__ToDo: call robot alias?__  
-
-
-In order to work with the real robot hardware lateron, the robot needs to be initialized first. Ask your tutor to do so.  
-Then, simply run:
-```
-roslaunch lbr_bringup robot.launch
-```
-This will start up all necessary drivers.  
 
 <a href="#top">top</a> 
 
@@ -87,11 +68,10 @@ This will start up all necessary drivers.
 MoveIt! requires a little  configuration before offering its capabilities to your robot. The configuration can easily be done with the MoveIt! Setup Assistant - a graphical tool that comes shipped with MoveIt! automatically.
 
 The following steps will lead you to a valid MoveIt!-configuration for the KUKA LBR.  
-A PR2-specific tutorial can be found [here](http://moveit.ros.org/wiki/PR2/Setup_Assistant/Quick_Start "PR2-SetupAssistant")  
 
 #### 2.1. Start  
 
-To start the MoveIt-SetupAssistant GUI, run (stop any other ROS application with `Ctrl+C`): 
+To start the MoveIt-SetupAssistant GUI, run: 
 ```
 roslaunch moveit_setup_assistant setup_assistant.launch
 ```
@@ -101,7 +81,7 @@ You should see the screen below.
 
 As we are creating the configuration for the first time, select "Create New MoveIt Configuration Package".  
 Now we need to load the robot model (URDF) on which basis the configuration is generated.  
-Browse to _URDF-LOCATION_ and load the lbr_solo.urdf.xacro file.  
+Browse to `~/git/ipa_seminar/ipa_seminar_manipulation/lbr_bringup/urdf` and load the `lbr_solo.urdf.xacro` file.  
 You should now see our robot within the SetupAssistant.  
 
 ![SetupAssistant2](./doc/SetupAssistant2.png "SetupAssistant2")
@@ -152,6 +132,9 @@ In the view you can see what the current configuration would look like. In case 
 
 ![SetupAssistant8](./doc/SetupAssistant8.png "SetupAssistant8")
 
+Create at least a robot pose `left` and a robot pose `right` as those are going to be used lateron.  
+
+
 ![SetupAssistant9](./doc/SetupAssistant9.png "SetupAssistant9")
 #### 2.6. End Effectors  
 
@@ -168,7 +151,9 @@ This tap ("Passive Joints") is not relevant for our scenario. So we can just ski
 
 In the final step, the MoveIt! SetupAssistant generates all files required for MotionPlanning for us automatically.  
 You can see a list of the files to be generated below. It comprises configuration files as well as startup files. By clicking on a file you can get some explanation about it in the text box beside it.  
-The only thing we need to do is to specify a location where the files should be stored. Then press _Generate Package_.  
+
+The only thing we need to do is to specify a location where the files should be stored. Browse to the folder `~/git/ipa_seminar/ipa_seminar_manipulation` and create a new folder `lbr_moveit_config` there. This is the destination for the configuration files. Then press _Generate Package_.  
+
 After the files have been generated, we can click _Exit Setup Assistant_.
 
 ![SetupAssistant12](./doc/SetupAssistant12.png "SetupAssistant12")
@@ -177,7 +162,8 @@ After the files have been generated, we can click _Exit Setup Assistant_.
 #### 2.9 Summary  
 
 We now created a MoveIt! configuration package that provides us with all configuration files and basic startup files.  
-The ROS package can be found at _MOVEIT_CONFIG_LOCATION_.  
+Navigate to the package with `roscd lbr_moveit_config` and have a look at the generated files.  
+
 The package includes the following files (amongst others):  
 
 Configuration files:  
@@ -325,6 +311,30 @@ More about the concept of executing trajectories with MoveIt! can be found [here
 
 Finally, we have all together to use MoveIt! on our KUKA LBR!  
 We will use the MoveIt! RVIZ-Plugin again to experience the new capabilities we just configured.  
+
+
+
+![CAUTION](./doc/yellow-warning.gif "CAUTIOIN") CAUTION ZONE ![CAUTION](./doc/yellow-warning.gif "CAUTIOIN")  
+* Only use the robot under supervision of your tutor
+* Make sure you have a clear view to the robot and the emergency button is in your hands before executing a command 
+* In case of unexpected behavior or in case the robot is about to collide hit the emergency button immediately
+* After the emergency button has been pressed, ask your tutor to recover the robot
+
+__ToDo: call robot alias?__  
+
+
+In order to work with the real robot hardware lateron, the robot needs to be initialized first. Ask your tutor to do so.  
+Then, simply run:
+```
+roslaunch lbr_bringup robot.launch
+```
+This will start up all necessary drivers.  
+
+<a href="#top">top</a> 
+
+
+
+
 
 Bring up the robot as descriped in section 1.2.
 ```
