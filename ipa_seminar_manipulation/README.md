@@ -192,7 +192,7 @@ Configuration files:
 * __config/lbr_solo.srdf__: This SRDF (Semantic Robot Description Format) file holds the main configuration to be used with MoveIt!
 
 Startup files:  
-* __launch/demo.launch__: This is the most basic startup file. It opens RVIZ where the planning capability can be tested without needing to run either a simulation nor a robot hardware.
+* __launch/demo.launch__: This is the most basic startup file. It opens RVIZ where the planning capability can be tested without needing to run either a simulation or a robot hardware.
 * __launch/move_group.launch__: This file will be used when MoveIt! is to be used in connection with a simulation or a robot hardware
 
 Both of these launch files combine other launch files contained in the launch folder. Those other files start up a specific module for MoveIt! respectively.  
@@ -200,7 +200,7 @@ Both of these launch files combine other launch files contained in the launch fo
 Whenever something needs to be changed within the MoveIt! configuration package, the Setup Assistant can simply be run again with the already existing package being loaded instead of creating a new package. Running the Setup Assistant again will only update files where changes apply.  
 
 The configuration files can also be modified manually. In fact, we will do so during the remainder of this tutorial.  
-In such case the Setup Assistant will notify you that configuratin files have been edited outside the Setup Assistant.  
+In such case the Setup Assistant will notify you that configuration files have been edited outside the Setup Assistant.  
 
 <a href="#top">top</a> 
 
@@ -247,14 +247,14 @@ Get used with the RVIZ environment and the plugins by:
 ### 4. MoveIt! - Enhanced Configuration  
 
 In this step we will enhance the basic MoveIt! configuration generated in step 3.  
-We will add support for visual sensors to be able to consider the dynamic environment duriing collision checking.  
+We will add support for visual sensors to be able to consider the dynamic environment during collision checking.  
 Also we will add controllers that allow us to use MoveIt! with the real robot hardware. 
 
 #### 4.1 Perception  
 
 Out of the box, MoveIt! considers the robot model's own geometric model (URDF) during collision checking to prevent self-collision.  
 Also, (known) static obstacles given as geometric primitives (i.e. box, cylinder, sphere) or meshes (i.e. from CAD data) can be added to the _Planning Scene_ at runtime. This will be shown in the last chapter of this tutorial ("Scripting API").  
-As in most real worl scenarios, the environment is not completely known, it changes over time or simply cannot be modeled accurately. Then visual sensors can be used to detect the current scene.  
+As in most real world scenarios, the environment is not completely known, it changes over time or simply cannot be modeled accurately. Then visual sensors can be used to detect the current scene.  
 
 MoveIt! uses a concept called _Planning Scene_ to provide information about an environment situation. The Planning Scene combines the following information:  
 * __Robot State:__ The state of the robot, i.e. its joint configuration
@@ -292,9 +292,9 @@ This tells MoveIt! to load an additional plugin (i.e. _sensor_plugin_) during st
 
 #### 4.2 Control  
 
-In order to be able to use MoveIt! with a real robot hardware we need to tell MoveIt!:
-1. where from it can receive information about the robot's current configuration (i.e. the joint states)
-2. where the planned trajectory should be executed
+In order to be able to use MoveIt! with a real robot hardware we need to tell MoveIt!:  
+1. where from it can receive information about the robot's current configuration (i.e. the joint states)  
+2. where the planned trajectory should be executed  
 
 Both of this can be achieved by configuring an according controller for our KUKA LBR.
 
