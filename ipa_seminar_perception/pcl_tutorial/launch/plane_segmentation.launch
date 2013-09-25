@@ -4,6 +4,8 @@
     <remap from="point_cloud_in" to="/passthrough_filter/point_cloud_out"/>
     <remap from="point_cloud_out" to="/plane_segmentation/plane"/>
     <remap from="point_cloud_out_2" to="/plane_segmentation/above_plane"/>
+    <remap from="marker" to="/plane_segmentation/marker_params"/>
+    <remap from="marker_2" to="/plane_segmentation/marker_plane"/>
     <param name="dist_thresh" type="double" value="0.01" />
     <param name="max_iterations" type="double" value="50" />
   </node>

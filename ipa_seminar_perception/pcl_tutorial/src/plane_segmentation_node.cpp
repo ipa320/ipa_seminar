@@ -17,6 +17,7 @@
 #include <pcl/sample_consensus/model_types.h>
 #include <pcl/segmentation/sac_segmentation.h>
 #include <pcl/filters/extract_indices.h>
+#include <pcl/common/eigen.h>
 
 #include <stop_watch.h>
 
@@ -32,6 +33,7 @@ public:
     pub_ = nh_.advertise<PointCloud>("point_cloud_out",1);
     pub_2_ = nh_.advertise<PointCloud>("point_cloud_out_2",1);
     pub_marker_ = nh_.advertise<visualization_msgs::Marker>("marker",1);
+    pub_marker_2_ = nh_.advertise<visualization_msgs::Marker>("marker_2",1);
     sub_ = nh_.subscribe ("point_cloud_in", 1,  &PlaneSegmentationNode::cloudCallback, this);
     config_server_.setCallback(boost::bind(&PlaneSegmentationNode::dynReconfCallback, this, _1, _2));
 
@@ -103,6 +105,28 @@ public:
     marker_centroid.scale.y = 0.1;
     marker_centroid.scale.z = 0.1;
     pub_marker_.publish(marker_centroid);
+
+    visualization_msgs::Marker marker_plane;
+    marker_plane.type = visualization_msgs::Marker::CUBE;
+    marker_plane.header = header;
+    marker_plane.id = 2;
+    marker_plane.action = visualization_msgs::Marker::ADD;
+    marker_plane.pose.position.x = centroid(0);
+    marker_plane.pose.position.y = centroid(1);
+    marker_plane.pose.position.z = centroid(2);
+    Eigen::Affine3f rotation;
+    pcl::getTransformationFromTwoUnitVectors(normal.unitOrthogonal(), normal, rotation);
+    Eigen::Quaternionf qu(rotation.inverse().rotation());
+    marker_plane.pose.orientation.x = qu.x();
+    marker_plane.pose.orientation.y = qu.y();
+    marker_plane.pose.orientation.z = qu.z();
+    marker_plane.pose.orientation.w = qu.w();
+    marker_plane.color.g = 1.0;
+    marker_plane.color.a = 1.0;
+    marker_plane.scale.x = 1;
+    marker_plane.scale.y = 1;
+    marker_plane.scale.z = 0.02;
+    pub_marker_2_.publish(marker_plane);
   }
 
   void
@@ -139,6 +163,7 @@ private:
   ros::Publisher pub_;
   ros::Publisher pub_2_;
   ros::Publisher pub_marker_;
+  ros::Publisher pub_marker_2_;
   dynamic_reconfigure::Server<pcl_tutorial::plane_segmentation_nodeConfig> config_server_;
 
   pcl::SACSegmentation<Point> seg_;
