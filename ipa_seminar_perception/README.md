@@ -128,7 +128,8 @@ In RVIZ, click on "Add" and select "Marker":
 
 ![rviz5](./doc/rviz5.png "Add marker")
 
-Change the marker topic to "/marker". You should see a sphere and an arrow marker for the plane now:
+Change the marker topic to "/plane_segmentation/marker_plane". You should see a rectangle for the plane now.
+You can also show the plane parameters (normal, centroid) by add a second marker display and subscribing to "/plane_segmentation/marker_params":
 
 ![rviz6](./doc/rviz6.png "Plane marker")
 
