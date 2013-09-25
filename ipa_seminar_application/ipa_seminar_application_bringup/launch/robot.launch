@@ -8,6 +8,9 @@
 
 	<!-- start robot_state_publisher -->
 	<node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher"/>
+	
+	<!-- fake joint state publisher for gripper-->
+	<node pkg="ipa_seminar_application_bringup" type="fake_gripper_joint_state_publisher.py" name="gripper_fake_joint_state_publisher"/>
 
 	<!-- start specific arm driver -->
 	<include file="$(find ipa_seminar_application_bringup)/launch/$(arg robot).launch" />
