@@ -1,6 +1,9 @@
 # 3D Perception with ROS and PCL
 ## Tutorial
 
+The goal of this tutorial is to segment an obstacle on the ground floor using 3D perception algorithms. The necessary steps can be seen in the figure below:
+[nodes1](./doc/nodes1.png "Nodes")
+
 ### 1.  3D camera driver
 
 In this tutorial an Asus XTion RGBD camera is used. The ROS driver is located in the package [openni_camera](http://www.ros.org/wiki/openni_camera) and the launch files in [openni_launch](http://www.ros.org/wiki/openni_launch).
@@ -29,7 +32,7 @@ Click on "Add" and select "PointCloud2":
 
 ![rviz2](./doc/rviz2.png "Add PointCloud")
 
-You will see the new display but no point cloud and an error message:
+In "Displays->PointCloud2", select the topic "/camera/depth_registered/points". You will probably see no point cloud but an error message:
 
 ![rviz3](./doc/rviz3.png "Error PointCloud")
 
@@ -75,7 +78,8 @@ bool is_dense        # True if there are no invalid points
 
 ### 2.  Passthrough filter
 
-Now we add a passthrough filter in order to crop the background of the point cloud.
+Now we add a passthrough filter in order to crop the wall in the background of the point cloud. This step will enhance the following processing step.
+Additional information is available [here](http://pointclouds.org/documentation/tutorials/passthrough.php#passthrough).
 
 #### 2.1.  Run the filter
 
@@ -91,10 +95,8 @@ You can observe, that the line <remap from="point_cloud_in" to="/camera/depth_re
 ```
 roslaunch pcl_tutorial passthrough_filter.launch
 ```
-to run the filter. In RVIZ, you can change the topic name in the PointCloud2 display to see the cropped point cloud. To lookup the topic, type
-```
-rostopic list | grep passthrough
-```
+to run the filter. In RVIZ, you can add a second PointCloud2 display and set the topic name to "/passthrough_filter/point_cloud_out".
+Now you can see how the filter works.
 
 #### 2.2.  Configure parameters
 
@@ -102,7 +104,8 @@ Now we configure the parameters of the passthrough filter using [dynamic reconfi
 ```
 rosrun rqt_reconfigure rqt_reconfigure
 ```
-to open the GUI. Select "passthrough_filter". Now you can change the upper and lower limit of the filter. The parameters specify limits of the depth values.
+to open the GUI. Select "passthrough_filter". Now you can change the upper and lower limit of the filter. The parameters specify limits of the depth values. 
+Adjust the parameters so that the wall in the background does not appear anymore.
 
 ![reconf1](./doc/reconf1.png "Configuration of passthrough")
 
@@ -110,12 +113,14 @@ to open the GUI. Select "passthrough_filter". Now you can change the upper and l
 
 #### 3.1.  Run the segmentation
 
-The next step is to start the plane segmentation, using
+The next step is to start the plane segmentation. The algorithm uses [RANSAC](http://pointclouds.org/documentation/tutorials/random_sample_consensus.php#random-sample-consensus) to fit a plane model to the point cloud. It always
+finds the dominant plane regardless how the scene looks. Type
 ```
 roslaunch pcl_tutorial plane_segmentation.launch
 ```
-The node will find the dominant plane in the point cloud and output markers for the centroid and the normal of the plane.
-It will also output the inliers of the plane (/plane_segmentation/plane) and the remainder of the scene (/plane_segmentation/above_plane) as point cloud  
+in a new terminal. The node will output markers for the centroid, the normal and the surface of the plane.
+It will also output the inliers of the plane (/plane_segmentation/plane) and the remainder of the scene (/plane_segmentation/above_plane) as point cloud.
+Use RVIZ to observe an compare the two output point clouds.
 
 #### 3.2. Visualize the marker
 
@@ -127,9 +132,12 @@ Change the marker topic to "/marker". You should see a sphere and an arrow marke
 
 ![rviz6](./doc/rviz6.png "Plane marker")
 
+Now you can move the camera and take a look on the results in RVIZ. Keep in mind that the algorithm always segments the dominant plane
+
 #### 3.3.  Marker message
 
-The Marker message is defined in the package [visualization_msgs](http://wiki.ros.org/visualization_msgs).
+The Marker message is defined in the package [visualization_msgs](http://wiki.ros.org/visualization_msgs). More information
+about marker types can be found [here](http://wiki.ros.org/rviz/DisplayTypes/Marker).
 
 ```
 # See http://www.ros.org/wiki/rviz/DisplayTypes/Marker and http://www.ros.org/wiki/rviz/Tutorials/Markers%3A%20Basic%20Shapes for more information on using this message with rviz
@@ -180,16 +188,25 @@ bool mesh_use_embedded_materials
 
 #### 3.4.  Configure parameters
 
-There are two parameters you can modify using dynamic reconfigure. "dist_thresh" specifies the inlier threshold. Adjust it until the plane is segmented correctly. The parameter "max_iterations" improves
-the segmentation robustness but lowers computation speed if increased.
+There are two parameters you can modify using dynamic reconfigure. "dist_thresh" specifies, at which ditance from the plane 
+model a point is still considered an inlier. Adjust it until the plane is segmented correctly (i.e. only points actually belonging
+to the ground floor are part of the plane). The parameter "max_iterations" improves the segmentation robustness but lowers computation speed if increased.
 
 ### 4.  Voxel filter (optional)
 
 In the terminal for the plane segmentation, you can see the processing time which is quite long. In order to speed up the computation we are going to add a voxel filter as pre-processing step.
+The resulting processing chain can be seen in the figure below:
+[nodes2](./doc/nodes2.png "Nodes")
+
+Additional information on the voxel grid can be found [here](http://pointclouds.org/documentation/tutorials/voxel_grid.php#voxelgrid).
 
 #### 4.1. Configure the launch files
 
-The voxel filter should be added as a first processing step. Thus, you have to modify the launch file for the passthrough filter so that it is connected to the output of the voxel filter. Use ROS tools like rostopic or rxgraph to find out how to change the launch file.
+The voxel filter should be added as a first processing step. Thus, you have to modify the launch file for the passthrough filter so that it is connected to the output of the voxel filter. Type
+```
+roscd pcl_tutorial
+```
+Now open the file "launch/passthrough_filter.launch" and change the remap of "point_cloud_in" to "/voxel_filter/point_cloud_out".
 
 #### 4.2. Run the voxel filter
 
@@ -197,8 +214,10 @@ Now you can run the filter node by
 ```
 roslaunch pcl_tutorial voxel_filter.launch
 ```
-You can change the leaf size parameters of the node using dynamic reconfigure.
+You also have to restart the passthrough_filter because the launch file was modified.
+You can change the leaf size parameter of the node using dynamic reconfigure. The higher the leaf size is, the lower is the resolution of the filter output. 
 
 #### 4.3. Check the results
 
-In console, observe the computation time of the plane segmentation if you change the parameters of the voxel filter. Also, visualize the downsampled point cloud in RVIZ.
+In console, observe the computation time of the plane segmentation if you change the parameters of the voxel filter.
+Also, visualize the downsampled point cloud (/voxel_filter/point_cloud_out) in RVIZ.
