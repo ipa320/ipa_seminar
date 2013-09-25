@@ -458,16 +458,27 @@ The functions mentioned above can now be used as `mgc.<function_name>()` with th
 
 #### 6.3. Script-Execution
 
-In order to run your script, either a simulation or the real robot hardware needs to be running (see Section 1).  Also MoveIt! needs to be started (in new terminal):  
+In order to run your script, the robot hardware needs to be running.  Also MoveIt! needs to be started (see <a href="#43-enhanced-usage">Enhanced Usage</a>):  
 ```
+export ROS_MASTER_URI=http://pyramid-2:11311
 roslaunch lbr_moveit_config move_group.launch
 ```
-and in another new terminal:
+and in a new terminal:
 ```
-roslaunch lbr_moveit_config moveit_rviz.launch
+export ROS_MASTER_URI=http://pyramid-2:11311
+roslaunch lbr_moveit_config moveit_rviz.launch config:=true
 ```
 
-The following example shows a script that combines everything we learned in this section.
+Run your script (in a new terminal):
+```
+export ROS_MASTER_URI=http://pyramid-2:11311
+roscd <your_file_location>
+python <your_file_name>
+```
+
+
+
+The following example shows a script that combines everything we learned in this section. It can be found [here](https://github.com/ipa320/ipa_seminar/blob/master/ipa_seminar_manipulation/lbr_bringup/scripts/scripting_example.py "Script Example").  
 ```python
 #!/usr/bin/env python
 import roslib; roslib.load_manifest('lbr_bringup')
