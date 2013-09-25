@@ -2,7 +2,7 @@
 ## Tutorial
 
 The goal of this tutorial is to segment an obstacle on the ground floor using 3D perception algorithms. The necessary steps can be seen in the figure below:
-[nodes1](./doc/nodes1.png "Nodes")
+![nodes1](./doc/nodes1.png "Nodes")
 
 ### 1.  3D camera driver
 
@@ -196,7 +196,7 @@ to the ground floor are part of the plane). The parameter "max_iterations" impro
 
 In the terminal for the plane segmentation, you can see the processing time which is quite long. In order to speed up the computation we are going to add a voxel filter as pre-processing step.
 The resulting processing chain can be seen in the figure below:
-[nodes2](./doc/nodes2.png "Nodes")
+![nodes2](./doc/nodes2.png "Nodes")
 
 Additional information on the voxel grid can be found [here](http://pointclouds.org/documentation/tutorials/voxel_grid.php#voxelgrid).
 
