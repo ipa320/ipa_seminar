@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-  <node pkg="pcl_tutorial" type="passthrough_filter_node" name="passthrough_filter" output="screen">
-    <remap from="point_cloud_in" to="/voxel_filter/point_cloud_out"/>
-    <remap from="point_cloud_out" to="/passthrough_filter/point_cloud_out"/>
-    <param name="lower_limit" type="double" value="0.0" />
-    <param name="upper_limit" type="double" value="2.0" />
-  </node>
-</launch>
