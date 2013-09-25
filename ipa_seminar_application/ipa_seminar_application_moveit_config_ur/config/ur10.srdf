@@ -15,12 +15,11 @@
     <group name="gripper">
         <link name="gripper_palm_link" />
     </group>
-    <group name="arm_gripper">
-        <group name="arm" />
-        <group name="gripper" />
-    </group>
     <group name="finger">
         <link name="gripper_finger_1_link" />
+    </group>
+    <group name="arm_gripper">
+        <chain base_link="arm_base_link" tip_link="gripper_palm_link" />
     </group>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="gripper_palm" parent_link="arm_wrist_3_link" group="gripper" parent_group="arm" />
