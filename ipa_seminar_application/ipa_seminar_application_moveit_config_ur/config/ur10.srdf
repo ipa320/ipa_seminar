@@ -15,6 +15,10 @@
     <group name="gripper">
         <link name="gripper_palm_link" />
     </group>
+    <group name="arm_gripper">
+        <group name="arm" />
+        <group name="gripper" />
+    </group>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="gripper_palm" parent_link="arm_wrist_3_link" group="gripper" parent_group="arm" />
     <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->

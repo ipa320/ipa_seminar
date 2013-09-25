@@ -31,7 +31,7 @@ class move_planned(smach.State):
 		### Create a handle for the Planning Scene Interface
 		self.psi = PlanningSceneInterface()
 		### Create a handle for the Move Group Commander
-		self.mgc = MoveGroupCommander("arm")
+		self.mgc = MoveGroupCommander("arm_gripper")
 
 	def execute(self, userdata):
 		print "move ptp to " + self.position
@@ -63,37 +63,13 @@ class move_lin(smach.State):
 
 		# plan trajectory
 		goal_pose = get_pose_from_parameter_server(self.position)
+		self.mgc.set_pose_reference_frame("gripper_palm_link")
 		(traj,frac) = self.mgc.compute_cartesian_path([goal_pose.pose], 0.01, 4, False)
 		if len(traj.joint_trajectory.points) == 0: # TODO is there a better way to know if planning failed or not?
 			return 'failed'
 		if frac != 1.0: # this means moveit couldn't plan to the end
 			return 'failed'
 
-		# execute trajectory
-		self.mgc.execute(traj)
-
-		print "moved lin to " + str(self.position)
-		return 'succeeded'
-
-class move_lin(smach.State):
-	def __init__(self, position):
-		smach.State.__init__(self, 
-			outcomes=['succeeded', 'failed'])
-		self.position = position
-		### Create a handle for the Planning Scene Interface
-		self.psi = PlanningSceneInterface()
-		### Create a handle for the Move Group Commander
-		self.mgc = MoveGroupCommander("arm")
-
-	def execute(self, userdata):
-		print "move lin to " + self.position
-
-		# plan trajectory
-		goal_pose = get_pose_from_parameter_server(self.position)
-		(traj,frac) = self.mgc.compute_cartesian_path([goal_pose.pose], 0.01, 4, False)
-		if len(traj.joint_trajectory.points) == 0: # TODO is there a better way to know if planning failed or not?
-			return 'failed'
-		
 		# execute trajectory
 		self.mgc.execute(traj)
 
@@ -114,11 +90,16 @@ class open_gripper(smach.State):
 			# check if gripper service is available
 			rospy.wait_for_service(self.service_name, 5)
 
+		except rospy.ServiceException, e:
+			print "Service call failed: %s"%e
+			return 'failed'
+
+		try:		
 			# move gripper
 			self.client(1)
 		except rospy.ServiceException, e:
 			print "Service call failed: %s"%e
-			return 'failed'
+		rospy.sleep(8)
 
 		print "gripper opened"
 		return 'succeeded'
@@ -137,11 +118,16 @@ class close_gripper(smach.State):
 			# check if gripper service is available
 			rospy.wait_for_service(self.service_name, 5)
 
+		except rospy.ServiceException, e:
+			print "Service call failed: %s"%e
+			return 'failed'
+
+		try:		
 			# move gripper
 			self.client(0)
 		except rospy.ServiceException, e:
 			print "Service call failed: %s"%e
-			return 'failed'
+		rospy.sleep(8)
 
 		print "gripper closed"
 		return 'succeeded'
