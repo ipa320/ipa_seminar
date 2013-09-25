@@ -152,6 +152,8 @@ Visualization Manager:
           Value: true
         /base_link:
           Value: true
+        /gripper_palm_link:
+          Value: true
         All Enabled: false
       Marker Scale: 1
       Name: TF
@@ -170,7 +172,8 @@ Visualization Manager:
                     /arm_wrist_2_link:
                       /arm_wrist_3_link:
                         /arm_ee_link:
-                          {}
+                          /gripper_palm_link:
+                            {}
                 /arm_upper_arm_middle_link:
                   {}
                 /arm_upper_shoulder_link:
