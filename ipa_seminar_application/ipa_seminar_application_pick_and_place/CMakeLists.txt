@@ -40,5 +40,4 @@ lwa4d
 FOREACH(robot ${robotlist})
 	MESSAGE("testing for robot: ${robot}")
 	rosbuild_add_roslaunch_check(launch robot:=${robot})
-	rosbuild_add_rostest(helper/urdf_${robot}.test)
 ENDFOREACH(robot)
