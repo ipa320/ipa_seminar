@@ -37,7 +37,41 @@ In order to visualize correctly, you have to choose the reference coordinate fra
 
 ![rviz4](./doc/rviz4.png "Set frame")
 
-Now you can change the visualization options, such as "Style", "Size", "Alpha" and "Color Transform" in order to alter the visualizaiton appearance.
+Now you can change the visualization options, such as "Style", "Size", "Alpha" and "Color Transform" in order to alter the visualization appearance.
+
+#### 1.3.  PointCloud2 message
+
+The message definition is in the package [sensor_msgs](http://wiki.ros.org/sensor_msgs).
+
+```
+# This message holds a collection of N-dimensional points, which may
+# contain additional information such as normals, intensity, etc. The
+# point data is stored as a binary blob, its layout described by the
+# contents of the "fields" array.
+
+# The point cloud data may be organized 2d (image-like) or 1d
+# (unordered). Point clouds organized as 2d images may be produced by
+# camera depth sensors such as stereo or time-of-flight.
+
+# Time of sensor data acquisition, and the coordinate frame ID (for 3d
+# points).
+Header header
+
+# 2D structure of the point cloud. If the cloud is unordered, height is
+# 1 and width is the length of the point cloud.
+uint32 height
+uint32 width
+
+# Describes the channels and their layout in the binary data blob.
+PointField[] fields
+
+bool    is_bigendian # Is this data bigendian?
+uint32  point_step   # Length of a point in bytes
+uint32  row_step     # Length of a row in bytes
+uint8[] data         # Actual point data, size is (row_step*height)
+
+bool is_dense        # True if there are no invalid points
+```
 
 ### 2.  Passthrough filter
 
@@ -92,6 +126,62 @@ In RVIZ, click on "Add" and select "Marker":
 Change the marker topic to "/marker". You should see a sphere and an arrow marker for the plane now:
 
 ![rviz6](./doc/rviz6.png "Plane marker")
+
+#### 3.3.  Marker message
+
+The Marker message is defined in the package [visualization_msgs](http://wiki.ros.org/visualization_msgs).
+
+```
+# See http://www.ros.org/wiki/rviz/DisplayTypes/Marker and http://www.ros.org/wiki/rviz/Tutorials/Markers%3A%20Basic%20Shapes for more information on using this message with rviz
+
+uint8 ARROW=0
+uint8 CUBE=1
+uint8 SPHERE=2
+uint8 CYLINDER=3
+uint8 LINE_STRIP=4
+uint8 LINE_LIST=5
+uint8 CUBE_LIST=6
+uint8 SPHERE_LIST=7
+uint8 POINTS=8
+uint8 TEXT_VIEW_FACING=9
+uint8 MESH_RESOURCE=10
+uint8 TRIANGLE_LIST=11
+
+uint8 ADD=0
+uint8 MODIFY=0
+uint8 DELETE=2
+
+Header header                        # header for time/frame information
+string ns                            # Namespace to place this object in... used in conjunction with id to create a unique name for the object
+int32 id                           # object ID useful in conjunction with the namespace for manipulating and deleting the object later
+int32 type                         # Type of object
+int32 action                         # 0 add/modify an object, 1 (deprecated), 2 deletes an object
+geometry_msgs/Pose pose                 # Pose of the object
+geometry_msgs/Vector3 scale             # Scale of the object 1,1,1 means default (usually 1 meter square)
+std_msgs/ColorRGBA color             # Color [0.0-1.0]
+duration lifetime                    # How long the object should last before being automatically deleted.  0 means forever
+bool frame_locked                    # If this marker should be frame-locked, i.e. retransformed into its frame every timestep
+
+#Only used if the type specified has some use for them (eg. POINTS, LINE_STRIP, ...)
+geometry_msgs/Point[] points
+#Only used if the type specified has some use for them (eg. POINTS, LINE_STRIP, ...)
+#number of colors must either be 0 or equal to the number of points
+#NOTE: alpha is not yet used
+std_msgs/ColorRGBA[] colors
+
+# NOTE: only used for text markers
+string text
+
+# NOTE: only used for MESH_RESOURCE markers
+string mesh_resource
+bool mesh_use_embedded_materials
+
+```
+
+#### 3.4.  Configure parameters
+
+There are two parameters you can modify using dynamic reconfigure. "dist_thresh" specifies the inlier threshold. Adjust it until the plane is segmented correctly. The parameter "max_iterations" improves
+the segmentation robustness but lowers computation speed if increased.
 
 ### 4.  Voxel filter (optional)
 

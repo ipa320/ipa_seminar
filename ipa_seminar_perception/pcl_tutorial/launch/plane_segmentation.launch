@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
   <node pkg="pcl_tutorial" type="plane_segmentation_node" name="plane_segmentation" output="screen">
-    <remap from="point_cloud_in" to="/camera/depth_registered/points"/>
+    <remap from="point_cloud_in" to="/passthrough_filter/point_cloud_out"/>
     <remap from="point_cloud_out" to="/plane_segmentation/plane"/>
     <remap from="point_cloud_out_2" to="/plane_segmentation/above_plane"/>
     <param name="dist_thresh" type="double" value="0.01" />
