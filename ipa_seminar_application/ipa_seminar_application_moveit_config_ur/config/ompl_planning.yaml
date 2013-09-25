@@ -59,3 +59,15 @@ arm_gripper:
     - PRMstarkConfigDefault
   projection_evaluator: joints(arm_shoulder_pan_joint,arm_shoulder_lift_joint)
   longest_valid_segment_fraction: 0.05
+finger:
+  planner_configs:
+    - SBLkConfigDefault
+    - ESTkConfigDefault
+    - LBKPIECEkConfigDefault
+    - BKPIECEkConfigDefault
+    - KPIECEkConfigDefault
+    - RRTkConfigDefault
+    - RRTConnectkConfigDefault
+    - RRTstarkConfigDefault
+    - PRMkConfigDefault
+    - PRMstarkConfigDefault
