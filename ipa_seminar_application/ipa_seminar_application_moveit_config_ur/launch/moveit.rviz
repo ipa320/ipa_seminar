@@ -1,14 +1,15 @@
 Panels:
   - Class: rviz/Displays
-    Help Height: 116
+    Help Height: 84
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /MotionPlanning1/Scene Geometry1
+        - /MotionPlanning1
         - /MotionPlanning1/Planning Request1
+        - /MotionPlanning1/Planned Path1
         - /Axes1
       Splitter Ratio: 0.74256
-    Tree Height: 236
+    Tree Height: 268
   - Class: rviz/Help
     Name: Help
   - Class: rviz/Views
@@ -111,12 +112,27 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          gripper_finger_1_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          gripper_finger_2_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          gripper_palm_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
         Loop Animation: false
         Robot Alpha: 0.5
         Show Robot Collision: false
         Show Robot Visual: true
         Show Trail: false
-        State Display Time: REALTIME
+        State Display Time: 0.05 s
         Trajectory Topic: /move_group/display_planned_path
       Planning Metrics:
         Payload: 1
@@ -213,15 +229,30 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          gripper_finger_1_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          gripper_finger_2_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          gripper_palm_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
         Robot Alpha: 0.5
         Show Scene Robot: true
       Value: true
     - Class: rviz/Axes
       Enabled: true
-      Length: 1.2
+      Length: 1
       Name: Axes
       Radius: 0.1
-      Reference Frame: /base_link
+      Reference Frame: /gripper_palm_link
       Value: true
   Enabled: true
   Global Options:
@@ -237,17 +268,17 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 3.347
+      Distance: 3.75881
       Focal Point:
-        X: 0.0973864
-        Y: -0.447917
-        Z: -1.49003e-08
+        X: 0.367685
+        Y: 0.1629
+        Z: 2.23518e-07
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.719797
+      Pitch: 0.779797
       Target Frame: /base_link
       Value: XYOrbit (rviz)
-      Yaw: 0.151763
+      Yaw: 4.91495
     Saved: ~
 Window Geometry:
   Displays:
@@ -263,5 +294,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1535
-  X: 57
+  X: 58
   Y: 24

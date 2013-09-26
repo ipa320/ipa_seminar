@@ -350,7 +350,7 @@ roslaunch lbr_moveit_config moveit_rviz.launch config:=true
 
 We will see our robot in its current Planning Scene. 
 
-__ToDo: Screenshot RVIZ with real robot and CollisionMap - annotated!__
+![RealPlanningScene](./doc/real_planning_scene.png "RealPlanningScene")
 
 As in the previous step we can compose Planning Requests in RVIZ using the InteractiveMarkers or move to pre-defined robot poses.  
 

@@ -9,9 +9,7 @@
   <include filename="$(find cob_description)/urdf/common.xacro" />
   <include filename="$(find cob_description)/urdf/materials.urdf.xacro" />
   <include filename="$(find cob_description)/gazebo/gazebo.urdf.xacro" />
-
-  <!-- calibration -->
-  <!--include filename="$(find ipa_seminar_application_bringup)/helper/calibration_lbr.urdf.xacro" /-->
+  <include filename="$(find schunk_description)/urdf/pg70/pg70.urdf.xacro" />
 
   <!-- lbr -->
   <include filename="$(find cob_description)/urdf/lbr/lbr.urdf.xacro" />
@@ -27,15 +25,15 @@
 		<visual>
 		   <origin xyz="0 0 0.5" rpy="0 0 0" />
 		   <geometry>
-			  <box size="1 1 1"/>
+			  <box size="2 2 1"/>
 		   </geometry>
-		   <material name="Schunk/DarkGrey" />
+		   <material name="IPA/LightGrey" />
 		</visual>
 
 		<collision>
 		   <origin xyz="0 0 0.5" rpy="0 0 0" />
 		   <geometry>
-			  <box size="1 1 1"/>
+			  <box size="2 2 1"/>
 		   </geometry>
 		</collision>
 	</link>
@@ -44,5 +42,10 @@
   <xacro:cob_lbr name="arm" parent="base_link">
     <origin xyz="0 0 1" rpy="0 0 0" />
   </xacro:cob_lbr>
+
+  <!-- gripper -->
+  <xacro:schunk_pg70 name="gripper" parent="arm_7_link">
+      <origin xyz="0 0 0.02" rpy="0 0 0" />
+  </xacro:schunk_pg70>
 
 </robot>

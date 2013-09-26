@@ -48,9 +48,11 @@ Note following rviz settings:
 * Activated Laserscanner plugins for front and rear
 * Activated robot_model plugin
 
-To initialize the mobile base press the deadman button on the joystick (see picture below) and the start button at the same time. (not required in simulation)
+To initialize the mobile base press the "deadman" button on the joystick (see picture below) and the "Init" button at the same time. (not required in simulation)
 
-You can now move around the robot using the joystick. Use the deadman button and the two analog joysticks. You will notice how the laser scans show the environment and that you can move tranlational and rotational at the same time. Try to get a feeling how the platform move, as you need to move the robot lateron during mapping.
+![Position of buttons on the joystick](/doc/Joystick.png)
+
+You can now move around the robot using the joystick. Use the "deadman" button and the two analog joysticks for base movement. You will notice how the laser scans show the environment and that you can move tranlational and rotational at the same time. Try to get a feeling how the platform move, as you need to move the robot lateron during mapping.
 
 
 <a href="#top">top</a> 

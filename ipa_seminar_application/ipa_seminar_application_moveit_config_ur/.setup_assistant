@@ -1,8 +1,8 @@
 moveit_setup_assistant_config:
   URDF:
-    package: ipa_seminar_application
-    relative_path: helper/ur.urdf.xacro
+    package: ipa_seminar_application_bringup
+    relative_path: urdf/ur.urdf.xacro
   SRDF:
     relative_path: config/ur10.srdf
   CONFIG:
-    generated_timestamp: 1379942249
+    generated_timestamp: 1380120797
