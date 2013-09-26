@@ -9,10 +9,10 @@ arm_controller:
     - arm_wrist_3_joint
   gains:
     arm_shoulder_pan_joint:
-      p: 3000.0
+      p: 2000.0
       d: 0.0
     arm_shoulder_lift_joint:
-      p: 3000.0
+      p: 2000.0
       d: 0.0
     arm_elbow_joint:
       p: 2000.0
