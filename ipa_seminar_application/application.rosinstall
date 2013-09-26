@@ -28,4 +28,4 @@ brics_showcase_industry  cob_common  cob_environments  cob_robots  ipa_seminar  
 - git:
     uri: 'git://github.com/ipa320/universal_robot.git'
     local-name: universal_robot
-    version: groovy_release_candidat
+    version: groovy_dev
