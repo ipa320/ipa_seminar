@@ -34,7 +34,7 @@ class move_planned(smach.State):
 		self.mgc = MoveGroupCommander("arm_gripper")
 
 	def execute(self, userdata):
-		print "move ptp to " + self.position
+		print ">>> move planned to " + self.position
 
 		# plan trajectory
 		goal_pose = get_pose_from_parameter_server(self.position)
@@ -45,7 +45,7 @@ class move_planned(smach.State):
 		# execute trajectory
 		self.mgc.execute(traj)
 
-		print "moved ptp to " + str(self.position)
+		print "<<< moved ptp to " + str(self.position)
 		return 'succeeded'
 
 class move_lin(smach.State):
@@ -59,8 +59,7 @@ class move_lin(smach.State):
 		self.mgc = MoveGroupCommander("arm_gripper")
 
 	def execute(self, userdata):
-		print "move lin to " + self.position
-
+		print ">>> move lin to " + self.position
 		# plan trajectory
 		goal_pose = get_pose_from_parameter_server(self.position)
 		(traj,frac) = self.mgc.compute_cartesian_path([goal_pose.pose], 0.01, 4, False)
@@ -72,7 +71,7 @@ class move_lin(smach.State):
 		# execute trajectory
 		self.mgc.execute(traj)
 
-		print "moved lin to " + str(self.position)
+		print "<<< moved lin to " + str(self.position)
 		return 'succeeded'
 
 class open_gripper(smach.State):
