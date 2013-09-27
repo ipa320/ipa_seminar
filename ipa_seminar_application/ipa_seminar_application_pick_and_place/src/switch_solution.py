@@ -16,9 +16,20 @@ class switch_objects(smach.StateMachine):
 			outcomes=['succeeded', 'failed', 'error'])
 
 		with self:
-			##############################
-			### fill in your code here ###
-			##############################
+			smach.StateMachine.add('A_TO_BUFFER', pick_and_place_object(area_a, buffer_area),
+				transitions={'succeeded':'B_TO_A', 
+							'failed':'failed',	
+							'error':'error'})
+
+			smach.StateMachine.add('B_TO_A', pick_and_place_object(area_b, area_a),
+				transitions={'succeeded':'succeeded',
+							'failed':'failed',
+							'error':'error'})
+
+			smach.StateMachine.add('BUFFER_TO_B', pick_and_place_object(buffer_area, area_b),
+				transitions={'succeeded':'succeeded',
+							'failed':'failed',
+							'error':'error'})
 
 # main
 def main():
