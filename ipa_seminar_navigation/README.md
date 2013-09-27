@@ -124,10 +124,18 @@ Analyze tf frames by activating tf plugin. Find and watch frame /map, /odom\_com
 
 <a href="#top">top</a> 
 ### 5. Path planning using Elastic Band
+Start the robot on a terminal:
 
-Start bringup
-Start amcl and move_base with just created map
-Start rviz config
+	roslaunch seminar_navigation robot_bringup.launch
+	
+Now start the prepared launch file to start the overall navigation with move_base and amcl:
+
+	roslaunch seminar_navigation robot_bringup.launch
+
+To control the robot we will use RVIZ again:
+
+	roslaunch seminar_navigation rviz_amcl.launch
+
 Note following rviz settings:
 
 * map origin
@@ -138,7 +146,12 @@ Note following rviz settings:
 * Activated marker plugin
 * Activated robot_model plugin
 
-Use set_position estimate tool in rviz to set initial localization
+Once everything is started you should localize the platform again using the "set pose estimate" tool (see previous section). Now you can use the move to tool from rviz to command goals to the mobile platform. See the picture below:
+
+![RVIZ during localization with amcl](/doc/rviz_amcl.png)
+
+While commanding the goals to the platform you can see the global path that was planned by move_base as well as the green bubles that are representing the reactive path. 
+
 
 <a href="#top">top</a> 
 ### 6. Writing a small application
