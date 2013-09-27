@@ -1,16 +1,23 @@
 gripper_controller:
   type: "robot_mechanism_controllers/JointTrajectoryActionController"
   joints:
-    - gripper_finger_1_joint
+    - gripper_finger_joint
+    - gripper_finger_mimic_joint
   gains:
-    gripper_finger_1_joint:
-      p: 80.0
-      d: 1.0
+    gripper_finger_joint:
+      p: 100.0
+      d: 0.0
+    gripper_finger_mimic_joint:
+      p: 100.0
+      d: 0.0
 
   gripper_joint_trajectory_action_node:
     joints:
-      - gripper_finger_1_joint
+      - gripper_finger_joint
+      - gripper_finger_mimic_joint
     constraints:
       goal_time: 0.6
-      gripper_finger_1_joint:
-        goal: 0.2
+      gripper_finger_joint:
+        goal: 0.05
+      gripper_finger_mimic_joint:
+        goal: 0.05

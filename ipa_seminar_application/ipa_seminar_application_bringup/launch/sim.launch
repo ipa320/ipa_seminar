@@ -35,6 +35,7 @@
 
 	<!-- load default configuration -->
 	<rosparam command="load" ns="/script_server/arm" file="$(find ipa_seminar_application_bringup)/config/arm_joint_configurations_$(arg robot).yaml"/>
+	<rosparam command="load" ns="/script_server/gripper" file="$(find ipa_seminar_application_bringup)/config/gripper_joint_configurations.yaml"/>
 
 	<!-- prepare robot -->
 	<node pkg="ipa_seminar_application_bringup" name="prepare_robot" type="prepare_robot.py" />

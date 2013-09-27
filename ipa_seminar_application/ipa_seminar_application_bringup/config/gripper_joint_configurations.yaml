@@ -1,0 +1,4 @@
+joint_names: ["gripper_finger_joint", "gripper_finger_mimic_joint"]
+
+open: [[0.03, 0.03]]
+close: [[0.0, 0.0]]
