@@ -11,18 +11,24 @@ from tf.transformations import *
 from geometry_msgs.msg import PoseStamped
 from moveit_commander import MoveGroupCommander, PlanningSceneInterface
 from brics_showcase_industry_interfaces.srv import *
-
 from simple_script_server import *
+
+### Create a handle for the Simple Script Server Interface
 sss = simple_script_server()
+### Create a handle for the Planning Scene Interface
+psi = PlanningSceneInterface()
+### Create a handle for the Move Group Commander
+mgc = MoveGroupCommander("arm_gripper")
 
 class prepare_robot(smach.State):
 	def __init__(self):
 		smach.State.__init__(self, 
 			outcomes=['succeeded', 'failed', 'error'])
+		self.og = open_gripper()
 
 	def execute(self, userdata):
 		print "preparing robot"
-		rospy.sleep(3)
+		self.og.execute(userdata)
 		print "robot prepared"
 		return 'succeeded'
 
@@ -31,19 +37,15 @@ class move_planned(smach.State):
 		smach.State.__init__(self, 
 			outcomes=['succeeded', 'failed', 'error'])
 		self.pose_stamped = pose_stamped
-		### Create a handle for the Planning Scene Interface
-		self.psi = PlanningSceneInterface()
-		### Create a handle for the Move Group Commander
-		self.mgc = MoveGroupCommander("arm_gripper")
 
 	def execute(self, userdata):
 		# plan trajectory
-		traj = self.mgc.plan(self.pose_stamped.pose)
+		traj = mgc.plan(self.pose_stamped.pose)
 		if len(traj.joint_trajectory.points) == 0: # TODO is there a better way to know if planning failed or not?
 			return 'failed'
 		
 		# execute trajectory
-		self.mgc.execute(traj)
+		mgc.execute(traj)
 
 		return 'succeeded'
 
@@ -52,21 +54,17 @@ class move_lin(smach.State):
 		smach.State.__init__(self, 
 			outcomes=['succeeded', 'failed', 'error'])
 		self.pose_stamped = pose_stamped
-		### Create a handle for the Planning Scene Interface
-		self.psi = PlanningSceneInterface()
-		### Create a handle for the Move Group Commander
-		self.mgc = MoveGroupCommander("arm_gripper")
 
 	def execute(self, userdata):
 		# plan trajectory
-		(traj,frac) = self.mgc.compute_cartesian_path([self.pose_stamped.pose], 0.01, 4, False)
+		(traj,frac) = mgc.compute_cartesian_path([self.pose_stamped.pose], 0.01, 4, False)
 		if len(traj.joint_trajectory.points) == 0: # TODO is there a better way to know if planning failed or not?
 			return 'failed'
 		if frac != 1.0: # this means moveit couldn't plan to the end
 			return 'failed'
 
 		# execute trajectory
-		self.mgc.execute(traj)
+		mgc.execute(traj)
 
 		return 'succeeded'
 
