@@ -4,7 +4,7 @@
 	<arg name="robot"/>
 
 	<!-- upload application configuration to parameter server -->
-	<rosparam command="load" ns="/pick_and_place" file="$(find ipa_seminar_application_pick_and_place)/config/application_config.yaml"/>
+	<rosparam command="load" ns="/application" file="$(find ipa_seminar_application_pick_and_place)/config/application_config.yaml"/>
 
 	<!-- start pick and place application -->
 	<node pkg="ipa_seminar_application_pick_and_place" type="pick_and_place.py" name="pick_and_place_application" output="screen"/>

@@ -12,6 +12,9 @@ from geometry_msgs.msg import PoseStamped
 from moveit_commander import MoveGroupCommander, PlanningSceneInterface
 from brics_showcase_industry_interfaces.srv import *
 
+from simple_script_server import *
+sss = simple_script_server()
+
 class prepare_robot(smach.State):
 	def __init__(self):
 		smach.State.__init__(self, 
@@ -85,12 +88,15 @@ class open_gripper(smach.State):
 			print "Service call failed: %s"%e
 			return 'failed'
 
-		try:		
-			# move gripper
-			self.client(1)
-		except rospy.ServiceException, e:
-			print "Service call failed: %s"%e
-		rospy.sleep(8)
+		# move gripper
+		if rospy.has_param("/use_sim_time"):
+			sss.move("gripper","open")
+		else:
+			try:		
+				self.client(1)
+			except rospy.ServiceException, e:
+				print "Service call failed: %s"%e
+			rospy.sleep(8)
 
 		print "gripper opened"
 		return 'succeeded'
@@ -112,13 +118,16 @@ class close_gripper(smach.State):
 		except rospy.ServiceException, e:
 			print "Service call failed: %s"%e
 			return 'failed'
-
-		try:		
-			# move gripper
-			self.client(0)
-		except rospy.ServiceException, e:
-			print "Service call failed: %s"%e
-		rospy.sleep(8)
+	
+		# move gripper
+		if rospy.has_param("/use_sim_time"):
+			sss.move("gripper","close")
+		else:
+			try:
+				self.client(0)
+			except rospy.ServiceException, e:
+				print "Service call failed: %s"%e
+			rospy.sleep(8)
 
 		print "gripper closed"
 		return 'succeeded'
@@ -139,7 +148,7 @@ class pick_object(smach.StateMachine):
 
 		with self:
 			smach.StateMachine.add('MOVE_TO_PICK_UP_POSITION1', move_planned(self.up_pose),
-				transitions={'succeeded':'object_picked', 
+				transitions={'succeeded':'MOVE_TO_PICK_DOWN_POSITION', 
 							'failed':'object_not_picked'})
 
 			smach.StateMachine.add('MOVE_TO_PICK_DOWN_POSITION', move_lin(self.down_pose),
