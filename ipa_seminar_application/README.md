@@ -195,12 +195,14 @@ IMAGE B A -
 
 #### Approach
 To solve this, we'll have to implement the following sequence:
+
 |	|Area1	|Area2	|Area3	|
 |------	|:-----:|:-----:|:-----:|
 |Start	|A	|B	|-	|
 |Step1	|A	|-	|B	|
 |Step2	|-	|A	|B	|
 |Step3	|B	|A	|-	|
+
 All we need is a state which offers the capability to move one object from a source area to a target area. The `pick_and_place_object` state will do that for us.
 
 #### Compose the new application
