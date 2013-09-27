@@ -54,6 +54,7 @@ export ROS_MASTER_URI=http://robot-lbr:11311
 
 ### 2. Running a pick and place application with SMACH  
 **Task**: Run a pick and place application for the universal robot arm.
+
 **Goal**: Lern how to start and monitor a SMACH application.
 
 #### Start the application
@@ -78,6 +79,7 @@ There are mainly four files involved here:
 IMAGE BUILDING BLOCKS
 
 The image shows the atomic building blocks (basic states and sub-state machines) which can be used for our application.
+
 Basic states:
 * prepare_robot()             Brings the robot into a defined starting position
 * move_planned(pose)          Moves to a given pose avoiding collisions
@@ -90,7 +92,9 @@ Sub-state machines:
 
 
 ### 3. Run the pick an place application continuously
-**Task**: Modify the application in a way that it runs continuously
+**Task**: Modify the application in a way that it runs continuously.
+
+**Goal**: Learn how to modify state transitions.
 
 #### Modify the application code
 We will have to modify the state machine which coordinates the pick and place application. At the moment the state machine looks like this:
@@ -138,12 +142,94 @@ To start the application again and check your modifications:
 roslaunch ipa_seminar_application_pick_and_place pick_and_place.launch
 ```
 
+#### Change the target areas
+If you want to change the target and source areas where the objects will be picked and places you can do that by just changing the names for the areas in the `main()` function of the application:
+```
+smach.StateMachine.add('PICK_AND_PLACE_OBJECT', pick_and_place_object(source_area="area_1", target_area="area_2"),
+	transitions={	'succeeded':'overall_succeeded',
+					'failed':'overall_failed',
+					'error':'error'})
+```
+e.g. to 
+```
+smach.StateMachine.add('PICK_AND_PLACE_OBJECT', pick_and_place_object(source_area="area_3", target_area="area_4"),
+	transitions={	'succeeded':'overall_succeeded',
+					'failed':'overall_failed',
+					'error':'error'})
+```
+
+
+### 4. Transfer the application to other robots
+**Task**: Run the same application on various robots.
+
+**Goal**: Learn how to design an application to be hardware independent.
+
+#### Run your applications on another robot
+By changing the `ROS_MASTER_URI` you can run your application on a different robot setup. E.g. you can run your application on the simulated Kuka LBR with
+```
+export ROS_MASTER_URI=http://robot-lbr:11311
+roslaunch ipa_seminar_application_pick_and_place pick_and_place.launch
+```
+
+#### Thinks to keep in mind while developing hardware independent applications
+Based on the standardizes ROS API to the driver layer and the higher level capabilities (e.g. motion planning) it is possible to define an application which is hardware independent. This is a (not complete) list which need to be taken into account while developing an hardware independent application:
+* Do not use hardcoded joint space positions or trajectories. Use cartesian poses or semantic names to describe your application.
+* Separation of concerns.
+* Separation of roles.
+* Robots need to have similar workspaces or at least cover the target areas.
 
 
 
-Thinks to keep in mind while developing hardware independent applications:
-* do not use hardcoded joint space positions or trajectories. Use cartesian poses or semantic names to describe your application.
-* separation of concerns
-* separation of roles
+### 5. Create a new appication (new state machine)
+**Task**: Define a new application to switch two objects.
 
-Based on the standardizes ROS API to the driver layer and the higher level capabilities (e.g. motion planning) it is possible to define an application which is hardware independent.
+**Goal**: Learn how to define new state machines composed out of already existing sub-state machines.
+
+The task is to define a new application which is able to swich place of two objects. We have the following situation:
+
+IMAGE A B -
+
+Now we want to change the places of object A and B to get
+
+IMAGE B A -
+
+#### Approach
+To solve this, we'll have to implement the following sequence:
+
+	Area1	Area2	Area3
+Start:	A	B	-
+Step1:	A	-	B
+Step2:	-	A	B
+Step3:	B	A	-
+
+All we need is a state which offers the capability to move one object from a source area to a target area. The `pick_and_place_object` state will do that for us.
+
+#### Compose the new application
+```
+pick_and_place_object(source_area, target_area)
+```
+We can hand over a `source_area` and a `target_area`. To do that four time in the order listed above copy the following lines into the `switch.py` template file. You can open the file with
+```
+roscd ipa_seminar_application_pick_and_place/src
+gedit switch.py
+```
+```
+smach.StateMachine.add('A_TO_BUFFER', pick_and_place_object(area_a, buffer_area),
+	transitions={'succeeded':'B_TO_A', 
+				'failed':'failed',	
+				'error':'error'})
+
+smach.StateMachine.add('B_TO_A', pick_and_place_object(area_b, area_a),
+	transitions={'succeeded':'succeeded',
+				'failed':'failed',
+				'error':'error'})
+
+smach.StateMachine.add('BUFFER_TO_B', pick_and_place_object(buffer_area, area_b),
+	transitions={'succeeded':'succeeded',
+				'failed':'failed',
+				'error':'error'})
+```
+**Remember to undo your changes from step 3 in `pick_and_place.py`** because we don't want to have a continuous pick and place here.
+
+
+#### 
