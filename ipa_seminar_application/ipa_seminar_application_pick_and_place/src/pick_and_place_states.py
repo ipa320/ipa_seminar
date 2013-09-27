@@ -15,7 +15,7 @@ from brics_showcase_industry_interfaces.srv import *
 class prepare_robot(smach.State):
 	def __init__(self):
 		smach.State.__init__(self, 
-			outcomes=['succeeded', 'failed'])
+			outcomes=['succeeded', 'failed', 'error'])
 
 	def execute(self, userdata):
 		print "preparing robot"
@@ -24,45 +24,39 @@ class prepare_robot(smach.State):
 		return 'succeeded'
 
 class move_planned(smach.State):
-	def __init__(self, position):
+	def __init__(self, pose_stamped):
 		smach.State.__init__(self, 
-			outcomes=['succeeded', 'failed'])
-		self.position = position
+			outcomes=['succeeded', 'failed', 'error'])
+		self.pose_stamped = pose_stamped
 		### Create a handle for the Planning Scene Interface
 		self.psi = PlanningSceneInterface()
 		### Create a handle for the Move Group Commander
 		self.mgc = MoveGroupCommander("arm_gripper")
 
 	def execute(self, userdata):
-		print ">>> move planned to " + self.position
-
 		# plan trajectory
-		goal_pose = get_pose_from_parameter_server(self.position)
-		traj = self.mgc.plan(goal_pose.pose)
+		traj = self.mgc.plan(self.pose_stamped.pose)
 		if len(traj.joint_trajectory.points) == 0: # TODO is there a better way to know if planning failed or not?
 			return 'failed'
 		
 		# execute trajectory
 		self.mgc.execute(traj)
 
-		print "<<< moved ptp to " + str(self.position)
 		return 'succeeded'
 
 class move_lin(smach.State):
-	def __init__(self, position):
+	def __init__(self, pose_stamped):
 		smach.State.__init__(self, 
-			outcomes=['succeeded', 'failed'])
-		self.position = position
+			outcomes=['succeeded', 'failed', 'error'])
+		self.pose_stamped = pose_stamped
 		### Create a handle for the Planning Scene Interface
 		self.psi = PlanningSceneInterface()
 		### Create a handle for the Move Group Commander
 		self.mgc = MoveGroupCommander("arm_gripper")
 
 	def execute(self, userdata):
-		print ">>> move lin to " + self.position
 		# plan trajectory
-		goal_pose = get_pose_from_parameter_server(self.position)
-		(traj,frac) = self.mgc.compute_cartesian_path([goal_pose.pose], 0.01, 4, False)
+		(traj,frac) = self.mgc.compute_cartesian_path([self.pose_stamped.pose], 0.01, 4, False)
 		if len(traj.joint_trajectory.points) == 0: # TODO is there a better way to know if planning failed or not?
 			return 'failed'
 		if frac != 1.0: # this means moveit couldn't plan to the end
@@ -71,13 +65,12 @@ class move_lin(smach.State):
 		# execute trajectory
 		self.mgc.execute(traj)
 
-		print "<<< moved lin to " + str(self.position)
 		return 'succeeded'
 
 class open_gripper(smach.State):
 	def __init__(self):
 		smach.State.__init__(self, 
-			outcomes=['succeeded', 'failed'])
+			outcomes=['succeeded', 'failed', 'error'])
 		self.service_name = "/MoveGripper"
 		self.client = rospy.ServiceProxy(self.service_name, MoveGripper)
 
@@ -105,7 +98,7 @@ class open_gripper(smach.State):
 class close_gripper(smach.State):
 	def __init__(self):
 		smach.State.__init__(self, 
-			outcomes=['succeeded', 'failed'])
+			outcomes=['succeeded', 'failed', 'error'])
 		self.service_name = "/MoveGripper"
 		self.client = rospy.ServiceProxy(self.service_name, MoveGripper)
 
@@ -133,17 +126,23 @@ class close_gripper(smach.State):
 
 ### sub state machines
 class pick_object(smach.StateMachine):
-	def __init__(self, prefix):	
+	def __init__(self, area):	
 		smach.StateMachine.__init__(self, 
-			outcomes=['object_picked', 'object_not_picked', 'failed'])
-		self.prefix = prefix
+			outcomes=['object_picked', 'object_not_picked', 'error'])
+		
+		# calculate poses
+		self.box_pose = get_pose_from_parameter_server(area)
+		self.down_pose = copy.deepcopy(self.box_pose)
+		self.down_pose.pose.position.z += 0.1
+		self.up_pose = copy.deepcopy(self.down_pose)
+		self.up_pose.pose.position.z += 0.1
 
 		with self:
-			smach.StateMachine.add('MOVE_TO_PICK_UP_POSITION1', move_planned(prefix + "up_position"),
-				transitions={'succeeded':'MOVE_TO_PICK_DOWN_POSITION', 
+			smach.StateMachine.add('MOVE_TO_PICK_UP_POSITION1', move_planned(self.up_pose),
+				transitions={'succeeded':'object_picked', 
 							'failed':'object_not_picked'})
 
-			smach.StateMachine.add('MOVE_TO_PICK_DOWN_POSITION', move_lin(prefix + "down_position"),
+			smach.StateMachine.add('MOVE_TO_PICK_DOWN_POSITION', move_lin(self.down_pose),
 				transitions={'succeeded':'CLOSE_GRIPPER',
 							'failed':'object_not_picked'})
 
@@ -151,32 +150,42 @@ class pick_object(smach.StateMachine):
 				transitions={'succeeded':'MOVE_TO_PICK_UP_POSITION2', 
 							'failed':'object_not_picked'})
 
-			smach.StateMachine.add('MOVE_TO_PICK_UP_POSITION2', move_lin(prefix + "up_position"),
+			smach.StateMachine.add('MOVE_TO_PICK_UP_POSITION2', move_lin(self.up_pose),
 				transitions={'succeeded':'object_picked', 
 							'failed':'object_not_picked'})
 
 class place_object(smach.StateMachine):
-	def __init__(self, prefix):	
+	def __init__(self, area):	
 		smach.StateMachine.__init__(self, 
-			outcomes=['object_placed', 'object_not_placed', 'failed'])
-		self.prefix = prefix
+			outcomes=['object_placed', 'object_not_placed', 'error'])
+
+		# calculate poses
+		self.box_pose = get_pose_from_parameter_server(area)
+		self.down_pose = copy.deepcopy(self.box_pose)
+		self.down_pose.pose.position.z += 0.1
+		self.up_pose = copy.deepcopy(self.down_pose)
+		self.up_pose.pose.position.z += 0.1
 
 		with self:
-			smach.StateMachine.add('MOVE_TO_PLACE_UP_POSITION1', move_planned(prefix + "up_position"),
+			smach.StateMachine.add('MOVE_TO_PLACE_UP_POSITION1', move_planned(self.up_pose),
 				transitions={'succeeded':'MOVE_TO_PLACE_DOWN_POSITION', 
-							'failed':'object_not_placed'})
+							'failed':'object_not_placed',
+							'error':'error'})
 
-			smach.StateMachine.add('MOVE_TO_PLACE_DOWN_POSITION', move_lin(prefix + "down_position"),
+			smach.StateMachine.add('MOVE_TO_PLACE_DOWN_POSITION', move_lin(self.down_pose),
 				transitions={'succeeded':'OPEN_GRIPPER',
-							'failed':'object_not_placed'})
+							'failed':'object_not_placed',
+							'error':'error'})
 
 			smach.StateMachine.add('OPEN_GRIPPER', open_gripper(),
 				transitions={'succeeded':'MOVE_TO_PLACE_UP_POSITION2', 
-							'failed':'object_not_placed'})
+							'failed':'object_not_placed',
+							'error':'error'})
 
-			smach.StateMachine.add('MOVE_TO_PLACE_UP_POSITION2', move_lin(prefix + "up_position"),
+			smach.StateMachine.add('MOVE_TO_PLACE_UP_POSITION2', move_lin(self.up_pose),
 				transitions={'succeeded':'object_placed', 
-							'failed':'object_not_placed'})
+							'failed':'object_not_placed',
+							'error':'error'})
 
 
 
@@ -191,7 +200,7 @@ def gen_pose(frame_id="/base_link", pos=[0,0,0], euler=[0,0,0]):
 
 def get_pose_from_parameter_server(param_name):
 	# get joint_names from parameter server
-	param_string = "/pick_and_place/" + param_name
+	param_string = "/application/" + param_name
 	if not rospy.has_param(param_string):
 		rospy.logerr("parameter %s does not exist on ROS Parameter Server, aborting...",param_string)
 		return 'failed'

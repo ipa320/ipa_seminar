@@ -8,6 +8,7 @@ Panels:
         - /RobotModel1/Links1
         - /TF1/Frames1
         - /Axes1
+        - /Axes2
       Splitter Ratio: 0.652605
     Tree Height: 663
   - Class: rviz/Selection
@@ -155,10 +156,17 @@ Visualization Manager:
       Value: false
     - Class: rviz/Axes
       Enabled: true
-      Length: 1
+      Length: 1.5
       Name: Axes
-      Radius: 0.1
-      Reference Frame: <Fixed Frame>
+      Radius: 0.05
+      Reference Frame: /base_link
+      Value: true
+    - Class: rviz/Axes
+      Enabled: true
+      Length: 0.3
+      Name: Axes
+      Radius: 0.01
+      Reference Frame: /gripper_palm_link
       Value: true
   Enabled: true
   Global Options:
@@ -186,10 +194,10 @@ Visualization Manager:
         Z: 0.411594
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.689797
+      Pitch: 0.694797
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.71859
+      Yaw: 6.26859
     Saved: ~
 Window Geometry:
   Displays:
