@@ -33,6 +33,9 @@ Also, an example solution for this tutorial is already available. Whenever you w
 
 <a href="#top">top</a> 
 
+#### SMACH
+SMACH is a finite state machine programming approach in ROS. It is based on python and allows to define states as basic building blocks as well as run them in various containers and compose them to state machines. State machines can on the other hand consist of sub-state machines again. You can find more information about SMACH at the [SMACH wiki page](http://wiki.ros.org/smach).
+
 #### Exporting ROS_MASTER_URI
 The `ROS_MASTER_URI` can be used to connect to different ROS cores. In this tutorial we'll use several robots (partly real, partly in simulation). To connect to the correct robot to run your applications you will have to export an environment variable called `ROS_MASTER_URI`. Here's a list of the robots we're using and their corresponding `HOSTNAME`.
 * Universal Robot UR10 (real):  `robot-ur-real`
@@ -50,14 +53,19 @@ export ROS_MASTER_URI=http://robot-lbr:11311
 
 
 ### 2. Running a pick and place application with SMACH  
-
-A pick and place application for the universal robot arm is already prepared.
+**Task**: Run a pick and place application for the universal robot arm.
+**Goal**: Lern how to start and monitor a SMACH application.
 
 #### Start the application
-
 To start the application:
 ```
 roslaunch ipa_seminar_application_pick_and_place pick_and_place.launch
+```
+
+#### Monitor execution
+There's a graphical tool which visualizes the states and transitions. The current state or sub-state machine is highlighted. You can start the tool with
+```
+rosrun smach_viewer smach_viewer.py
 ```
 
 #### Coding details
@@ -86,14 +94,44 @@ Sub-state machines:
 
 #### Modify the application code
 We will have to modify the state machine which coordinates the pick and place application. At the moment the state machine looks like this:
+
 SCREENSHOT PICK_AND_PLACE SINGLE
+
+Now we want to have a continuously running pick and place application which should look like this:
+
+SCREENSHOT PICK_AND_PLACE CONTINUOUS
+
 You can open the pick and place application file with
 ```
 roscd ipa_seminar_application_pick_and_place
 gedit src/pick_and_place.py
 ```
+In the file you'll find the `pick_and_place_object` class which defines a SMACH state machine out of two sub-state machines `pick_object` and `place_object`. 
+```
+class pick_and_place_object(smach.StateMachine):
+	def __init__(self, source_area, target_area):	
+		smach.StateMachine.__init__(self, 
+			outcomes=['succeeded', 'failed', 'error'])
 
+		with self:
+			smach.StateMachine.add('PICK_OBJECT', pick_object(source_area),
+				transitions={'object_picked':'PLACE_OBJECT', 
+							'object_not_picked':'failed',	
+							'error':'error'})
 
+			smach.StateMachine.add('PLACE_OBJECT', place_object(target_area),
+				transitions={'object_placed':'succeeded',
+							'object_not_placed':'failed',
+							'error':'error'})
+
+```
+Each state has a name, a type and a list of transitions which connect the outcome of a state to the next state. Our state machine itself has a list of three outcomes ```outcomes=['succeeded', 'failed', 'error']```. All transitions inside the state machine should either point to another state inside the same state machine or point to an outcome of the state machine. If we connect the `object_placed` outcome of the `PLACE_OBJECT` state to `PICK_OBJECT` we will continuously pick and place an object from the `source_area` to the `target_area`. Please modify the `PLACE_OBJECT` state like this:
+```
+smach.StateMachine.add('PLACE_OBJECT', place_object(target_area),
+	transitions={'object_placed':'PICK_OBJECT',
+				'object_not_placed':'failed',
+				'error':'error'})
+```
 
 To start the application again and check your modifications:
 ```
