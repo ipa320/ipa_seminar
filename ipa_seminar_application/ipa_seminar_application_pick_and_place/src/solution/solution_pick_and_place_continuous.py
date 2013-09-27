@@ -21,7 +21,7 @@ class pick_and_place_object(smach.StateMachine):
 							'error':'error'})
 
 			smach.StateMachine.add('PLACE_OBJECT', place_object(target_area),
-				transitions={'object_placed':'succeeded',
+				transitions={'object_placed':'PICK_OBJECT',
 							'object_not_placed':'failed',
 							'error':'error'})
 

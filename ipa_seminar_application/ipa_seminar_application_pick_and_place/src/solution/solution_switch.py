@@ -33,7 +33,7 @@ class switch_objects(smach.StateMachine):
 
 # main
 def main():
-	rospy.init_node('switch')
+	rospy.init_node('application')
 
 	# create a SMACH state machine
 	SM = smach.StateMachine(outcomes=['overall_succeeded','overall_failed', 'error'])
