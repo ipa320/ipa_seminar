@@ -233,4 +233,10 @@ smach.StateMachine.add('BUFFER_TO_B', pick_and_place_object(buffer_area, area_b)
 **Remember to undo your changes from step 3 in `pick_and_place.py`** because we don't want to have a continuous pick and place here.
 
 
-#### 
+#### Extend the application to sort a whole sequence of objects
+Based on the `switch_objects` state you can build up an application to sort a sequence of objects. E.g.
+
+|	|Area1	|Area2	|Area3	|Area4	|Area5	|
+|------	|:-----:|:-----:|:-----:|:-----:|:-----:|
+|Start	|D	|B	|A	|C	|-	|
+|Goal	|A	|B	|C	|D	|-	|
