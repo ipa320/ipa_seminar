@@ -4,16 +4,8 @@
 
 ### Contents
 
-1. <a href="#1--introduction">Introduction</a>   
-  1.1. <a href="#11-tools">Tools</a>  
-  1.2. <a href="#12-helpful-commands">Helpful Commands</a>  
-2. <a href="#2-moveit---setup-assistant">MoveIt! - Setup Assistant</a>  
-  2.1. <a href="#21-start">Start</a>  
-  2.2. <a href="#22-self-collision">Self-Collision</a>  
-  2.3. <a href="#23-virtual-joints">Virtual Joints</a>  
-  2.4. <a href="#24-planning-groups">Planning Groups</a>  
-
-
+1. <a href="#1--introduction">Introduction</a>
+2. <a href="#2-Running-a-pick-and-place-application-with-SMACH">Running a pick and place application</a>  
 
 
 ### 1.  Introduction
@@ -65,17 +57,55 @@ A pick and place application for the universal robot arm is already prepared.
 
 To start the application:
 ```
-roslaunch ipa_seminar_application_pick_and_place pick_and_place.py
+roslaunch ipa_seminar_application_pick_and_place pick_and_place.launch
 ```
 
 #### Coding details
-There are mainly two files involved here:
-`pick_and_place_states.py`: asd
-`pick_and_place.py`: asd
+There are mainly four files involved here:
+`pick_and_place_states.py`:   Defines basic states (=building blocks for our application)
+`pick_and_place.py`:          Defines the pick and place application (=coordination for our application)
+`application_config.yaml`:    Defines the target areas (configuration for our application)
+`pick_and_place.launch`:      Defines which components need to be started (=deployment of our application)
+
+IMAGE BUILDING BLOCKS
+
+The image shows the atomic building blocks (basic states and sub-state machines) which can be used for our application.
+Basic states:
+* prepare_robot()             Brings the robot into a defined starting position
+* move_planned(pose)          Moves to a given pose avoiding collisions
+* move_lin(pose)              Moves to a given pose on a straight line avoiding collisions
+* open_gripper()              Opens the gripper
+* close_gripper()             Closes the gripper
+Sub-state machines:
+* pick_object(area)           Picks up an object from a given target area (uses move_planned, move_lin and close_gripper)
+* place_object(area)          Places an object on a given target area (uses move_planned, move_lin and open_gripper)
+
+
+### 3. Run the pick an place application continuously
+**Task**: Modify the application in a way that it runs continuously
+
+#### Modify the application code
+We will have to modify the state machine which coordinates the pick and place application. At the moment the state machine looks like this:
+SCREENSHOT PICK_AND_PLACE SINGLE
+You can open the pick and place application file with
+```
+roscd ipa_seminar_application_pick_and_place
+gedit src/pick_and_place.py
+```
+
+
+
+To start the application again and check your modifications:
+```
+roslaunch ipa_seminar_application_pick_and_place pick_and_place.launch
+```
 
 
 
 
-
+Thinks to keep in mind while developing hardware independent applications:
+* do not use hardcoded joint space positions or trajectories. Use cartesian poses or semantic names to describe your application.
+* separation of concerns
+* separation of roles
 
 Based on the standardizes ROS API to the driver layer and the higher level capabilities (e.g. motion planning) it is possible to define an application which is hardware independent.
