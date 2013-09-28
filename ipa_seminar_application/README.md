@@ -85,7 +85,7 @@ The following sheenshots show the composition of the `pick_object` and the `plac
 
 |`pick_object`|`place_object`|
 |:-----------:|:------------:|
-|<img src="./doc/pick.png" width="400px" />|<img src="./doc/place.png" width="400px" />|
+|<img src="./doc/pick.png" width="350px" />|<img src="./doc/place.png" width="350px" />|
 
 <a href="#top">top</a>
 
