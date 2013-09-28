@@ -64,30 +64,28 @@ rosrun smach_viewer smach_viewer.py
 
 #### Coding details
 There are mainly four files involved here:
-`pick_and_place_states.py`:   Defines basic states (=building blocks for our application)
-`pick_and_place.py`:          Defines the pick and place application (=coordination for our application)
-`application_config.yaml`:    Defines the target areas (configuration for our application)
-`pick_and_place.launch`:      Defines which components need to be started (=deployment of our application)
-
-IMAGE BUILDING BLOCKS
+* `pick_and_place_states.py`:   Defines basic states (=building blocks for our application)
+* `pick_and_place.py`:          Defines the pick and place application (=coordination for our application)
+* `application_config.yaml`:    Defines the target areas (configuration for our application)
+* `pick_and_place.launch`:      Defines which components need to be started (=deployment of our application)
 
 The image shows the atomic building blocks (basic states and sub-state machines) which can be used for our application.
 
 Basic states:
-* prepare_robot()             Brings the robot into a defined starting position
-* move_planned(pose)          Moves to a given pose avoiding collisions
-* move_lin(pose)              Moves to a given pose on a straight line avoiding collisions
-* open_gripper()              Opens the gripper
-* close_gripper()             Closes the gripper
+* `prepare_robot()`             Brings the robot into a defined starting position
+* `move_planned(pose)`          Moves to a given pose avoiding collisions
+* `move_lin(pose)`              Moves to a given pose on a straight line avoiding collisions
+* `open_gripper()`              Opens the gripper
+* `close_gripper()`             Closes the gripper
 Sub-state machines:
-* pick_object(area)           Picks up an object from a given target area (uses move_planned, move_lin and close_gripper)
-* place_object(area)          Places an object on a given target area (uses move_planned, move_lin and open_gripper)
+* `pick_object(area)`           Picks up an object from a given target area (uses move_planned, move_lin and close_gripper)
+* `place_object(area)`          Places an object on a given target area (uses move_planned, move_lin and open_gripper)
 
 The following sheenshots show the composition of the `pick_object` and the `place_object` state machines out of the given basic states:
 
 |`pick_object`|`place_object`|
 |:-----------:|:------------:|
-|![pick_object](./doc/pick.png "Pick object state machine") | ![place_object](./doc/place.png "Place object state machine")|
+|<img src="./doc/pick.png" width="180px" />|<img src="./doc/place.png" width="180px" />|
 
 <a href="#top">top</a>
 
