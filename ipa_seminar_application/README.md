@@ -208,11 +208,8 @@ To solve this, we'll have to implement the following sequence:
 
 All we need is a state which offers the capability to move one object from a source area to a target area. The `pick_and_place_object` state will do that for us.
 
-#### Compose the new application
-```
-pick_and_place_object(source_area, target_area)
-```
-We can hand over a `source_area` and a `target_area`. To do that four time in the order listed above copy the following lines into the `switch.py` template file. You can open the file with
+#### Compose the new sub-state machine
+Let's define a sub-state machine `pick_and_place_object(source_area, target_area)` out of the previous application which takes a `source_area` and a `target_area` as input parameters. If we do that four times in the order listed above we get a new application called `switch_object`. Copy the following lines to the `switch.py` template file. You can open the file with
 ```
 roscd ipa_seminar_application_pick_and_place/src
 gedit switch.py
