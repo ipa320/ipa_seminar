@@ -22,7 +22,7 @@ class switch_objects(smach.StateMachine):
 							'error':'error'})
 
 			smach.StateMachine.add('B_TO_A', pick_and_place_object(area_b, area_a),
-				transitions={'succeeded':'succeeded',
+				transitions={'succeeded':'BUFFER_TO_B',
 							'failed':'failed',
 							'error':'error'})
 

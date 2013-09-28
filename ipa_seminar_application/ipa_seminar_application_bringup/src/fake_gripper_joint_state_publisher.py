@@ -7,7 +7,6 @@ from sensor_msgs.msg import JointState
 def fake_publisher():
         rospy.init_node('fake_joint_state_publisher_connector')
 
-        # emergency_stop topic
         pub = rospy.Publisher('/joint_states',JointState)
         msg = JointState()
         msg.header.stamp = rospy.Time.now()
