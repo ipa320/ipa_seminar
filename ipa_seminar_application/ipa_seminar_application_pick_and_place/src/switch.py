@@ -11,14 +11,14 @@ from pick_and_place_states import *
 from pick_and_place import *
 
 class switch_objects(smach.StateMachine):
-	def __init__(self, area_a, area_b, buffer_area):	
-		smach.StateMachine.__init__(self, 
-			outcomes=['succeeded', 'failed', 'error'])
+    def __init__(self, area_a, area_b, buffer_area):	
+        smach.StateMachine.__init__(self, 
+            outcomes=['succeeded', 'failed', 'error'])
 
-		with self:
-			##############################
-			### fill in your code here ###
-			##############################
+        with self:
+            ####################################
+            ### TODO: fill in your code here ###
+            ####################################
 
 # main
 def main():

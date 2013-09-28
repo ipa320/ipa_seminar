@@ -213,5 +213,8 @@ def get_pose_from_parameter_server(param_name):
 		return 'failed'
 	param = rospy.get_param(param_string)
 
+	# transform box position from arm_0_link to base_link
+	param[0][2] += 1.1 # lift along z-axis 
+
 	# fill pose message
 	return gen_pose(pos = param[0], euler = param[1])

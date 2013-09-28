@@ -11,25 +11,25 @@ from pick_and_place_states import *
 from pick_and_place import *
 
 class switch_objects(smach.StateMachine):
-	def __init__(self, area_a, area_b, buffer_area):	
-		smach.StateMachine.__init__(self, 
-			outcomes=['succeeded', 'failed', 'error'])
+    def __init__(self, area_a, area_b, buffer_area):	
+        smach.StateMachine.__init__(self, 
+            outcomes=['succeeded', 'failed', 'error'])
 
-		with self:
-			smach.StateMachine.add('A_TO_BUFFER', pick_and_place_object(area_a, buffer_area),
-				transitions={'succeeded':'B_TO_A', 
-							'failed':'failed',	
-							'error':'error'})
+        with self:
+            smach.StateMachine.add('A_TO_BUFFER', pick_and_place_object(area_a, buffer_area),
+                transitions={'succeeded':'B_TO_A', 
+                    'failed':'failed',
+                    'error':'error'})
 
-			smach.StateMachine.add('B_TO_A', pick_and_place_object(area_b, area_a),
-				transitions={'succeeded':'BUFFER_TO_B',
-							'failed':'failed',
-							'error':'error'})
+            smach.StateMachine.add('B_TO_A', pick_and_place_object(area_b, area_a),
+                transitions={'succeeded':'BUFFER_TO_B',
+                'failed':'failed',
+                'error':'error'})
 
-			smach.StateMachine.add('BUFFER_TO_B', pick_and_place_object(buffer_area, area_b),
-				transitions={'succeeded':'succeeded',
-							'failed':'failed',
-							'error':'error'})
+            smach.StateMachine.add('BUFFER_TO_B', pick_and_place_object(buffer_area, area_b),
+                transitions={'succeeded':'succeeded',
+                    'failed':'failed',
+                    'error':'error'})
 
 # main
 def main():

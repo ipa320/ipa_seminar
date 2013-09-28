@@ -43,6 +43,8 @@ export ROS_MASTER_URI=http://robot-lbr:11311
 
 **Goal**: Learn how to start and monitor a SMACH application.
 
+We have already prepared a pick and place application which moves an object from `area_1` to `area_2`.
+
 #### Start the application
 To start the application:
 ```
@@ -50,18 +52,12 @@ roslaunch ipa_seminar_application_pick_and_place pick_and_place.launch
 ```
 
 #### Monitor execution
-There's a graphical tool which visualizes the states and transitions. The current state or sub-state machine is highlighted. You can start the tool with
+There's a graphical tool which visualizes the states and transitions. The current state or sub-state machine is highlighted. While the pick and place application is running you can monitor its state. Start the tool with
 ```
 rosrun smach_viewer smach_viewer.py
 ```
 
 #### Coding details
-There are mainly four files involved here:
-* `pick_and_place_states.py`:   Defines basic states (=building blocks for our application)
-* `pick_and_place.py`:          Defines the pick and place application (=coordination for our application)
-* `application_config.yaml`:    Defines the target areas (configuration for our application)
-* `pick_and_place.launch`:      Defines which components need to be started (=deployment of our application)
-
 The image shows the atomic building blocks (basic states and sub-state machines) which can be used for our application.
 
 Basic states:
@@ -70,6 +66,7 @@ Basic states:
 * `move_lin(pose)`              Moves to a given pose on a straight line avoiding collisions
 * `open_gripper()`              Opens the gripper
 * `close_gripper()`             Closes the gripper
+
 Sub-state machines:
 * `pick_object(area)`           Picks up an object from a given target area (uses move_planned, move_lin and close_gripper)
 * `place_object(area)`          Places an object on a given target area (uses move_planned, move_lin and open_gripper)
@@ -79,6 +76,18 @@ The following screenshots show the composition of the `pick_object` and the `pla
 |`pick_object`|`place_object`|
 |:-----------:|:------------:|
 |<img src="./doc/pick.png" width="350px" />|<img src="./doc/place.png" width="350px" />|
+
+The source code for the states and application above is distributed over four files inside the `ipa_seminar_application_pick_and_place` package. Each file represents one aspect of the **separation of concerns**:
+* `src/pick_and_place_states.py`:   Defines basic states (= building blocks for our application)
+* `src/pick_and_place.py`:          Defines the pick and place application (= coordination for our application)
+* `config/application_config.yaml`:    Defines the target areas (= configuration for our application)
+* `launch/pick_and_place.launch`:      Defines which components need to be started (= deployment of our application)
+
+You can navigate to the package and open the files e.g. with
+```
+roscd ipa_seminar_application_pick_and_place
+gedit config/application_config.yaml
+```
 
 <a href="#top">top</a>
 
@@ -128,13 +137,13 @@ smach.StateMachine.add('PLACE_OBJECT', place_object(target_area),
 				'error':'error'})
 ```
 
-To start the application again and check your modifications:
+Save the file and start the application with your modifications again with
 ```
 roslaunch ipa_seminar_application_pick_and_place pick_and_place.launch
 ```
 
 #### Change the target areas
-If you want to change the target and source areas where the objects will be picked and places you can do that by just changing the names for the areas in the `main()` function of the application:
+If you want to change the target and source areas where the objects will be picked and placed you can do that by just changing the names for the predefined areas in the `main()` function of the application:
 ```
 smach.StateMachine.add('PICK_AND_PLACE_OBJECT', pick_and_place_object(source_area="area_1", target_area="area_2"),
 	transitions={	'succeeded':'overall_succeeded',
@@ -147,6 +156,24 @@ smach.StateMachine.add('PICK_AND_PLACE_OBJECT', pick_and_place_object(source_are
 	transitions={	'succeeded':'overall_succeeded',
 					'failed':'overall_failed',
 					'error':'error'})
+```
+
+Save the file and start the application with your modifications again with
+```
+roslaunch ipa_seminar_application_pick_and_place pick_and_place.launch
+```
+
+If you want to change the predefined areas or add new areas, you can do that in the file `application_config.yaml`:
+```
+roscd ipa_seminar_application_pick_and_place
+gedit config/application_config.yaml
+```
+
+The reference coordinate system is shown in RVIZ. Keep it mind that the areas need to be in the workspace of the arm, otherwise the application cannot be executed and will abort with a failure. 
+
+Save the file and start the application with your modifications again with
+```
+roslaunch ipa_seminar_application_pick_and_place pick_and_place.launch
 ```
 
 <a href="#top">top</a>
@@ -208,24 +235,31 @@ roscd ipa_seminar_application_pick_and_place/src
 gedit switch.py
 ```
 ```
-smach.StateMachine.add('A_TO_BUFFER', pick_and_place_object(area_a, buffer_area),
-	transitions={'succeeded':'B_TO_A', 
-				'failed':'failed',	
-				'error':'error'})
+            smach.StateMachine.add('A_TO_BUFFER', pick_and_place_object(area_a, buffer_area),
+                transitions={'succeeded':'B_TO_A', 
+                    'failed':'failed',
+                    'error':'error'})
 
-smach.StateMachine.add('B_TO_A', pick_and_place_object(area_b, area_a),
-	transitions={'succeeded':'succeeded',
-				'failed':'failed',
-				'error':'error'})
+            smach.StateMachine.add('B_TO_A', pick_and_place_object(area_b, area_a),
+                transitions={'succeeded':'BUFFER_TO_B',
+                'failed':'failed',
+                'error':'error'})
 
-smach.StateMachine.add('BUFFER_TO_B', pick_and_place_object(buffer_area, area_b),
-	transitions={'succeeded':'succeeded',
-				'failed':'failed',
-				'error':'error'})
+            smach.StateMachine.add('BUFFER_TO_B', pick_and_place_object(buffer_area, area_b),
+                transitions={'succeeded':'succeeded',
+                    'failed':'failed',
+                    'error':'error'})
 ```
-**Remember to undo your changes from step 3 in `pick_and_place.py`** because we don't want to have a continuous pick and place here.
+**Remarks:**
+* **Remember to undo your changes from step 3 in `pick_and_place.py`** because we don't want to have a continuous pick and place here.
+* **Python is very sensitive with tabs and spaces**, if you get an error when starting the application, check the indentation.
 
-#### Extend the application to sort a whole sequence of objects
+Save the file and start the application with your modifications with
+```
+roslaunch ipa_seminar_application_pick_and_place switch.launch
+```
+
+#### Extend the application to sort a whole sequence of objects (optional)
 Based on the `switch_objects` state you can build up an application to sort a sequence of objects. E.g.
 
 |	|Area1	|Area2	|Area3	|Area4	|Area5	|
