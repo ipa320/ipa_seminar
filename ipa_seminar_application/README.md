@@ -14,9 +14,9 @@
 This section quickly introduces basic tools used within this tutorial. It also lists several helpful (terminal) commands that are used frequently throughout this tutorial.
 
 #### Tools
-We use _Terminator_ as a command prompt. You can find a shortcut on the left bar of your screen. Commands given in the following can be copied into the _Terminator_ window. During the tutorial sometimes several terminal windows are needed. The terminal can be split into several sub-windows by using the _Split Horizontically/Vertically_ feature after a right-click on the _Terminator_ window.
+We use _Terminator_ as a command prompt. You can find a shortcut on the left bar of your screen. Commands given in the following can be copied into the _Terminator_ window. During the tutorial sometimes several terminal windows are needed. The terminal can be split into several sub-windows by using the _Split Horizontally/Vertically_ feature after a right-click on the _Terminator_ window.
 
-We wil use _gedit_ as a text edior. You can find a shortcut on the left bar of your screen as well. The editor can also be opened by running `gedit` in a terminal window.
+We will use _gedit_ as a text editor. You can find a shortcut on the left bar of your screen as well. The editor can also be opened by running `gedit` in a terminal window.
 
 #### Useful terminal commands
 You can find a list of useful tools and terminal commands in the [ROS Cheat Sheet](http://download.ros.org/downloads/ROScheatsheet.pdf "ROS Cheat Sheet").
@@ -46,7 +46,7 @@ export ROS_MASTER_URI=http://robot-lbr:11311
 ### 2. Running a pick and place application with SMACH  
 **Task**: Run a pick and place application for the universal robot arm.
 
-**Goal**: Lern how to start and monitor a SMACH application.
+**Goal**: Learn how to start and monitor a SMACH application.
 
 #### Start the application
 To start the application:
@@ -79,7 +79,7 @@ Sub-state machines:
 * `pick_object(area)`           Picks up an object from a given target area (uses move_planned, move_lin and close_gripper)
 * `place_object(area)`          Places an object on a given target area (uses move_planned, move_lin and open_gripper)
 
-The following sheenshots show the composition of the `pick_object` and the `place_object` state machines out of the given basic states:
+The following screenshots show the composition of the `pick_object` and the `place_object` state machines out of the given basic states:
 
 |`pick_object`|`place_object`|
 |:-----------:|:------------:|
