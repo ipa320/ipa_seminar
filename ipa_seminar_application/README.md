@@ -5,33 +5,23 @@
 ### Contents
 
 1. <a href="#1--introduction">Introduction</a>
-2. <a href="#2-Running-a-pick-and-place-application-with-SMACH">Running a pick and place application</a>  
+2. <a href="#2-Running-a-pick-and-place-application-with-SMACH">Running a pick and place application</a>
+2. <a href="#2-Running-a-pick-and-place-application-with-SMACH">Running a pick and place application</a>
+2. <a href="#2-Running-a-pick-and-place-application-with-SMACH">Running a pick and place application</a>
+2. <a href="#2-Running-a-pick-and-place-application-with-SMACH">Running a pick and place application</a>
 
+### 1. Introduction
+This section quickly introduces basic tools used within this tutorial. It also lists several helpful (terminal) commands that are used frequently throughout this tutorial.
 
-### 1.  Introduction
+#### Tools
+We use _Terminator_ as a command prompt. You can find a shortcut on the left bar of your screen. Commands given in the following can be copied into the _Terminator_ window. During the tutorial sometimes several terminal windows are needed. The terminal can be split into several sub-windows by using the _Split Horizontically/Vertically_ feature after a right-click on the _Terminator_ window.
 
-This section quickly introduces basic tools used within this tutorial.  
-It also lists several helpful (terminal) commands that are used frequently throughout this tutorial.  
+We wil use _gedit_ as a text edior. You can find a shortcut on the left bar of your screen as well. The editor can also be opened by running `gedit` in a terminal window.
 
-#### 1.1. Tools  
+#### Useful terminal commands
+You can find a list of useful tools and terminal commands in the [ROS Cheat Sheet](http://download.ros.org/downloads/ROScheatsheet.pdf "ROS Cheat Sheet").
 
-We use _Terminator_ as a command prompt. You can find a shortcut on the left bar of your screen. Commands given in the following can be copied into the _Terminator_ window. During the tutorial sometimes several terminal windows are needed. The terminal can be split into several sub-windows by using the _Split Horizontically/Vertically_ feature after a right-click on the _Terminator_ window.  
-
-We wil use _gedit_ as a text edior. You can find a shortcut on the left bar of your screen as well. The editor can also be opened by running `gedit` in a terminal window.  
-
-#### 1.2. Helpful Commands
-
-For navigating to specific ROS packages or files, the easiest way to do so is to use the command `roscd <package_name>` where `<package_name>` is the name of the ROS package you want to navigate to, e.g. `lbr_bringup`.  `roscd` brings you to the desired package from any previous location. After the `<package_name>`, pressing `TAB` can be used for auto-completion in order to navigate further within the ROS package.  
-
-For editing a file simply use `roscd` to navigate to the folder of the file and then type `gedit <file_name>` where `<file_name>` is the name of the file you want to edit.  
-
-For more helpful ROS commands have a look at the [ROS Cheat Sheet](http://download.ros.org/downloads/ROScheatsheet.pdf "ROS Cheat Sheet").  
-
-For convenience, all required ROS packages are already installed and the environment (i.e. environment variables) is set up correctly. Whenever an environment variable (e.g. ROS_MASTER_URI) needs to be changed this is stated below.  
-
-Also, an example solution for this tutorial is already available. Whenever you want to have a look at the solution files or you want to run the solution, simply type `solution` in the terminal before opening the respective file or running the command.  
-
-<a href="#top">top</a> 
+For convenience, all required ROS packages are already installed and the environment (i.e. environment variables) is set up correctly. Whenever an environment variable (e.g. ROS_MASTER_URI) needs to be changed this is stated below.
 
 #### SMACH
 SMACH is a finite state machine programming approach in ROS. It is based on python and allows to define states as basic building blocks as well as run them in various containers and compose them to state machines. State machines can on the other hand consist of sub-state machines again. You can find more information about SMACH at the [SMACH wiki page](http://wiki.ros.org/smach).
@@ -51,6 +41,7 @@ So for the simulated Kuka LBR this would be
 export ROS_MASTER_URI=http://robot-lbr:11311
 ```
 
+<a href="#top">top</a>
 
 ### 2. Running a pick and place application with SMACH  
 **Task**: Run a pick and place application for the universal robot arm.
@@ -90,6 +81,7 @@ Sub-state machines:
 * pick_object(area)           Picks up an object from a given target area (uses move_planned, move_lin and close_gripper)
 * place_object(area)          Places an object on a given target area (uses move_planned, move_lin and open_gripper)
 
+<a href="#top">top</a>
 
 ### 3. Run the pick an place application continuously
 **Task**: Modify the application in a way that it runs continuously.
@@ -158,6 +150,7 @@ smach.StateMachine.add('PICK_AND_PLACE_OBJECT', pick_and_place_object(source_are
 					'error':'error'})
 ```
 
+<a href="#top">top</a>
 
 ### 4. Transfer the application to other robots
 **Task**: Run the same application on various robots.
@@ -178,7 +171,7 @@ Based on the standardizes ROS API to the driver layer and the higher level capab
 * Separation of roles.
 * Robots need to have similar workspaces or at least cover the target areas.
 
-
+<a href="#top">top</a>
 
 ### 5. Create a new appication (new state machine)
 **Task**: Define a new application to switch two objects.
@@ -231,7 +224,6 @@ smach.StateMachine.add('BUFFER_TO_B', pick_and_place_object(buffer_area, area_b)
 				'error':'error'})
 ```
 **Remember to undo your changes from step 3 in `pick_and_place.py`** because we don't want to have a continuous pick and place here.
-
 
 #### Extend the application to sort a whole sequence of objects
 Based on the `switch_objects` state you can build up an application to sort a sequence of objects. E.g.
