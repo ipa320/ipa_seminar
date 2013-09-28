@@ -186,8 +186,8 @@ Based on the standardizes ROS API to the driver layer and the higher level capab
 
 The task is to define a new application which is able to switch the place of two objects. We have the following situation:
 
-|:------:|:-----:|
 |Area1 |Area2 |
+|:------:|:-----:|
 |A |B |
 
 Now we want to change the places of object A and B to get
