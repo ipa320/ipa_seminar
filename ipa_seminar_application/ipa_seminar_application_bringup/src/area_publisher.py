@@ -28,14 +28,31 @@ def publisher():
 				marker.header.stamp = rospy.Time.now()
 				marker.pose = get_pose_from_parameter_server(area).pose
 				marker.pose.position.z = 1.0
-				marker.ns = area
+				marker.ns = area + "cube"
 				marker.type = 1
 				marker.scale.x = 0.1
 				marker.scale.y = 0.1
 				marker.scale.z = 0.01
 				marker.color = color
 				pub.publish(marker)
-			
+
+				# arrow
+				arrow_marker = Marker()
+				arrow_marker.header.frame_id = "/base_link"
+				arrow_marker.header.stamp = rospy.Time.now()
+				arrow_marker.pose = get_pose_from_parameter_server(area).pose
+				arrow_marker.pose.position.z = 1.01
+				arrow_marker.ns = area + "arrow"
+				arrow_marker.type = 0
+				arrow_marker.scale.x = 0.2
+				arrow_marker.scale.y = 0.01
+				#arrow_marker.scale.z = 0.3
+				arrow_marker.color.r = 1
+				arrow_marker.color.g = 0
+				arrow_marker.color.b = 0
+				arrow_marker.color.a = 1
+				pub.publish(arrow_marker)
+
 				# text
 				text_marker = Marker()
 				text_marker.header.frame_id = "/base_link"
@@ -45,7 +62,7 @@ def publisher():
 				text_marker.ns = area + "text"
 				text_marker.type = 9
 				text_marker.scale.z = 0.075
-				text_marker.color= color
+				text_marker.color = color
 				text_marker.text = area
 				pub.publish(text_marker)
 
