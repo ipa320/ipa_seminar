@@ -4,6 +4,8 @@
 
 ### Contents
 
+[TOC]
+
 1. <a href="#1--introduction">Introduction</a>
 2. <a href="#2-Running-a-pick-and-place-application-with-SMACH">Running a pick and place application</a>
 2. <a href="#2-Running-a-pick-and-place-application-with-SMACH">Running a pick and place application</a>
