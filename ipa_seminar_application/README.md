@@ -192,7 +192,9 @@ The task is to define a new application which is able to switch the place of two
 
 Now we want to change the places of object A and B to get
 
-IMAGE B A -
+|Area1 |Area2 |
+|:------:|:-----:|
+|B |A |
 
 #### Approach
 To solve this, we'll have to implement the following sequence:
