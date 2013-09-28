@@ -97,11 +97,11 @@ The following sheenshots show the composition of the `pick_object` and the `plac
 #### Modify the application code
 We will have to modify the state machine which coordinates the pick and place application. At the moment the state machine looks like this:
 
-SCREENSHOT PICK_AND_PLACE SINGLE
+<img src="./doc/pick_and_place.png" width="700px" />
 
 Now we want to have a continuously running pick and place application which should look like this:
 
-SCREENSHOT PICK_AND_PLACE CONTINUOUS
+<img src="./doc/pick_and_place_continuous.png" width="700px" />
 
 You can open the pick and place application file with
 ```
