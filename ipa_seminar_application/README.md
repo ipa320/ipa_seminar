@@ -81,6 +81,9 @@ Sub-state machines:
 * pick_object(area)           Picks up an object from a given target area (uses move_planned, move_lin and close_gripper)
 * place_object(area)          Places an object on a given target area (uses move_planned, move_lin and open_gripper)
 
+The following sheenshots show the composition of the `pick_object` and the `place_object` state machines out of the given basic states:
+|![pick_object](./doc/pick.png "Pick object state machine") | ![place_object](./doc/place.png "Place object state machine")|
+
 <a href="#top">top</a>
 
 ### 3. Run the pick an place application continuously
