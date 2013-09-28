@@ -13,11 +13,6 @@
 ### 1. Introduction
 This section quickly introduces basic tools used within this tutorial. It also lists several helpful (terminal) commands that are used frequently throughout this tutorial.
 
-#### Tools
-We use _Terminator_ as a command prompt. You can find a shortcut on the left bar of your screen. Commands given in the following can be copied into the _Terminator_ window. During the tutorial sometimes several terminal windows are needed. The terminal can be split into several sub-windows by using the _Split Horizontally/Vertically_ feature after a right-click on the _Terminator_ window.
-
-We will use _gedit_ as a text editor. You can find a shortcut on the left bar of your screen as well. The editor can also be opened by running `gedit` in a terminal window.
-
 #### Useful terminal commands
 You can find a list of useful tools and terminal commands in the [ROS Cheat Sheet](http://download.ros.org/downloads/ROScheatsheet.pdf "ROS Cheat Sheet").
 
