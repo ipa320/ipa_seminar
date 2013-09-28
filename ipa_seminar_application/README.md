@@ -6,9 +6,9 @@
 
 1. <a href="#1--introduction">Introduction</a>
 2. <a href="#2-Running-a-pick-and-place-application-with-SMACH">Running a pick and place application</a>
-3. <a href="#3-Running-a-pick-and-place-application-with-SMACH">Running a pick and place application</a>
-4. <a href="#4-Running-a-pick-and-place-application-with-SMACH">Running a pick and place application</a>
-5. <a href="#5-Running-a-pick-and-place-application-with-SMACH">Running a pick and place application</a>
+3. <a href="#3-run-the-pick-an-place-application-continuously">Run the pick and place application continuously</a>
+4. <a href="#4-transfer-the-application-to-other-robots">Transfer the application to other robots</a>
+5. <a href="#5-create-a-new-application-new-state-machine">Create a new application (new state machine)</a>
 
 ### 1. Introduction
 This section quickly introduces basic tools used within this tutorial. It also lists several helpful (terminal) commands that are used frequently throughout this tutorial.
@@ -177,7 +177,7 @@ Based on the standardizes ROS API to the driver layer and the higher level capab
 
 <a href="#top">top</a>
 
-### 5. Create a new appication (new state machine)
+### 5. Create a new application (new state machine)
 **Task**: Define a new application to switch two objects.
 
 **Goal**: Learn how to define new state machines composed out of already existing sub-state machines.
