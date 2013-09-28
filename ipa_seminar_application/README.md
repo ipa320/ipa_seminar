@@ -4,15 +4,11 @@
 
 ### Contents
 
-![TOC]
-
-{:toc}
-
 1. <a href="#1--introduction">Introduction</a>
 2. <a href="#2-Running-a-pick-and-place-application-with-SMACH">Running a pick and place application</a>
-2. <a href="#2-Running-a-pick-and-place-application-with-SMACH">Running a pick and place application</a>
-2. <a href="#2-Running-a-pick-and-place-application-with-SMACH">Running a pick and place application</a>
-2. <a href="#2-Running-a-pick-and-place-application-with-SMACH">Running a pick and place application</a>
+3. <a href="#3-Running-a-pick-and-place-application-with-SMACH">Running a pick and place application</a>
+4. <a href="#4-Running-a-pick-and-place-application-with-SMACH">Running a pick and place application</a>
+5. <a href="#5-Running-a-pick-and-place-application-with-SMACH">Running a pick and place application</a>
 
 ### 1. Introduction
 This section quickly introduces basic tools used within this tutorial. It also lists several helpful (terminal) commands that are used frequently throughout this tutorial.
