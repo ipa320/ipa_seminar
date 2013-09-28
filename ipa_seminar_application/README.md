@@ -184,9 +184,10 @@ Based on the standardizes ROS API to the driver layer and the higher level capab
 
 **Goal**: Learn how to define new state machines composed out of already existing sub-state machines.
 
-The task is to define a new application which is able to swich place of two objects. We have the following situation:
+The task is to define a new application which is able to switch the place of two objects. We have the following situation:
 
-IMAGE A B -
+|Area1 |Area2 |
+|A |B |
 
 Now we want to change the places of object A and B to get
 
