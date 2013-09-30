@@ -1,4 +1,4 @@
-disable sticky edges
+disable sticky edges, check monitor configuration
 
 
 add users (usernames: group1...group4, pw: group1...group4)
@@ -8,12 +8,16 @@ sudo adduser group1
 ```
 
 
-
+on ros account
 ```
 sudo apt-get install ros-groovy-cob* ros-groovy-moveit-*
+```
 
+
+on all user accounts
+```
 mkdir ~/git
-rosinstall -j 8 ~/git application.rosinstall
+rosinstall -j 8 ~/git /home/ros/application.rosinstall
 ```
 
 
