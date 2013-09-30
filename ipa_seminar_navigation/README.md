@@ -10,8 +10,7 @@ Mobile robot navigation with ROS
 4. <a href="#4-localizing-in-the-environment">Localizing in the environment</a>
 5. <a href="#5-path-planning-using-elastic-band">Path planning using Elastic Band</a>
 6. <a href="#6-writing-a-small-application">Writing a small application</a>
-7. <a href="#7-optional-using-3d-sensors-in-navigation">Optional: Using 3D sensors in navigation</a>
-8. <a href="#8-help">Help</a>
+7. <a href="#7-help">Help</a>
 
 
 ### 1. Prerequisites
@@ -48,9 +47,11 @@ Note following rviz settings:
 * Activated Laserscanner plugins for front and rear
 * Activated robot_model plugin
 
-To initialize the mobile base press the deadman button on the joystick (see picture below) and the start button at the same time. (not required in simulation)
+To initialize the mobile base press the "deadman" button on the joystick (see picture below) and the "Init" button at the same time. (not required in simulation)
 
-You can now move around the robot using the joystick. Use the deadman button and the two analog joysticks. You will notice how the laser scans show the environment and that you can move tranlational and rotational at the same time. Try to get a feeling how the platform move, as you need to move the robot lateron during mapping.
+![Position of buttons on the joystick](/doc/Joystick.png)
+
+You can now move around the robot using the joystick. Use the "deadman" button and the two analog joysticks for base movement. You will notice how the laser scans show the environment and that you can move tranlational and rotational at the same time. Try to get a feeling how the platform move, as you need to move the robot lateron during mapping.
 
 
 <a href="#top">top</a> 
@@ -122,10 +123,18 @@ Analyze tf frames by activating tf plugin. Find and watch frame /map, /odom\_com
 
 <a href="#top">top</a> 
 ### 5. Path planning using Elastic Band
+Start the robot on a terminal:
 
-Start bringup
-Start amcl and move_base with just created map
-Start rviz config
+	roslaunch seminar_navigation robot_bringup.launch
+	
+Now start the prepared launch file to start the overall navigation with move_base and amcl:
+
+	roslaunch seminar_navigation robot_bringup.launch
+
+To control the robot we will use RVIZ again:
+
+	roslaunch seminar_navigation rviz_amcl.launch
+
 Note following rviz settings:
 
 * map origin
@@ -136,17 +145,43 @@ Note following rviz settings:
 * Activated marker plugin
 * Activated robot_model plugin
 
-Use set_position estimate tool in rviz to set initial localization
+Once everything is started you should localize the platform again using the "set pose estimate" tool (see previous section). Now you can use the move to tool from rviz to command goals to the mobile platform. See the picture below:
+
+![RVIZ during localization with amcl](/doc/rviz_amcl.png)
+
+While commanding the goals to the platform you can see the global path that was planned by move_base as well as the green bubles that are representing the reactive path. 
+
 
 <a href="#top">top</a> 
 ### 6. Writing a small application
-<a href="#top">top</a> 
-### 7. Optional: Using 3D sensors in navigation
+
+	#!/usr/bin/python
+	import roslib
+	roslib.load_manifest('cob_script_server')
+	import rospy
+
+	from simple_script_server import script
+
+	class MyScript(script):
+    		def Initialize(self):
+        		if(self.sss.parse == False):
+            			rospy.loginfo("Please set initial pose in RVIZ")
+            			raw_input("Press Enter when done")
+
+    		def Run(self):
+        		rospy.loginfo("Running script...")
+        		self.sss.move("base",[-0.831, 0.082, -0.376]) # Moving base to position x, y, yaw with unit [m, m, rad]
+        		self.sss.move("base",[-0.286, -4.197, 0.754])
+
+	if __name__ == "__main__":
+    		SCRIPT = MyScript()
+    		SCRIPT.Start()
 
 
 
 <a href="#top">top</a> 
-### 8. Help  
+
+### 7. Help  
 
 
 
@@ -154,8 +189,8 @@ Use set_position estimate tool in rviz to set initial localization
 
 In case of questions - now or later - do not hestate to contact your navigation expert at Fraunhofer IPA:
 
-Dipl.-Ing. Alexander Bubeck
-e-mail: [alexander.bubeck@ipa.fraunhofer.de](mailto: alexander.bubeck@ipa.fraunhofer.de)
-phone: +49 711 970-1314
+	Dipl.-Ing. Alexander Bubeck
+	e-mail: alexander.bubeck@ipa.fraunhofer.de
+ 	phone: +49 711 970-1314
 
 <a href="#top">top</a> 
