@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+
+	<arg name="robot"/>
+
+	<!-- upload application configuration to parameter server -->
+	<rosparam command="load" ns="/application" file="$(find ipa_seminar_application_pick_and_place)/config/application_config.yaml"/>
+
+	<!-- start pick and place application -->
+	<node pkg="ipa_seminar_application_pick_and_place" type="switch.py" name="switch_application" output="screen"/>
+
+</launch>

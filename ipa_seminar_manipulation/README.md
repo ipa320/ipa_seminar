@@ -192,32 +192,48 @@ In such case the Setup Assistant will notify you that configuration files have b
 ### 3. MoveIt! - RVIZ-Plugin  
 
 The following will explain the main important points about the MoveIt! RVIZ Plugin.  
-A PR2-specific tutorial can be found [here](http://moveit.ros.org/wiki/PR2/Rviz_Plugin/Quick_Start).  
 
 #### 3.1. Plugin Environment Basics  
 
-In order to get familar with MoveIt! step-by-step, we will first use MoveIt! in its most basic form:
+In order to get familar with MoveIt! step-by-step, we will first use MoveIt! in its most basic form - the demo mode. The demo mode allows us to test the MoveIt! configuration in a simple simulation environment. Execution on the real robot hardware will follow lateron in step 5.  
+
+For starting the demo mode, simply run: 
 ```
 roslaunch lbr_moveit_config demo.launch config:=true
 ```
 
-This will start up the main MoveIt! node called _move_group_ and an RVIZ window with the MoveIt!-Plugin loaded.  
+This will start up the main MoveIt! node called _move_group_ and an RVIZ window with the MoveIt!-Plugin loaded (You might need to maximize the RVIZ window in order to see everything).  
 
-__ToDo: Screenshot of original RVIZ config - annotated!!!__  
+The RVIZ window consists of three main parts:  
+* the visualization on the right
+* the _Displays_ section on the top left
+* the MoveIt! control panel on the lower left
 
-The window consists of three main parts:  
-* On the right you can see a visualization of the robot augmented with various additional (virtual) information.
-* Within the _Displays_ section additional plugins can be added, removed or configured.
-* On the lower left you can see the MoveIt! control panel. 
+In the visualization, you will see several models of the robot:
+* the _Scene Robot_ which displays the current state of the robot
+* the _Start State_ which virtually displays the start state for a planning request (depicted in green with an interactive marker attached)
+* the _Goal State_ which virutally displays the goal state for a planning request (depicted in orange wiht an interactive marker attached)
+* the _Planned Path_ whicht virtually displays the result trajectory of a planning request
+
+You can modify the view using the _Display_ section. There you can toggle some of the displays on or off, change colors and so on. You can save the changes into the RVIZ configuration file via the menu bar at the top.  
+
+Configure your view so that you can see both the _Start State_ and the _Goal State_. Also disable _Loop Animation_ in the _Planned Path_ section.  
+
+![RVIZ-Plugin-Trail](./doc/rviz_plugin_trail_annotated.png "RVIZ-Plugin-Trail")
+
 
 #### 3.2. Planning Request  
 
-Get used with the RVIZ environment and the plugins by:
-* Move between pre-defined robot poses
-* Move using Start-/Goal-InteractiveMarker
-* Configure your visualization as you like (e.g. show trail)
+In order to send planning requests to MoveIt!, we will use the interactive markers and the MoveIt! control panel on the lower left.  
 
-![RVIZ-Plugin-Trail](./doc/rviz_plugin_trail_annotated.png "RVIZ-Plugin-Trail")
+In the _Context_ tab of the MoveIt! control panel, make sure it says "OMPL" underneath the Planning Library. This means MoveIt! has loaded all required components. Then switch to the _Planning_ tab.  
+
+In this tab, we can modify the _Start State_ and the _Goal State_ of the robot by dragging the interactive markers in the visualization. You can also set either the _Start State_ or the _Goal State_ to one of the previously defined robot poses using the drag down menu in the MoveIt! control panel.  
+
+Once you configured the _Start State_ and the _Goal State_ of the robot, click _Plan_ in the control panel for planning the trajectory. If successful, the result is shown in the visualization.  
+
+The buttons _Execute_ and _Plan and Execute_ are without function in the demo mode. We will use them lateron when working with the real robot hardware (see <a href="#43-enhanced-usage">Enhanced Usage</a>).  
+
 
 <a href="#top">top</a> 
 
@@ -310,9 +326,7 @@ More about the concept of executing trajectories with MoveIt! can be found [here
 #### 4.3 Enhanced Usage  
 
 Finally, we have all together to use MoveIt! on our KUKA LBR!  
-We will use the MoveIt! RVIZ-Plugin again to experience the new capabilities we just configured.  
-
-
+In order to work with the real robot hardware, the robot needs to be initialized first. Ask your tutor to do so.  
 
 ![CAUTION](./doc/yellow-warning.gif "CAUTIOIN") CAUTION ZONE ![CAUTION](./doc/yellow-warning.gif "CAUTIOIN")  
 * Only use the robot under supervision of your tutor
@@ -320,45 +334,27 @@ We will use the MoveIt! RVIZ-Plugin again to experience the new capabilities we 
 * In case of unexpected behavior or in case the robot is about to collide hit the emergency button immediately
 * After the emergency button has been pressed, ask your tutor to recover the robot
 
-__ToDo: call robot alias?__  
+We will use the MoveIt! RVIZ-Plugin again to experience the new capabilities we just configured. However, this time we will not use the demo mode.  
 
-
-In order to work with the real robot hardware lateron, the robot needs to be initialized first. Ask your tutor to do so.  
-Then, simply run:
+To start MoveIt! with the robot hardware run:  
 ```
-roslaunch lbr_bringup robot.launch
-```
-This will start up all necessary drivers.  
-
-<a href="#top">top</a> 
-
-
-
-
-
-Bring up the robot as descriped in section 1.2.
-```
-roslaunch lbr_bringup robot.launch
-```
-Next we will start MoveIt! with the new capabilities by running (in new terminal):
-```
+export ROS_MASTER_URI=http://pyramid-2:11311
 roslaunch lbr_moveit_config move_group.launch
 ```
-And to start RVIZ (in new terminal):
+
+Also we need to start RVIZ seperately using (in a new terminal):
 ```
-roslaunch lbr_moveit_config moveit_rviz.launch
+export ROS_MASTER_URI=http://pyramid-2:11311
+roslaunch lbr_moveit_config moveit_rviz.launch config:=true
 ```
 
 We will see our robot in its current Planning Scene. 
 
-__ToDo: Screenshot RVIZ with real robot and CollisionMap - annotated!__
+![RealPlanningScene](./doc/real_planning_scene.png "RealPlanningScene")
 
 As in the previous step we can compose Planning Requests in RVIZ using the InteractiveMarkers or move to pre-defined robot poses.  
-Once you composed a new Planning Request, click _Plan_ in the control panel of the plugin. MoveIt! starts to solve your request and - if successfull - you should see the resulting trajectory.  
 
-![CAUTION](./doc/yellow-warning.gif "CAUTIOIN") CAUTION ZONE ![CAUTION](./doc/yellow-warning.gif "CAUTIOIN")  
-
-The resulting trajectory can be executed on the robot by clicking _Execute_ in the control panel.  
+Once you composed a new Planning Request, click _Plan_ in the control panel of the plugin. MoveIt! starts to solve your request and - if successfull - you should see the resulting trajectory. The resulting trajectory can then be executed on the robot by clicking _Execute_ in the control panel.  
 
 By clicking _Plan and Execute_, MoveIt! will directly execute your Planning Request - if planned successfully.  
 When using this mode - ___only in this mode!___ - also _reactive_ planning is activated. This means that MoveIt! monitors the execution of the trajectory, updating the Planning Scene continuously. As soon as changes in the environment, e.g. a new obstacle, crosses the trajectory thus leading to a collision, MoveIt! stops the execution and tries to replan, i.e. find another trajectory to the specified goal considering the new environment situation.  
@@ -462,16 +458,27 @@ The functions mentioned above can now be used as `mgc.<function_name>()` with th
 
 #### 6.3. Script-Execution
 
-In order to run your script, either a simulation or the real robot hardware needs to be running (see Section 1).  Also MoveIt! needs to be started (in new terminal):  
+In order to run your script, the robot hardware needs to be running.  Also MoveIt! needs to be started (see <a href="#43-enhanced-usage">Enhanced Usage</a>):  
 ```
+export ROS_MASTER_URI=http://pyramid-2:11311
 roslaunch lbr_moveit_config move_group.launch
 ```
-and in another new terminal:
+and in a new terminal:
 ```
-roslaunch lbr_moveit_config moveit_rviz.launch
+export ROS_MASTER_URI=http://pyramid-2:11311
+roslaunch lbr_moveit_config moveit_rviz.launch config:=true
 ```
 
-The following example shows a script that combines everything we learned in this section.
+Run your script (in a new terminal):
+```
+export ROS_MASTER_URI=http://pyramid-2:11311
+roscd <your_file_location>
+python <your_file_name>
+```
+
+
+
+The following example shows a script that combines everything we learned in this section. It can be found [here](https://github.com/ipa320/ipa_seminar/blob/master/ipa_seminar_manipulation/lbr_bringup/scripts/scripting_example.py "Script Example").  
 ```python
 #!/usr/bin/env python
 import roslib; roslib.load_manifest('lbr_bringup')

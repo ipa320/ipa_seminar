@@ -33,12 +33,11 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 SET(robotlist
 ur
 lbr
-#kr16
+lwa4d
 )
 
 # loop through list of robots for testing
 FOREACH(robot ${robotlist})
 	MESSAGE("testing for robot: ${robot}")
 	rosbuild_add_roslaunch_check(launch robot:=${robot})
-	rosbuild_add_rostest(helper/urdf_${robot}.test)
 ENDFOREACH(robot)
