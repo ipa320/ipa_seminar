@@ -35,6 +35,12 @@ So for the simulated Kuka LBR this would be
 export ROS_MASTER_URI=http://robot-lbr:11311
 ```
 
+#### Make sure your code is up-to-date
+```
+roscd ipa_seminar
+git pull origin master
+```
+
 <a href="#top">top</a>
 
 ### 2. Running a pick and place application with SMACH  
