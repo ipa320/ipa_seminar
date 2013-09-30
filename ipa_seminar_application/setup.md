@@ -34,7 +34,8 @@ export ROS_PACKAGE_PATH=~/git:$ROS_PACKAGE_PATH
 export ROS_PARALLEL_JOBS=-j5
 
 #show ROS_MASTER_URI in bash prompt
-export PS1="\u@\h:\w\e[0;32m{$ROS_MASTER_URI}\e[m$"
+export PS1="\[\u@\h:\w\e[0;32m{$ROS_MASTER_URI}\e[m$\]"
+
 ```
 
 build
