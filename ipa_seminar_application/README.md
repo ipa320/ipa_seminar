@@ -24,10 +24,12 @@ The `ROS_MASTER_URI` can be used to connect to different ROS cores. In this tuto
 * Universal Robot UR10 (real):  `robot-ur`
 * Kuka LBR (sim):               `robot-lbr`
 * Schunk LWA4d (sim):           `robot-lwa4d`
+
 You can export the `ROS_MASTER_URI` with
 ```
 export ROS_MASTER_URI=http://<<HOSTNAME>>:11311
 ```
+
 So for the simulated Kuka LBR this would be
 ```
 export ROS_MASTER_URI=http://robot-lbr:11311
@@ -43,8 +45,9 @@ export ROS_MASTER_URI=http://robot-lbr:11311
 We have already prepared a pick and place application which moves an object from `area_1` to `area_2`.
 
 #### Start the application
-To start the application:
+We'll start with the real robot which is running on `http://robot-lbr:11311`. To start the application:
 ```
+export ROS_MASTER_URI=http://robot-ur:11311
 roslaunch ipa_seminar_application_pick_and_place pick_and_place.launch
 ```
 
