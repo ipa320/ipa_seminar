@@ -1,6 +1,9 @@
+```
+sudo apt-get install ros-groovy-cob* ros-groovy-moveit-*
+
 mkdir ~/git
 rosinstall -j 8 ~/git application.rosinstall
-
+```
 
 
 add to ~/.bashrc:
