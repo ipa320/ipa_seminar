@@ -13,6 +13,7 @@ on ros account
 sudo apt-get install ros-groovy-cob* ros-groovy-moveit-*
 mkdir ~/git
 rosinstall -j 8 ~/git https://raw.github.com/ipa320/setup/master/repositories/seminar_application.rosinstall
+
 ```
 
 
@@ -32,11 +33,6 @@ export ROS_PARALLEL_JOBS=-j5
 
 #show ROS_MASTER_URI in bash prompt
 export PS1="\u@\h:\w\e[0;32m{$ROS_MASTER_URI}\e[m$"
-```
-
-source bashrc and do a rosmake
-```
-rosmake ipa_seminar_application_bringup ipa_seminar_application_pick_and_place
 ```
 
 update user accounts
