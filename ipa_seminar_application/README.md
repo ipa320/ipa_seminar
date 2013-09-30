@@ -144,19 +144,8 @@ roslaunch ipa_seminar_application_pick_and_place pick_and_place.launch
 
 #### Change the target areas
 If you want to change the target and source areas where the objects will be picked and placed you can do that by just changing the names for the predefined areas in the `main()` function of the application:
-```
-smach.StateMachine.add('PICK_AND_PLACE_OBJECT', pick_and_place_object(source_area="area_1", target_area="area_2"),
-	transitions={	'succeeded':'overall_succeeded',
-					'failed':'overall_failed',
-					'error':'error'})
-```
-e.g. to 
-```
-smach.StateMachine.add('PICK_AND_PLACE_OBJECT', pick_and_place_object(source_area="area_3", target_area="area_4"),
-	transitions={	'succeeded':'overall_succeeded',
-					'failed':'overall_failed',
-					'error':'error'})
-```
+
+From `area_1` e.g. to `area_3` and from `area_2` e.g. to `area_4`.
 
 Save the file and start the application with your modifications again with
 ```
