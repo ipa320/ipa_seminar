@@ -154,6 +154,31 @@ While commanding the goals to the platform you can see the global path that was 
 
 <a href="#top">top</a> 
 ### 6. Writing a small application
+
+	#!/usr/bin/python
+	import roslib
+	roslib.load_manifest('cob_script_server')
+	import rospy
+
+	from simple_script_server import script
+
+	class MyScript(script):
+    		def Initialize(self):
+        		if(self.sss.parse == False):
+            			rospy.loginfo("Please set initial pose in RVIZ")
+            			raw_input("Press Enter when done")
+
+    		def Run(self):
+        		rospy.loginfo("Running script...")
+        		self.sss.move("base",[-0.831, 0.082, -0.376]) # Moving base to position x, y, yaw with unit [m, m, rad]
+        		self.sss.move("base",[-0.286, -4.197, 0.754])
+
+	if __name__ == "__main__":
+    		SCRIPT = MyScript()
+    		SCRIPT.Start()
+
+
+
 <a href="#top">top</a> 
 
 ### 7. Help  
