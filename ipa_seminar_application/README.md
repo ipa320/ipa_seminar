@@ -21,8 +21,7 @@ SMACH is a finite state machine programming approach in ROS. It is based on pyth
 
 #### Exporting ROS_MASTER_URI
 The `ROS_MASTER_URI` can be used to connect to different ROS cores. In this tutorial we'll use several robots (partly real, partly in simulation). To connect to the correct robot to run your applications you will have to export an environment variable called `ROS_MASTER_URI`. Here's a list of the robots we're using and their corresponding `HOSTNAME`.
-* Universal Robot UR10 (real):  `robot-ur-real`
-* Universal Robot UR10 (sim):   `robot-ur-sim`
+* Universal Robot UR10 (real):  `robot-ur`
 * Kuka LBR (sim):               `robot-lbr`
 * Schunk LWA4d (sim):           `robot-lwa4d`
 You can export the `ROS_MASTER_URI` with
