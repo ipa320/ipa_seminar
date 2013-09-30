@@ -33,3 +33,12 @@ export ROS_PARALLEL_JOBS=-j5
 #show ROS_MASTER_URI in bash prompt
 export PS1="\u@\h:\w\e[0;32m{$ROS_MASTER_URI}\e[m$"
 ```
+
+
+
+
+update user accounts
+```
+cd ~/git/ipa_seminar
+git pull origin master
+```
