@@ -17,7 +17,7 @@ sudo apt-get install ros-groovy-cob* ros-groovy-moveit-*
 on all user accounts
 ```
 mkdir ~/git
-rosinstall -j 8 ~/git /home/ros/application.rosinstall
+rosinstall -j 8 ~/git https://raw.github.com/ipa320/setup/master/repositories/seminar_application.rosinstall
 ```
 
 
