@@ -19,7 +19,7 @@ rosinstall -j 8 ~/git https://raw.github.com/ipa320/setup/master/repositories/se
 on all user accounts
 ```
 mkdir ~/git
-git clone /home/ros/git/ipa_seminar ~/gi
+git clone /home/ros/git/ipa_seminar ~/git
 ```
 
 
