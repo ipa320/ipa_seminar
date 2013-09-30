@@ -10,8 +10,7 @@ Mobile robot navigation with ROS
 4. <a href="#4-localizing-in-the-environment">Localizing in the environment</a>
 5. <a href="#5-path-planning-using-elastic-band">Path planning using Elastic Band</a>
 6. <a href="#6-writing-a-small-application">Writing a small application</a>
-7. <a href="#7-optional-using-3d-sensors-in-navigation">Optional: Using 3D sensors in navigation</a>
-8. <a href="#8-help">Help</a>
+7. <a href="#7-help">Help</a>
 
 
 ### 1. Prerequisites
@@ -156,12 +155,8 @@ While commanding the goals to the platform you can see the global path that was 
 <a href="#top">top</a> 
 ### 6. Writing a small application
 <a href="#top">top</a> 
-### 7. Optional: Using 3D sensors in navigation
 
-
-
-<a href="#top">top</a> 
-### 8. Help  
+### 7. Help  
 
 
 
@@ -169,8 +164,8 @@ While commanding the goals to the platform you can see the global path that was 
 
 In case of questions - now or later - do not hestate to contact your navigation expert at Fraunhofer IPA:
 
-Dipl.-Ing. Alexander Bubeck
-e-mail: [alexander.bubeck@ipa.fraunhofer.de](mailto: alexander.bubeck@ipa.fraunhofer.de)
-phone: +49 711 970-1314
+	Dipl.-Ing. Alexander Bubeck
+	e-mail: alexander.bubeck@ipa.fraunhofer.de
+ 	phone: +49 711 970-1314
 
 <a href="#top">top</a> 
