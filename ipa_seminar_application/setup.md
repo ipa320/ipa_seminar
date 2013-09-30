@@ -1,3 +1,14 @@
+disable sticky edges
+
+
+add users (usernames: group1...group4, pw: group1...group4)
+```
+sudo adduser group1
+
+```
+
+
+
 ```
 sudo apt-get install ros-groovy-cob* ros-groovy-moveit-*
 
