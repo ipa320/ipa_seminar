@@ -11,13 +11,15 @@ sudo adduser group1
 on ros account
 ```
 sudo apt-get install ros-groovy-cob* ros-groovy-moveit-*
+mkdir ~/git
+rosinstall -j 8 ~/git https://raw.github.com/ipa320/setup/master/repositories/seminar_application.rosinstall
 ```
 
 
 on all user accounts
 ```
 mkdir ~/git
-rosinstall -j 8 ~/git https://raw.github.com/ipa320/setup/master/repositories/seminar_application.rosinstall
+git clone git@github.com:ipa320/ipa_seminar.git ~/git
 ```
 
 
