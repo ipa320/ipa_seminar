@@ -130,11 +130,11 @@ Start the robot on a terminal:
 	
 Now start the prepared launch file to start the overall navigation with move_base and amcl:
 
-	roslaunch seminar_navigation robot_bringup.launch
+	roslaunch seminar_navigation navigation_eband.launch
 
 To control the robot we will use RVIZ again:
 
-	roslaunch seminar_navigation rviz_amcl.launch
+	roslaunch seminar_navigation rviz_eband.launch
 
 Note following rviz settings:
 
