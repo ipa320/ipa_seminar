@@ -43,7 +43,7 @@ The rviz window should look like this:
 
 Note following rviz settings:
 
-* base_link origin
+* Fixed frame: base_link
 * Activated Laserscanner plugins for front and rear
 * Activated robot_model plugin
 
@@ -76,7 +76,7 @@ The rviz window should look like this:
 
 Note following rviz settings:
 
-* map origin
+* Fixed frame: map 
 * Activated map plugin with topic /map
 * Activated Laserscanner plugins for front and rear
 * Activated robot_model plugin
@@ -107,13 +107,13 @@ Start rviz config
 
 Note following rviz settings:
 
-* map origin
+* Fixed frame: map
 * Activated map plugin with topic /map
 * Activated Laserscanner plugins for front and rear
 * Activated pose estimate plugin
 * Activated robot_model plugin
 
-Use set_position estimate tool in rviz to set initial localization. See the picture below:
+Use "2D pose estimate" tool in rviz to set initial localization. See the picture below:
 
 ![RVIZ during localization with amcl](/doc/rviz_amcl.png)
 
@@ -137,7 +137,7 @@ To control the robot we will use RVIZ again:
 
 Note following rviz settings:
 
-* map origin
+* Fixed frame: map
 * Activated map plugin with topic /map
 * Activated Laserscanner plugins for front and rear
 * Activated pose estimate plugin
@@ -145,7 +145,7 @@ Note following rviz settings:
 * Activated marker plugin
 * Activated robot_model plugin
 
-Once everything is started you should localize the platform again using the "set pose estimate" tool (see previous section). Now you can use the move to tool from rviz to command goals to the mobile platform. See the picture below:
+Once everything is started you should localize the platform again using the "2D pose estimate" tool (see previous section). Now you can use the "2D nav goal" tool right of the other tool from rviz to command goals to the mobile platform. See the picture below:
 
 ![RVIZ during localization with amcl](/doc/rviz_amcl.png)
 
