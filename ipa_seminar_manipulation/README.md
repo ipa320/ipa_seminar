@@ -352,7 +352,7 @@ We will see our robot in its current Planning Scene.
 
 ![RealPlanningScene](./doc/real_planning_scene.png "RealPlanningScene")
 
-As in the previous step we can compose Planning Requests in RVIZ using the InteractiveMarkers or move to pre-defined robot poses.  
+As in the previous step we can compose Planning Requests in RVIZ using the InteractiveMarkers or move to pre-defined robot poses. Make sure to select only _current_ for the _Start State_ and click _update_ before planning to avoid unexpected jumps of the robot.  
 
 Once you composed a new Planning Request, click _Plan_ in the control panel of the plugin. MoveIt! starts to solve your request and - if successfull - you should see the resulting trajectory. The resulting trajectory can then be executed on the robot by clicking _Execute_ in the control panel.  
 
