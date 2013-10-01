@@ -10,7 +10,8 @@ Mobile robot navigation with ROS
 4. <a href="#4-localizing-in-the-environment">Localizing in the environment</a>
 5. <a href="#5-path-planning-using-elastic-band">Path planning using Elastic Band</a>
 6. <a href="#6-writing-a-small-application">Writing a small application</a>
-7. <a href="#7-help">Help</a>
+7. <a href="#7-optional-online-configuration-of-navigation">Optional: Online configuration of navigation</a>
+8. <a href="#8-help">Help</a>
 
 
 ### 1. Prerequisites
@@ -200,8 +201,27 @@ Now extend the script with more positions to let the platform move in each part 
 
 <a href="#top">top</a> 
 
-### 7. Help  
+### 7. Optional: Online configuration of navigation  
 
+When running the created script you can adapt the planning algorithm during runtime by using the dynamic\_reconfigure tool. To do so run the following command in a terminal:
+
+	rosrun rqt_reconfigure rqt_reconfigure
+	
+You should now see a window like in the picture below:
+
+![Online configuring the navigation](/doc/configure.png)
+
+You can now change the parameters during execution and see what happens.
+
+
+<a href="#top">top</a> 
+
+### 8. Help  
+
+You will can find online help on the documentation pages of the cob_navigation and ROS navigation stack at:
+
+	http://wiki.ros.org/cob_navigation
+	http://wiki.ros.org/navigation
 
 
 ===
