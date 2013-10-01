@@ -10,7 +10,8 @@ Mobile robot navigation with ROS
 4. <a href="#4-localizing-in-the-environment">Localizing in the environment</a>
 5. <a href="#5-path-planning-using-elastic-band">Path planning using Elastic Band</a>
 6. <a href="#6-writing-a-small-application">Writing a small application</a>
-7. <a href="#7-help">Help</a>
+7. <a href="#7-optional-online-configuration-of-navigation>Optional: Online configuration of navigation</a>
+7. <a href="#8-help">Help</a>
 
 
 ### 1. Prerequisites
