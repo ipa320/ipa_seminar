@@ -24,7 +24,7 @@ You should see a lot of topics starting with /camera/.
 
 To open rviz, run
 ```
-rosrun rviz rviz
+rosrun rviz rviz -d plain.rviz
 ```
 ![rviz1](./doc/rviz1.png "Plain RVIZ")
 

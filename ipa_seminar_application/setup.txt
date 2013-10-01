@@ -1,2 +1,0 @@
-show ROS_MASTER_URI in bash prompt:
-export PS1="\u@\h:\w\e[0;32m{$ROS_MASTER_URI}\e[m$"

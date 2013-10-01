@@ -21,17 +21,24 @@ SMACH is a finite state machine programming approach in ROS. It is based on pyth
 
 #### Exporting ROS_MASTER_URI
 The `ROS_MASTER_URI` can be used to connect to different ROS cores. In this tutorial we'll use several robots (partly real, partly in simulation). To connect to the correct robot to run your applications you will have to export an environment variable called `ROS_MASTER_URI`. Here's a list of the robots we're using and their corresponding `HOSTNAME`.
-* Universal Robot UR10 (real):  `robot-ur-real`
-* Universal Robot UR10 (sim):   `robot-ur-sim`
+* Universal Robot UR10 (real):  `robot-ur`
 * Kuka LBR (sim):               `robot-lbr`
 * Schunk LWA4d (sim):           `robot-lwa4d`
+
 You can export the `ROS_MASTER_URI` with
 ```
 export ROS_MASTER_URI=http://<<HOSTNAME>>:11311
 ```
+
 So for the simulated Kuka LBR this would be
 ```
 export ROS_MASTER_URI=http://robot-lbr:11311
+```
+
+#### Make sure your code is up-to-date
+```
+roscd ipa_seminar
+git pull origin master
 ```
 
 <a href="#top">top</a>
@@ -44,8 +51,9 @@ export ROS_MASTER_URI=http://robot-lbr:11311
 We have already prepared a pick and place application which moves an object from `area_1` to `area_2`.
 
 #### Start the application
-To start the application:
+We'll start with the real robot which is running on `http://robot-lbr:11311`. To start the application:
 ```
+export ROS_MASTER_URI=http://robot-ur:11311
 roslaunch ipa_seminar_application_pick_and_place pick_and_place.launch
 ```
 
@@ -142,19 +150,8 @@ roslaunch ipa_seminar_application_pick_and_place pick_and_place.launch
 
 #### Change the target areas
 If you want to change the target and source areas where the objects will be picked and placed you can do that by just changing the names for the predefined areas in the `main()` function of the application:
-```
-smach.StateMachine.add('PICK_AND_PLACE_OBJECT', pick_and_place_object(source_area="area_1", target_area="area_2"),
-	transitions={	'succeeded':'overall_succeeded',
-					'failed':'overall_failed',
-					'error':'error'})
-```
-e.g. to 
-```
-smach.StateMachine.add('PICK_AND_PLACE_OBJECT', pick_and_place_object(source_area="area_3", target_area="area_4"),
-	transitions={	'succeeded':'overall_succeeded',
-					'failed':'overall_failed',
-					'error':'error'})
-```
+
+From `area_1` e.g. to `area_3` and from `area_2` e.g. to `area_4`.
 
 Save the file and start the application with your modifications again with
 ```
