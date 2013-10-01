@@ -200,8 +200,27 @@ Now extend the script with more positions to let the platform move in each part 
 
 <a href="#top">top</a> 
 
-### 7. Help  
+### 7. Optional: Online configuration of navigation  
 
+When running the created script you can adapt the planning algorithm during runtime by using the dynamic\_reconfigure tool. To do so run the following command in a terminal:
+
+	rosrun rqt_reconfigure rqt_reconfigure
+	
+You should now see a window like in the picture below:
+
+![Online configuring the navigation](/doc/configure.png)
+
+You can now change the parameters during execution and see what happens.
+
+
+<a href="#top">top</a> 
+
+### 8. Help  
+
+You will can find online help on the documentation pages of the cob_navigation and ROS navigation stack at:
+
+	http://wiki.ros.org/cob_navigation
+	http://wiki.ros.org/navigation
 
 
 ===
