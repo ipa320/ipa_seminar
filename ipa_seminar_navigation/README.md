@@ -19,7 +19,7 @@ The navigation tasks in this tutorial can be run both on the real robot and in s
 
 To run the robot in simulation please use:
 
-	roslaunch seminar_navigation simulation_bringup.launch
+	roslaunch seminar_navigation simu_bringup.launch
 
 This launchfile will start a gazebo simulation of the robot and the environment with the necessary hardware and sensor interfaces.
 
