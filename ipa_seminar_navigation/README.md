@@ -43,7 +43,7 @@ The rviz window should look like this:
 
 Note following rviz settings:
 
-* base_link origin
+* Fixed frame: base_link
 * Activated Laserscanner plugins for front and rear
 * Activated robot_model plugin
 
@@ -76,7 +76,7 @@ The rviz window should look like this:
 
 Note following rviz settings:
 
-* map origin
+* Fixed frame: map 
 * Activated map plugin with topic /map
 * Activated Laserscanner plugins for front and rear
 * Activated robot_model plugin
@@ -107,13 +107,13 @@ Start rviz config
 
 Note following rviz settings:
 
-* map origin
+* Fixed frame: map
 * Activated map plugin with topic /map
 * Activated Laserscanner plugins for front and rear
 * Activated pose estimate plugin
 * Activated robot_model plugin
 
-Use set_position estimate tool in rviz to set initial localization. See the picture below:
+Use "2D pose estimate" tool in rviz to set initial localization. See the picture below:
 
 ![RVIZ during localization with amcl](/doc/rviz_amcl.png)
 
@@ -137,7 +137,7 @@ To control the robot we will use RVIZ again:
 
 Note following rviz settings:
 
-* map origin
+* Fixed frame: map
 * Activated map plugin with topic /map
 * Activated Laserscanner plugins for front and rear
 * Activated pose estimate plugin
@@ -145,15 +145,19 @@ Note following rviz settings:
 * Activated marker plugin
 * Activated robot_model plugin
 
-Once everything is started you should localize the platform again using the "set pose estimate" tool (see previous section). Now you can use the move to tool from rviz to command goals to the mobile platform. See the picture below:
+Once everything is started you should localize the platform again using the "2D pose estimate" tool (see previous section). Now you can use the "2D nav goal" tool right of the other tool from rviz to command goals to the mobile platform. See the picture below:
 
 ![RVIZ during localization with amcl](/doc/rviz_amcl.png)
 
 While commanding the goals to the platform you can see the global path that was planned by move_base as well as the green bubles that are representing the reactive path. 
 
+Keep the navigation running for the next part of the seminar.
 
 <a href="#top">top</a> 
 ### 6. Writing a small application
+
+To write an application with the navigation system you will have to write a small script that triggers different movements.
+An example of an application is the following. Please create a new file with gedit in the seminar\_navi\_scenario package and copy the following in the file:
 
 	#!/usr/bin/python
 	import roslib
@@ -177,6 +181,21 @@ While commanding the goals to the platform you can see the global path that was 
     		SCRIPT = MyScript()
     		SCRIPT.Start()
 
+Note that this script has already filled out positions to move to. This positions will not fit to your map and have to be tought again.
+Therefore move the platform to the desired position using the joystick and find out the position with TF. Besides looking the TF position up in RVIZ you can also use the following terminal call:
+
+	rosrun tf tf_echo /map /base_link
+
+This will command the current position of the /base_link in the /map coordinate system. Take the x and y value and the last elemement of the rpy rotation (the rotation around the z-axis) and fill it in the application.
+Do the same process by moving with the joystick and finding out the position with the second target position.
+
+Now we finished creating the script. To actually run it we have to move to the seminar\_navi_scenario package and run the python script:
+
+	roscd seminar_navi_scenario
+	python ./script_name.py
+	
+Watch the base moving on the area and in RVIZ.
+Now extend the script with more positions to let the platform move in each part of the area.
 
 
 <a href="#top">top</a> 
