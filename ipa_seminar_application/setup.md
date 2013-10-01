@@ -29,7 +29,7 @@ rosdep update
 add to ~/.bashrc:
 ```
 source /opt/ros/groovy/setup.bash
-export ROS_PACKAGE_PATH=~/git:$ROS_PACKAGE_PATH
+export ROS_PACKAGE_PATH=~/git:/home/ros/git:$ROS_PACKAGE_PATH
 
 export ROS_PARALLEL_JOBS=-j5
 
