@@ -1,0 +1,14 @@
+<package>
+  <description brief="seminar_navi_scenario">
+
+     seminar_navi_scenario
+
+  </description>
+  <author>Alexander Bubeck</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/seminar_navi_scenario</url>
+
+</package>
+
+

@@ -1,0 +1,83 @@
+planner_configs:
+  SBLkConfigDefault:
+    type: geometric::SBL
+    range: 0.05
+  ESTkConfigDefault:
+    type: geometric::EST
+    range: 0.05
+  LBKPIECEkConfigDefault:
+    type: geometric::LBKPIECE
+    range: 0.05
+  BKPIECEkConfigDefault:
+    type: geometric::BKPIECE
+    range: 0.05
+  KPIECEkConfigDefault:
+    type: geometric::KPIECE
+    range: 0.05
+  RRTkConfigDefault:
+    type: geometric::RRT
+    range: 0.05
+  RRTConnectkConfigDefault:
+    type: geometric::RRTConnect
+    range: 0.05
+  RRTstarkConfigDefault:
+    type: geometric::RRTstar
+    range: 0.05
+  PRMkConfigDefault:
+    type: geometric::PRM
+    range: 0.05
+  PRMstarkConfigDefault:
+    type: geometric::PRMstar
+    range: 0.05
+arm:
+  planner_configs:
+    - SBLkConfigDefault
+    - ESTkConfigDefault
+    - LBKPIECEkConfigDefault
+    - BKPIECEkConfigDefault
+    - KPIECEkConfigDefault
+    - RRTkConfigDefault
+    - RRTConnectkConfigDefault
+    - RRTstarkConfigDefault
+    - PRMkConfigDefault
+    - PRMstarkConfigDefault
+  projection_evaluator: joints(arm_shoulder_pan_joint,arm_shoulder_lift_joint)
+  longest_valid_segment_fraction: 0.01
+gripper:
+  planner_configs:
+    - SBLkConfigDefault
+    - ESTkConfigDefault
+    - LBKPIECEkConfigDefault
+    - BKPIECEkConfigDefault
+    - KPIECEkConfigDefault
+    - RRTkConfigDefault
+    - RRTConnectkConfigDefault
+    - RRTstarkConfigDefault
+    - PRMkConfigDefault
+    - PRMstarkConfigDefault
+finger:
+  planner_configs:
+    - SBLkConfigDefault
+    - ESTkConfigDefault
+    - LBKPIECEkConfigDefault
+    - BKPIECEkConfigDefault
+    - KPIECEkConfigDefault
+    - RRTkConfigDefault
+    - RRTConnectkConfigDefault
+    - RRTstarkConfigDefault
+    - PRMkConfigDefault
+    - PRMstarkConfigDefault
+arm_gripper:
+  planner_configs:
+    - SBLkConfigDefault
+    - ESTkConfigDefault
+    - LBKPIECEkConfigDefault
+    - BKPIECEkConfigDefault
+    - KPIECEkConfigDefault
+    - RRTkConfigDefault
+    - RRTConnectkConfigDefault
+    - RRTstarkConfigDefault
+    - PRMkConfigDefault
+    - PRMstarkConfigDefault
+  projection_evaluator: joints(arm_shoulder_pan_joint,arm_shoulder_lift_joint)
+  longest_valid_segment_fraction: 0.01

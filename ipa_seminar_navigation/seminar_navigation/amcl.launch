@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+
+	<arg name="map" default="$(find seminar_navi_scenario)/map/map.yaml" />
+
+	<!--- Run map_server -->
+	<node name="map_server" pkg="map_server" type="map_server" args="$(arg map)"/>
+
+	<!--- Run AMCL -->
+	<include file="$(find cob_navigation_global)/launch/amcl_node.xml" />
+	
+</launch>

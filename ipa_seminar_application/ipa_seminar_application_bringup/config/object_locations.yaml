@@ -1,0 +1,10 @@
+salt:
+  model: salt
+  model_type: urdf
+  position: [ 0.5, 0.0, 1.1 ]
+  orientation: [0, 1.5708, 0]
+spaghetti:
+  model: spaghetti
+  model_type: urdf
+  position: [0.5, 0.2, 1.1]
+  orientation: [1.5708, 0, 1.5708]

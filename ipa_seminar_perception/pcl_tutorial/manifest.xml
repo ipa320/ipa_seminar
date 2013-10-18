@@ -1,0 +1,18 @@
+<package>
+  <description brief="pcl_tutorial">
+
+     pcl_tutorial
+
+  </description>
+  <author>Georg Arbeiter</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/pcl_tutorial</url>
+  <depend package="roscpp"/>
+  <depend package="pcl"/>
+  <depend package="pcl_ros"/>
+  <depend package="dynamic_reconfigure"/>
+
+</package>
+
+
