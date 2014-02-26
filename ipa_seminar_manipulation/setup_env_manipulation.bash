@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 ### ROS
-#source /opt/ros/groovy/setup.bash
-source /home/ros/git/care-o-bot_catkin/devel/setup.bash
+source /opt/ros/groovy/setup.bash
+#source /home/ros/git/care-o-bot_catkin/devel/setup.bash
 export ROS_PACKAGE_PATH=/home/ros/git/care-o-bot:$ROS_PACKAGE_PATH
 export ROS_PACKAGE_PATH=~/git/ipa_seminar:$ROS_PACKAGE_PATH
 
