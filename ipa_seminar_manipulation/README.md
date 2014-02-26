@@ -117,10 +117,12 @@ For this tutorial we add two Planning Groups:
   * Use the _Add Kin. Chain_ option to assign the kinematic chain starting with arm_0_link (Base Link) and ending with arm_7_link (Tip Link).  
 
 2. Group "gripper"  
-  * For the gripper does not need a kinematic solver. Thus we leave it `None`.  
-  * As the gripper group only consists of just one link (i.e. _gripper_link_), we use the _Add Links_ option for assigning.  
+  * The gripper does not need a kinematic solver. Thus we leave it `None`.  
+  * As the gripper group only consists of just one link (i.e. gripper_link), we use the _Add Links_ option for assigning.  
 
 ![SetupAssistant6](./doc/SetupAssistant6.png "SetupAssistant6")  
+
+After the configuration of the two Planning Groups, your configuration should look like the following.  
 
 ![SetupAssistant7](./doc/SetupAssistant7.png "SetupAssistant7")
 
@@ -128,7 +130,7 @@ For this tutorial we add two Planning Groups:
 
 The tap "Robot Poses" allows us to define some _robot poses_. These robot poses can later be used as goals for a motion plan within the RVIZ plugin or the CommandLineTool.  
 Now define some poses for the group "arm". Use the sliders to set the joint values of each joint within the group.  
-In the view you can see what the current configuration would look like. In case the current configuration is in collision a notification is displayed.  
+In the view you can see what the current configuration would look like. In case the current configuration is in collision, the robot model becomes red in the display.  
 
 ![SetupAssistant8](./doc/SetupAssistant8.png "SetupAssistant8")
 
