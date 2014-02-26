@@ -114,7 +114,7 @@ For this tutorial we add two Planning Groups:
 
 1. Group "arm"  
   * Select `kdl_kinematics_plugin/KDLKinematicsPlugin` as _Kinematic Solver_. This is a numerical Solver for Inverse Kinematics.  
-  * Use the _Add Kin. Chain_ option to assign the kinematic chain starting with _arm_0_link_ (Base Link) and ending with _arm_7_link_ (Tip Link).  
+  * Use the _Add Kin. Chain_ option to assign the kinematic chain starting with arm_0_link (Base Link) and ending with arm_7_link (Tip Link).  
 
 2. Group "gripper"  
   * For the gripper does not need a kinematic solver. Thus we leave it `None`.  
