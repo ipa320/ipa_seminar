@@ -5,29 +5,10 @@
 ### Contents
 
 1. <a href="#1--introduction">Introduction</a>   
-  1.1. <a href="#11-tools">Tools</a>  
-  1.2. <a href="#12-commands">Commands</a>  
 2. <a href="#2-moveit---setup-assistant">MoveIt! - Setup Assistant</a>  
-  2.1. <a href="#21-start">Start</a>  
-  2.2. <a href="#22-self-collision">Self-Collision</a>  
-  2.3. <a href="#23-virtual-joints">Virtual Joints</a>  
-  2.4. <a href="#24-planning-groups">Planning Groups</a>  
-  2.5. <a href="#25-robot-poses">Robot Poses</a>  
-  2.6. <a href="#26-end-effectors">End Effectors</a>  
-  2.7. <a href="#27-passive-joints">Passive Joints</a>  
-  2.8. <a href="#28-configuration-files">Configuration Files</a>  
-  2.9. <a href="#29-summary">Summary</a>  
 3. <a href="#3-moveit---rviz-plugin">MoveIt! - RVIZ-Plugin</a>  
-  3.1. <a href="#31-plugin-environment-basics">Plugin Environment Basics</a>  
-  3.2. <a href="#32-planning-request">Planning Request</a>  
 4. <a href="#4-moveit---enhanced-configuration">MoveIt! - Enhanced Configuration</a>  
-  4.1. <a href="#41-perception">Perception</a>  
-  4.2. <a href="#42-control">Control</a>  
-  4.3. <a href="#43-enhanced-usage">Enhanced Usage</a>  
 5. <a href="#5-moveit---scripting-api">MoveIt! - Scripting API</a>  
-  5.1. <a href="#51-planningsceneinterface">PlanningSceneInterface</a>  
-  5.2. <a href="#52-movegroupcommander">MoveGroupCommander</a>  
-  5.3. <a href="#53-script-execution">Script-Execution</a>  
 6. <a href="#6-help">Help</a>  
 
 
@@ -163,10 +144,7 @@ Close the Setup Assistant by clicking __Exit Setup Assistant__.
 
 #### 2.9 Summary  
 
-We now created a MoveIt! configuration package that provides us with all configuration files and basic startup files for the Kuka LBR.  
-Navigate to the package with `roscd lbr_moveit_config` and have a look at the generated files.  
-
-The package includes the following files (amongst others):  
+We just created a new ROS package that provides us with all configuration files and basic startup files.  Navigate to the package with `roscd lbr_moveit_config` and have a look at the generated files.  
 
 Configuration files:  
 * __config/joint_limits.yaml__: This file specifies velocity and acceleration limits for all joints of the robot. Position limits are defined in the URDF already.
@@ -178,12 +156,7 @@ Startup files:
 * __launch/demo.launch__: This is the most basic startup file. It opens RVIZ where the planning capability can be tested without needing to run either a simulation or a robot hardware.
 * __launch/move_group.launch__: This file will be used when MoveIt! is to be used in connection with a simulation or a robot hardware
 
-Both of these launch files combine other launch files contained in the launch folder. Those other files start up a specific module for MoveIt! respectively.  
-
-Whenever something needs to be changed within the MoveIt! configuration package, the Setup Assistant can simply be run again with the already existing package being loaded instead of creating a new package. Running the Setup Assistant again will only update files where changes apply.  
-
-The configuration files can also be modified manually. In fact, we will do so during the remainder of this tutorial.  
-In such case the Setup Assistant will notify you that configuration files have been edited outside the Setup Assistant.  
+Both of launch files call other launch files contained in the launch folder which start up specific MoveIt! modules respectively.  
 
 <a href="#top">top</a> 
 
@@ -197,8 +170,7 @@ The following will introduce the __MoveIt! RVIZ-Plugin__ and explain how to use 
 
 #### 3.1. Plugin Environment Basics  
 
-In order to get familar with MoveIt! step-by-step, we will first use MoveIt! in its most basic form - the __demo mode__. The demo mode allows us to test the MoveIt! configuration in a simple simulation environment. Execution on the real robot hardware will follow lateron in step 5.  
-
+In order to get familar with MoveIt! step-by-step, we will first use MoveIt! in its most basic form - the __demo mode__.  
 For starting the demo mode, run: 
 ```
 roslaunch lbr_moveit_config demo.launch config:=true
@@ -217,9 +189,7 @@ In the visualization, you will see several models of the robot:
 * the __Goal State__ which displays the virtual goal state for a planning request (depicted in blue with an interactive marker attached)
 * the __Planned Path__ whicht virtually displays the result trajectory of a planning request
 
-You can modify what you see in the visualization by using the display section. You can e.g. toggle some of the displays or change colors. Save the changes into the RVIZ configuration file through the menu bar at the top.  
-
-Configure your view so that you can see both the __Start State__ and the __Goal State__.  
+You can modify what you see in the visualization by adjusting the settings in the display section. You can e.g. toggle some of the displays or change colors. Save the changes into the RVIZ configuration file through the menu bar at the top.  
 
 ![RVIZ-Plugin-Trail](./doc/rviz_plugin_trail_annotated.png "RVIZ-Plugin-Trail")
 
@@ -228,7 +198,7 @@ Configure your view so that you can see both the __Start State__ and the __Goal 
 
 In order to send planning requests to MoveIt!, we will use the interactive markers and the MoveIt! control panel on the lower left.  
 
-In the __Context__ tab of the MoveIt! control panel, make sure it says __OMPL__ underneath the Planning Library. This means MoveIt! has loaded all required components. Then switch to the __Planning__ tab.  
+In the __Context__ tab of the MoveIt! control panel, make sure it says __OMPL__ underneath the Planning Library. This means that MoveIt! has successfully loaded all required components. Then switch to the __Planning__ tab.  
 
 In this tab, we can modify the Start State and the Goal State of the robot by dragging the interactive markers in the visualization. You can also set either the Start State or the Goal State to one of the previously defined robot poses using the drag down menu in the MoveIt! control panel.  
 
@@ -250,10 +220,6 @@ We will add support for visual sensors to be able to consider the dynamic enviro
 Also we will add controllers that allow us to use MoveIt! with the real robot hardware. 
 
 #### 4.1 Perception  
-
-Out of the box, MoveIt! considers the geometric model of the robot (URDF) during collision checking to prevent selfCollision.  
-Also, (known) static obstacles given as geometric primitives (i.e. box, cylinder, sphere) or meshes (i.e. from CAD data) can be added at runtime. This will be shown in the last chapter of this tutorial.  
-As in most real world scenarios, the environment is not completely known, it changes over time or simply cannot be modeled accurately. Then visual sensors can be used to detect the current environment.  
 
 MoveIt! uses a concept called __Planning Scene__ to provide information about an environment situation. The Planning Scene combines the following information:  
 * __Robot State:__ The state of the robot, i.e. its joint configuration
@@ -323,7 +289,7 @@ In order to use this new configuration file, paste the following lines to `lbr_s
 Now, we configured everything to be able to use MoveIt! on our KUKA LBR!  
 In order to work with the real robot hardware, the robot needs to be initialized first. Ask your tutor to do so.  
 
-![CAUTION](./doc/yellow-warning.gif "CAUTIOIN") CAUTION ZONE ![CAUTION](./doc/yellow-warning.gif "CAUTIOIN")  
+Please note:
 * Only use the robot under supervision of your tutor
 * Make sure you have a clear view to the robot and the emergency button is in your hands before executing a command 
 * In case of unexpected behavior or in case the robot is about to collide hit the emergency button immediately
