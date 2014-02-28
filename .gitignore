@@ -1,2 +1,5 @@
 *~
 *pyc
+*.cfgc
+bin
+build

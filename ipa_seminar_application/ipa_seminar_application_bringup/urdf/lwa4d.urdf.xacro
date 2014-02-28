@@ -43,12 +43,12 @@
 
   <!-- arm -->
   <xacro:schunk_lwa4d name="arm" parent="base_link">
-    <origin xyz="0 0 1" rpy="3.1415926 0 0" />
+    <origin xyz="0 0 1" rpy="0 0 3.14" />
   </xacro:schunk_lwa4d>
 
   <!-- gripper -->
   <xacro:schunk_pg70 name="gripper" parent="arm_7_link">
-      <origin xyz="0 0 0" rpy="3.14 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
   </xacro:schunk_pg70>
 
 </robot>
