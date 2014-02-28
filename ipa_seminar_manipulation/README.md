@@ -109,7 +109,7 @@ After the configuration of the two Planning Groups, the tab should look like the
 
 The tab __Robot Poses__ allows us to pre-define default robot poses. These robot poses can later be used as goals for a motion command.  
 Define poses for the group "arm" by using the sliders to set the joint values of each joint within the group.  
-You can see what the current configuration looks like in the visualization. In case the current configuration is in collision, the robot model becomes red.  
+You can see what the current configuration looks like in the visualization. In case the current configuration is in collision, this is indicated by a notification.  
 
 ![SetupAssistant8](./doc/SetupAssistant8.png "SetupAssistant8")
 
@@ -134,7 +134,7 @@ The tab __Passive Joints__ is not relevant for our scenario. Just skip it.
 In the final step, the MoveIt! SetupAssistant generates all files required for motion planning automatically.  
 You can see a list of files to be generated below. It comprises configuration files (.yaml) as well as startup files (.launch). By clicking on a file you can get more information about it in the text box beside it.  
 
-To generate the files, specify a location where the files should be stored by browsing to the folder `~/git/ipa_seminar/ipa_seminar_manipulation`. A new package `lbr_moveit_config` will be created there.  
+To generate the files, specify a location where the files should be stored by browsing to the folder `~/git/ipa_seminar/ipa_seminar_manipulation`. Create a new folder `lbr_moveit_config` and select it as destination.  
 Then press __Generate Package__.  
 
 Close the Setup Assistant by clicking __Exit Setup Assistant__.
@@ -186,7 +186,7 @@ The RVIZ window consists of three main parts:
 In the visualization, you will see several models of the robot:
 * the __Scene Robot__ which displays the current state of the robot
 * the __Start State__ which virtually displays the start state for a planning request (depicted in green with an interactive marker attached)
-* the __Goal State__ which displays the virtual goal state for a planning request (depicted in blue with an interactive marker attached)
+* the __Goal State__ which displays the virtual goal state for a planning request (depicted in orange with an interactive marker attached)
 * the __Planned Path__ whicht virtually displays the result trajectory of a planning request
 
 You can modify what you see in the visualization by adjusting the settings in the display section. You can e.g. toggle some of the displays or change colors. Save the changes into the RVIZ configuration file through the menu bar at the top.  
