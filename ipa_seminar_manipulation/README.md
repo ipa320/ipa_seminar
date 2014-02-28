@@ -6,7 +6,7 @@
 
 1. <a href="#1--introduction">Introduction</a>   
   1.1. <a href="#11-tools">Tools</a>  
-  1.2. <a href="#12-helpful-commands">Helpful Commands</a>  
+  1.2. <a href="#12-commands">Commands</a>  
 2. <a href="#2-moveit---setup-assistant">MoveIt! - Setup Assistant</a>  
   2.1. <a href="#21-start">Start</a>  
   2.2. <a href="#22-self-collision">Self-Collision</a>  
@@ -41,21 +41,21 @@ It also lists several helpful (terminal) commands that are used frequently throu
 
 #### 1.1. Tools  
 
-We use _Terminator_ as a command prompt. You can find a shortcut on the left bar of your screen. Commands given in the following can be copied into the _Terminator_ window. During the tutorial sometimes several terminal windows are needed. The terminal can be split into several sub-windows by using the _Split Horizontically/Vertically_ feature after a right-click on the _Terminator_ window.  
+It is recommended to use __terminator__ as a command prompt. A shortcut can be found on the left bar of your screen.  
+Commands given in the following can be copied into the terminator window. 
 
-We wil use _gedit_ as a text edior. You can find a shortcut on the left bar of your screen as well. The editor can also be opened by running `gedit` in a terminal window.  
+We wil use __gedit__ as a text edior. A shortcut can be found on the left bar of your screen as well.  
 
-#### 1.2. Helpful Commands
+#### 1.2. Commands
 
-For navigating to specific ROS packages or files, the easiest way to do so is to use the command `roscd <package_name>` where `<package_name>` is the name of the ROS package you want to navigate to, e.g. `lbr_bringup`.  `roscd` brings you to the desired package from any previous location. After the `<package_name>`, pressing `TAB` can be used for auto-completion in order to navigate further within the ROS package.  
+Use the command `roscd <package_name>` to browse to the folder of a specific ROS package, where `<package_name>` is the name of the ROS package, e.g. `lbr_bringup`.  `roscd` can be used from any previous location.    
 
-For editing a file simply use `roscd` to navigate to the folder of the file and then type `gedit <file_name>` where `<file_name>` is the name of the file you want to edit.  
+For editing a file simply use `roscd` to navigate to the folder of the file and then type `gedit <file_name>`, where `<file_name>` is the name of the file you want to edit.  
 
 For more helpful ROS commands have a look at the [ROS Cheat Sheet](http://download.ros.org/downloads/ROScheatsheet.pdf "ROS Cheat Sheet").  
 
-For convenience, all required ROS packages are already installed and the environment (i.e. environment variables) is set up correctly. Whenever an environment variable (e.g. ROS_MASTER_URI) needs to be changed this is stated below.  
-
-Also, an example solution for this tutorial is already available. Whenever you want to have a look at the solution files or you want to run the solution, simply type `solution` in the terminal before opening the respective file or running the command.  
+All required ROS packages are already installed and the environment (i.e. environment variables) is set up correctly.  
+An example solution for this tutorial is already available. In order to use the solution rather than your own version, simply type `solution` in the terminal before opening the respective file or running the command.  
 
 <a href="#top">top</a> 
 
@@ -65,9 +65,9 @@ Also, an example solution for this tutorial is already available. Whenever you w
 
 ### 2. MoveIt! - Setup Assistant  
 
-MoveIt! requires a little  configuration before offering its capabilities to your robot. The configuration can easily be done with the MoveIt! Setup Assistant - a graphical tool that comes shipped with MoveIt! automatically.
+MoveIt! requires a little configuration before offering its capabilities to your robot. The configuration can easily be done with the __MoveIt! Setup Assistant__ - a graphical tool that comes shipped with MoveIt! automatically.
 
-The following steps will lead you to a valid MoveIt!-configuration for the KUKA LBR.  
+The following steps will lead you to a valid MoveIt!-configuration for the __Kuka LBR__.  
 
 #### 2.1. Start  
 
@@ -79,9 +79,8 @@ You should see the screen below.
 
 ![SetupAssistant1](./doc/SetupAssistant1.png "SetupAssistant1")
 
-As we are creating the configuration for the first time, select "Create New MoveIt Configuration Package".  
-Now we need to load the robot model (URDF) on which basis the configuration is generated.  
-Browse to `~/git/ipa_seminar/ipa_seminar_manipulation/lbr_bringup/urdf` and load the `lbr_solo.urdf.xacro` file.  
+In order to create a new configuration, select __Create New MoveIt Configuration Package__.  
+Load the robot model (URDF) by browsing to `~/git/ipa_seminar/ipa_seminar_manipulation/lbr_bringup/urdf` and selecting the `lbr_solo.urdf.xacro` file.  
 You should now see our robot within the SetupAssistant.  
 
 ![SetupAssistant2](./doc/SetupAssistant2.png "SetupAssistant2")
@@ -89,48 +88,48 @@ You should now see our robot within the SetupAssistant.
 
 #### 2.2. Self-Collision  
 
-In order to speed up later collision checking, a _SelfCollisionMatrix_ can be computed in the next tap ("Self Collision").  
-Select the highest _Sampling Density_ and click "Regenerate Default Collision Matrix".  
+In order to speed up later collision checking, a SelfCollision-Matrix can be computed in the __Self Collision__ tab.  
+Select the highest Sampling Density and click __Regenerate Default Collision Matrix__.    
 
 ![SetupAssistant3](./doc/SetupAssistant3.png "SetupAssistant3")
 
-After about 10 seconds you will see a list of pairs of links which never or always collide within the robot model. This knowledge is used to speed up Self-CollisionChecking as these checks need not to be done during a planning step again.
+After about 10 seconds you will see a list of pairs of links which never or always collide within the robot model. This knowledge is used to speed up SelfCollision-Checking as these checks need not to be done during a planning step again.
 
 ![SetupAssistant4](./doc/SetupAssistant4.png "SetupAssistant4")
 
 
 #### 2.3. Virtual Joints  
 
-The next tap "Virtual Joints" is less important for our scenario.  
-This tap gets important in case you want to use MoveIt! with a mobile robot. A _virtual joint_ connects the robot to the world. While mobile robots would have _planar_ (2d) or _floating_ (6d) virtual joints, we simply define a _fixed_ virtual joint stating that our robot does not move.  
+The next tap __Virtual Joints__ is less important for our scenario.  
+This tap gets important in case you want to use MoveIt! with a mobile robot. A virtual joint connects the robot to the world. While mobile robots would have __planar__ (2d) or __floating__ (6d) virtual joints, we simply define a __fixed__ virtual joint stating that our robot does not move.  
 
 ![SetupAssistant5](./doc/SetupAssistant5.png "SetupAssistant5")
 
 #### 2.4. Planning Groups  
 
-In step four ("Planning Groups") we define collections of links and joints of the robot and declare them as _Planning Groups_. Each Planning Group defines semantically related parts of the robot. For each Planning Group defined here MoveIt! will generate a configuration in order to perform motion planning later.  
+In step four __Planning Groups__, we define collections of links and joints of the robot and declare them as a Planning Group. For each Planning Group defined here, MoveIt! will generate a configuration in order to perform motion planning later.  
 
 For this tutorial we add two Planning Groups:  
 
 1. Group "arm"  
-  * Select `kdl_kinematics_plugin/KDLKinematicsPlugin` as _Kinematic Solver_. This is a numerical Solver for Inverse Kinematics.  
-  * Use the _Add Kin. Chain_ option to assign the kinematic chain starting with arm_0_link (Base Link) and ending with arm_7_link (Tip Link).  
+  * Select `kdl_kinematics_plugin/KDLKinematicsPlugin` as __Kinematic Solver__. This is a numerical Solver for Inverse Kinematics.  
+  * Use the __Add Kin. Chain__ button to assign the kinematic chain starting with `arm_0_link` (Base Link) and ending with `arm_7_link` (Tip Link).  
 
 2. Group "gripper"  
   * The gripper does not need a kinematic solver. Thus we leave it `None`.  
-  * As the gripper group only consists of just one link (i.e. gripper_link), we use the _Add Links_ option for assigning.  
+  * As the gripper group only consists of just one link (i.e. `gripper_link`), we use the __Add Links__ button here.  
 
 ![SetupAssistant6](./doc/SetupAssistant6.png "SetupAssistant6")  
 
-After the configuration of the two Planning Groups, your configuration should look like the following.  
+After the configuration of the two Planning Groups, the tap should look like the following.  
 
 ![SetupAssistant7](./doc/SetupAssistant7.png "SetupAssistant7")
 
 #### 2.5. Robot Poses  
 
-The tap "Robot Poses" allows us to define some _robot poses_. These robot poses can later be used as goals for a motion plan within the RVIZ plugin or the CommandLineTool.  
-Now define some poses for the group "arm". Use the sliders to set the joint values of each joint within the group.  
-In the view you can see what the current configuration would look like. In case the current configuration is in collision, the robot model becomes red in the display.  
+The tap __Robot Poses__ allows us to pre-define some default robot poses. These robot poses can later be used as goals for a motion plan within the RVIZ plugin or the CommandLineTool.  
+Now define poses for the group "arm" by using the sliders to set the joint values of each joint within the group.  
+You can see what the current configuration would look like in the visualization. In case the current configuration is in collision, the robot model becomes red.  
 
 ![SetupAssistant8](./doc/SetupAssistant8.png "SetupAssistant8")
 
@@ -138,25 +137,27 @@ Create at least a robot pose `left` and a robot pose `right` as those are going 
 
 
 ![SetupAssistant9](./doc/SetupAssistant9.png "SetupAssistant9")
+
 #### 2.6. End Effectors  
 
-Next, we define our gripper to be the _End Effector_ for our arm.  
-This will give us an _Interactive Marker_ for moving the arm in the RVIZ Plugin. This is also important for High(er)-Level Capabilities of MoveIt! - such as _Pick-and-Place_.  
+Next, we define our gripper to be the __End Effector__ for our arm.  
+This will give us an __Interactive Marker__ for moving the arm in the RVIZ Plugin. This is also important for High(er)-Level Capabilities of MoveIt! - such as __Pick-and-Place__.  
 
 ![SetupAssistant10](./doc/SetupAssistant10.png "SetupAssistant10")
 
 #### 2.7. Passive Joints  
 
-This tap ("Passive Joints") is not relevant for our scenario. So we can just skip it.
+This tap __Passive Joints__ is not relevant for our scenario. So we just skip it.
 
 #### 2.8. Configuration Files  
 
-In the final step, the MoveIt! SetupAssistant generates all files required for MotionPlanning for us automatically.  
-You can see a list of the files to be generated below. It comprises configuration files as well as startup files. By clicking on a file you can get some explanation about it in the text box beside it.  
+In the final step, the MoveIt! SetupAssistant generates all files required for MotionPlanning automatically.  
+You can see a list of files to be generated below. It comprises configuration files as well as startup files. By clicking on a file you can get more information about it in the text box beside it.  
 
-The only thing we need to do is to specify a location where the files should be stored. Browse to the folder `~/git/ipa_seminar/ipa_seminar_manipulation` and create a new folder `lbr_moveit_config` there. This is the destination for the configuration files. Then press _Generate Package_.  
+To generate the files, specify a location where the files should be stored by browsing to the folder `~/git/ipa_seminar/ipa_seminar_manipulation`. A new package `lbr_moveit_config` will be created there.  
+Then press __Generate Package__.  
 
-After the files have been generated, we can click _Exit Setup Assistant_.
+Close the Setup Assistant by clicking __Exit Setup Assistant__.
 
 ![SetupAssistant12](./doc/SetupAssistant12.png "SetupAssistant12")
 
