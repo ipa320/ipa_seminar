@@ -10,7 +10,7 @@ def fake_publisher():
         pub = rospy.Publisher('/joint_states',JointState)
         msg = JointState()
         msg.header.stamp = rospy.Time.now()
-        msg.name = ['gripper_finger_1_joint', 'gripper_finger_2_joint']
+        msg.name = ['gripper_finger_joint','gripper_finger_mimic_joint']
         msg.position = [0.0, 0.0]
         msg.velocity = [0.0, 0.0]
         msg.effort = [0.0, 0.0]

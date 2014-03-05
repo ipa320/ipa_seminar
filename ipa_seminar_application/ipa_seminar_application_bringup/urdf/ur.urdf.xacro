@@ -41,7 +41,7 @@
 
   <!-- arm -->
   <xacro:cob_ur10 name="arm" parent="base_link">
-    <origin xyz="0 0 1" rpy="0 0 0" />
+    <origin xyz="0 0 1" rpy="0 0 0.40" />
   </xacro:cob_ur10>
 
   <!-- gripper -->

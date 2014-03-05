@@ -17,6 +17,12 @@
 	<!-- fake joint state publisher for gripper-->
 	<node pkg="ipa_seminar_application_bringup" type="fake_gripper_joint_state_publisher.py" name="gripper_fake_joint_state_publisher"/>
 
+	<!-- send objects locations to parameter server -->
+	<rosparam command="delete" param="/objects"/>
+	<rosparam command="load" ns="objects" file="$(find ipa_seminar_application_bringup)/config/object_locations.yaml"/>
+	<!--node pkg="cob_bringup_sim" name="spawn_object" type="spawn_object.py" args="all"/-->
+	<node pkg="ipa_seminar_application_bringup" name="area_publisher" type="area_publisher.py"/>
+
 	<!-- move it -->
 	<include file="$(find ipa_seminar_application_bringup)/../ipa_seminar_application_moveit_config_$(arg robot)/launch/move_group.launch" />
 
