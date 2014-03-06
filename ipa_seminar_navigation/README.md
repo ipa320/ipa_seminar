@@ -40,7 +40,7 @@ Now start the prepared rviz configuration to show the current state of the robot
 
 The rviz window should look like this:
 
-![RVIZ during free moving of robot](/doc/rviz_joystick.png)
+![RVIZ during free moving of robot](./doc/rviz_joystick.png)
 
 Note following rviz settings:
 
