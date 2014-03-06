@@ -50,7 +50,7 @@ Note following rviz settings:
 
 To initialize the mobile base press the "deadman" button on the joystick (see picture below) and the "Init" button at the same time. (not required in simulation)
 
-![Position of buttons on the joystick](/doc/Joystick.png)
+![Position of buttons on the joystick](./doc/Joystick.png)
 
 You can now move around the robot using the joystick. Use the "deadman" button and the two analog joysticks for base movement. You will notice how the laser scans show the environment and that you can move tranlational and rotational at the same time. Try to get a feeling how the platform move, as you need to move the robot lateron during mapping.
 
@@ -72,7 +72,7 @@ Start rviz config
 
 The rviz window should look like this:
 
-![RVIZ during map creation](/doc/rviz_gmapping.png)
+![RVIZ during map creation](./doc/rviz_gmapping.png)
 
 
 Note following rviz settings:
@@ -116,7 +116,7 @@ Note following rviz settings:
 
 Use "2D pose estimate" tool in rviz to set initial localization. See the picture below:
 
-![RVIZ during localization with amcl](/doc/rviz_amcl.png)
+![RVIZ during localization with amcl](./doc/rviz_amcl.png)
 
 Move around using joystick and see the localization converge.
 
@@ -148,7 +148,7 @@ Note following rviz settings:
 
 Once everything is started you should localize the platform again using the "2D pose estimate" tool (see previous section). Now you can use the "2D nav goal" tool right of the other tool from rviz to command goals to the mobile platform. See the picture below:
 
-![RVIZ during localization with amcl](/doc/rviz_amcl.png)
+![RVIZ during localization with amcl](./doc/rviz_amcl.png)
 
 While commanding the goals to the platform you can see the global path that was planned by move_base as well as the green bubles that are representing the reactive path. 
 
@@ -209,7 +209,7 @@ When running the created script you can adapt the planning algorithm during runt
 	
 You should now see a window like in the picture below:
 
-![Online configuring the navigation](/doc/configure.png)
+![Online configuring the navigation](./doc/configure.png)
 
 You can now change the parameters during execution and see what happens.
 
