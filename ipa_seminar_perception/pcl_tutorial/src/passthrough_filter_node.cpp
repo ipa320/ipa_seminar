@@ -26,7 +26,7 @@ public:
     config_server_.setCallback(boost::bind(&PlaneSegmentationNode::dynReconfCallback, this, _1, _2));
 
     pt_.setFilterFieldName ("z");
-    pt_.setFilterLimits (0.0, 2.0);
+    pt_.setFilterLimits (2.0, 5.0);
   }
 
   ~PlaneSegmentationNode() {}
