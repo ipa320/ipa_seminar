@@ -1,13 +1,13 @@
 # ROS driver programming using BRIDE
 ## Tutorial
 
-The goal of this tutorial is to create a ROS driver for the KUKA KR16 robot using the BRIDE tool-chain for model-driven engineering. Basic information and details about Bride are available [here](http://wiki.ros.org/bride)
+The goal of this tutorial is to create a ROS driver for the KUKA KR16 robot using the BRIDE tool-chain for model-driven engineering. Basic information and details about Bride are available [here](http://wiki.ros.org/bride).
 
 ### 1.  Startup BRIDE and create a new project
 
 #### 1.1.  Installing BRIDE
 
-For installing BRIDE please follow the [BRIDE installation instructions](https://github.com/ipa320/bride/wiki/Installation)
+For installing BRIDE please follow the [BRIDE installation instructions](https://github.com/ipa320/bride/wiki/Installation).
 
 #### 1.2.  Running the BRIDE IDE
 You can startup bride from your terminal by calling
@@ -26,7 +26,7 @@ You can now create a new project by choosing the wizard in File -> New -> Projec
 
 ![eclipse_create_project1](./doc/eclipse_create_project1.png "Creating a BRIDE project with the eclipse IDE: Step 1")
 
-In the wizard give the new project the name of the package you want to create and choose as project type "Makefile project" -> "Empty Project". In the case of the tutorial we want to create the package "kr16_driver" 
+In the wizard give the new project the name of the package you want to create and choose as project type "Makefile project" -> "Empty Project". In the case of the tutorial we want to create the package "kr16_driver". 
 
 ![eclipse_create_project2](./doc/eclipse_create_project2.png "Creating a BRIDE project with the eclipse IDE: Step 2")
 
@@ -59,7 +59,7 @@ With the palette on the right you can now add a "Node" to the graphical plane by
 
 ![create_a_node](./doc/create_a_node.png "Creating a node")
 
-Following the [ROS-I driver specs](http://wiki.ros.org/Industrial/Industrial_Robot_Driver_Spec), add a Publisher called "joint_states" and "states" and an ActionServer called "joint_trajectory_action" by selecting the corresponding type on the right pane and clicking on the corner of the graphical node representation. You should then see the following screen: 
+Following the [ROS-I driver specs](http://wiki.ros.org/Industrial/Industrial_Robot_Driver_Spec), add a Publisher called "joint_states" and "states" and an ActionServer called "folllow_joint_trajectory_action" by selecting the corresponding type on the right pane and clicking on the corner of the graphical node representation. You should then see the following screen: 
 
 ![create_action_pub](./doc/create_action_pub.png "Creating a publisher and action")
 
@@ -73,7 +73,7 @@ Now select the other components you created in order to show their settings in t
 ![publisher_properties2](./doc/publisher_properties2.png "Setting properties for the state publisher")
 ![action_server_properties](./doc/action_server_properties.png "Setting properties for the action server")
 
-Follwoing the [ROS-I driver specs](http://wiki.ros.org/Industrial/Industrial_Robot_Driver_Spec), we now add the following parameters to the node model: robot_ip_address (ip address of the robot), robot_description (urdf path and filename relative to the current directory) and robot_port (the port the robot is listening to. Not defined in the spec.). Your model should then look as follows
+Follwoing the [ROS-I driver specs](http://wiki.ros.org/Industrial/Industrial_Robot_Driver_Spec), we now add the following parameters to the node model: robot_ip_address (ip address of the robot), robot_description (urdf description parameter) and robot_port (the port the robot is listening to. Not defined in the spec.). Your model should then look as follows
 
 ![kr16_driver_model](./doc/kr16_driver_model.png "The complete driver model")
 
@@ -231,7 +231,7 @@ After finishing the system configuration you can generate the manifest and launc
 
 When you open a new terminal you should be able to run
 ```
-roslaunch deployment system.launch 
+roslaunch kr16_deployment system.launch 
 ```
 With the standard ros tools (e.g. rostopic, rxgraph, etc.) you should now be able to investigate your system. If so, you are ready to move on to the real robot!
 
