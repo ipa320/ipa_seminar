@@ -1,0 +1,15 @@
+######### DEPRECATED #########
+#   This Action is legacy    #
+# Don't use for new projects #
+##############################
+
+#goal definition
+float32[] pose
+float32 linVel  #velocity of linear movement m/s
+bool relativeMovement
+---
+#result definition
+int32 errorcode
+---
+#feedback
+int32 stage

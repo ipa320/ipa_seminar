@@ -1,0 +1,21 @@
+<package>
+  <name></name>
+  <description>Architecture </description>
+  <version>0.0.0</version>
+  <maintainer email="TODO@TODO.to">TODO</maintainer>
+  <author email="TODO@TODO.to">TODO</author>
+  <license>TODO</license>
+  <url>TODO</url>
+
+  <buildtool_depend>catkin</buildtool_depend>  
+
+ 
+  
+
+  <!-- protected region additional manifest statements on begin -->
+  <!-- protected region additional manifest statements end -->
+  
+  
+</package>
+
+

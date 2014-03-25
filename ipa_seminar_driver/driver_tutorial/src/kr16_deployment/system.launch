@@ -1,0 +1,25 @@
+<launch>
+<!-- protected region additional custom Launchfile statements in the beginning on begin -->
+<!-- protected region additional custom Launchfile statements in the beginning end -->
+  
+
+	<node pkg="kr16_driver" type="kr16_node" name="kr16_node"  output="screen">
+ 		<remap from="state" to="/arm_controller/state"/> 
+		<param name="robot_ip_address" value="192.1.10.20"/>
+		<param name="robot_description" value="/home/ros/"/>
+		<param name="robot_port" value="49152"/>
+	</node>
+	
+	<node pkg="kr16_test_client" type="kr16_test_client" name="kr16_test_client"  output="screen">
+		<remap from="state" to="/arm_controller/state"/>
+		<param name="joint_position_1" value="-35 -98 108 -0.2 80 0.4 0"/>
+		<param name="joint_position_2" value="-25 -95 105 -0.5 80 10.5 0"/>
+	</node>
+	
+
+<!-- protected region additional custom Launchfile statements in the end of launch file on begin -->
+<!-- protected region additional custom Launchfile statements in the end of launch file end -->
+
+</launch>
+
+

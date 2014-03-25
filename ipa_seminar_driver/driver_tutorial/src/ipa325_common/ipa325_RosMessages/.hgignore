@@ -1,0 +1,8 @@
+syntax: glob
+.git
+build
+msg_gen
+bin
+_*
+srv_gen
+*~

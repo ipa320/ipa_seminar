@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       name="kr16" >
+
+  <xacro:include filename="$(find ipa325_robot_descriptions)/urdf/kr16/ipa325_kr16.urdf.xacro" />
+  
+  <!-- setup workspace -->
+  <link name="world"/>
+
+  <joint name="fixed_world" type="fixed">
+    <origin xyz="0 0 0.6" rpy="0 0 ${-4*pi/4}"/>
+    <parent link="world"/>
+    <child link="workspace"/>
+  </joint>
+
+  <link name="workspace">
+    <inertial>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <mass value="100"/>
+    <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+      <mesh filename="package://ipa325_robot_descriptions/meshes/silia/stack.stl" />
+      </geometry>
+      <material name="Grey" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+      <mesh filename="package://ipa325_robot_descriptions/meshes/silia/stack.stl" />
+      </geometry>
+    </collision>
+  </link>
+
+  <gazebo reference="workspace">
+    <material>Gazebo/Grey</material>
+  </gazebo>
+
+  <!-- include robot -->
+  <xacro:ipa325_kr16 prefix="" parent="workspace">
+    <origin xyz="0 0 0.6" rpy="0 0 0"/>
+  </xacro:ipa325_kr16>
+
+</robot>

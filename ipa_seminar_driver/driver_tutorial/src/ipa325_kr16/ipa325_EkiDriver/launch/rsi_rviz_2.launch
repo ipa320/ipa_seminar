@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+
+	<!-- send kr16 urdf (robot description) to param server -->
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find ipa325_robot_descriptions)/urdf/cells/silia/silia.urdf.xacro'" />
+
+	<!-- start robot_state_publisher -->
+	<node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher"/>
+
+	<!-- start Visualization -->
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find urdf_tutorial)/urdf.vcg" />
+
+
+</launch>

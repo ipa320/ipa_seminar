@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+	   xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+	   xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+	   xmlns:xacro="http://ros.org/wiki/xacro">
+
+	<xacro:macro name="kr16_transmission" params="name">
+
+		<transmission name="${name}kr16_0_link_trans">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="${name}kr16_0_joint"/>
+			<actuator name="${name}kr16_0_motor">
+				<hardwareInterface>EffortJointInterface</hardwareInterface>
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+	
+		<transmission name="${name}kr16_1_link_trans">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="${name}kr16_1_joint"/>
+			<actuator name="${name}kr16_1_motor">
+				<hardwareInterface>EffortJointInterface</hardwareInterface>
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+	
+		<transmission name="${name}kr16_2_link_trans">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="${name}kr16_2_joint"/>
+			<actuator name="${name}kr16_2_motor">
+				<hardwareInterface>EffortJointInterface</hardwareInterface>
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+	
+		<transmission name="${name}kr16_3_link_trans">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="${name}kr16_3_joint"/>
+			<actuator name="${name}kr16_3_motor">
+				<hardwareInterface>EffortJointInterface</hardwareInterface>
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+	
+		<transmission name="${name}kr16_4_link_trans">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="${name}kr16_4_joint"/>
+			<actuator name="${name}kr16_4_motor">
+				<hardwareInterface>EffortJointInterface</hardwareInterface>
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+	
+		<transmission name="${name}kr16_5_link_trans">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="${name}kr16_5_joint"/>
+			<actuator name="${name}kr16_5_motor">
+				<hardwareInterface>EffortJointInterface</hardwareInterface>
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+
+
+
+	</xacro:macro>
+
+</robot>

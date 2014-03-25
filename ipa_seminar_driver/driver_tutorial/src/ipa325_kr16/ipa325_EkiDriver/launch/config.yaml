@@ -1,0 +1,6 @@
+IP_address: "192.1.10.20"
+port: 49152
+autoConnect: true
+dummyMode: false
+krl_ethernet_xml: "/home/ros/catkin_ws/src/ipa325_kr16/ipa325_EkiDriver/common/files/EKIServerFrame.xml"
+joint_names: [kuka16_1_joint, kuka16_2_joint, kuka16_3_joint, kuka16_4_joint, kuka16_5_joint, kuka16_6_joint]

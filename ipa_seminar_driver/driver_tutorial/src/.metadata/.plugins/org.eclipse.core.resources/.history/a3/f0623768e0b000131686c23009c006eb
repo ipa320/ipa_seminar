@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:ros="http://ros/1.0" xmi:id="_1I8UwLDbEeOhofuH0eZV8Q" type="RosPackage" name="kr16_driver.ros_package_diagram" measurementUnit="Pixel">
+  <children xmi:type="notation:Shape" xmi:id="_oBe50LDcEeOhofuH0eZV8Q" type="2001" fontName="Ubuntu">
+    <children xmi:type="notation:DecorationNode" xmi:id="_oBh9ILDcEeOhofuH0eZV8Q" type="5008"/>
+    <children xmi:type="notation:BasicCompartment" xmi:id="_oBjyULDcEeOhofuH0eZV8Q" type="7001">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_oBjyUbDcEeOhofuH0eZV8Q" showTitle="true"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_oBjyUrDcEeOhofuH0eZV8Q"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_oBjyU7DcEeOhofuH0eZV8Q"/>
+    </children>
+    <element xmi:type="ros:Node" href="kr16_driver.ros_package#//@node.0"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_oBe50bDcEeOhofuH0eZV8Q" x="120" y="72" width="253" height="157"/>
+  </children>
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_1I8UwbDbEeOhofuH0eZV8Q"/>
+  <element xmi:type="ros:Package" href="kr16_driver.ros_package#/"/>
+</notation:Diagram>

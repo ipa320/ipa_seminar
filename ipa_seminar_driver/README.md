@@ -1,7 +1,7 @@
 # ROS driver programming using BRIDE
 ## Tutorial
 
-The goal of this tutorial is to create a ROS driver for the KUKA KR16 robot using the BRIDE tool-chain for model-driven engineering. Basic information and details about Bride are available [here](http://wiki.ros.org/bride).
+The goal of this tutorial is to create a ROS driver for the KUKA KR16 robot using the BRIDE tool-chain for model-driven engineering. Basic information and details about Bride are available [here](http://wiki.ros.org/bride). The tutorial begins with a short introduction on how to setup the BRIDE IDE and moves on to the creation of two node models: One node model which is wrapping the kr16 robot driver and another node which will trigger the kr16 driver to continuously move the robot from one waypoint to another.
 
 ### 1.  Startup BRIDE and create a new project
 
@@ -96,45 +96,180 @@ You can now generate the source code of the node automatically based on the mode
 
 To implement the actual capability code for your ROS driver you have to only focus on the kr16_node_common.cpp file in the common/src/ directory. You can open the file by double clicking it in the project explorer. The file contains protected regions you can use for your code that will not be overwritten once you regenerate the node by the tool chain.
 
-Once the file is open you can now go to the kr16_node_impl class and edit the code as follows: 
+Once the file is open you can now go to the kr16_node_impl class and edit the code as follows. Please be aware, that it is only save to edit the locations in between the user comments. All other edits will be overwritte by the next model generation process. At first we need to add the driver specific includes:
+
+```
+//ROS typedefs
+#include "ros/ros.h"
+#include <sensor_msgs/JointState.h>
+#include <control_msgs/JointTrajectoryControllerState.h>
+
+/* protected region user include files on begin */
+//driver
+#include <KukaEthernetClient/KukaEthernetClient.h>
+#include <queue>
+/* protected region user include files end */
+
+```
+Then we put the driver functionality into the user code sections of the "kr16_node_impl" class. The "configure()" function is called once, when the node is launched and should contain all intitialization code. The "update()" function is called for each iteration of the node and is used to publish the status information. The action callback function is called on request by the action client. 
 
 ```
 class kr16_node_impl
 {
 	/* protected region user member variables on begin */
+	KukaEthernetClient kuka_client_;
+	bool kuka_callback_received_;
+	int polling_rate_;
+	int received_msg_id_;
+	sensor_msgs::JointState joint_state_msg_;
+	std::vector<std::string> joint_names_;
 	/* protected region user member variables end */
 
 public:
-    kr16_node_impl() 
-    {
-        /* protected region user constructor on begin */
+	kr16_node_impl()
+	{
+		/* protected region user constructor on begin */
+		// Kuka Communication specifics
+		polling_rate_ = 100;
+		kuka_callback_received_ = false;
+		received_msg_id_ = -1;
 		/* protected region user constructor end */
-    }
-    void configure(kr16_node_config config) 
-    {
-        /* protected region user configure on begin */
+	}
+
+	void configure(kr16_node_config config)
+	{
+		/* protected region user configure on begin */
+		bool dummy_mode = false;
+		bool auto_connect = true;
+		std::string xml_path = "/home/ros/catkin_ws/src/ipa325_kr16/ipa325_EkiDriver/common/files/EKIServerFrame.xml";
+		kuka_client_.setClientDummy(dummy_mode);
+
+		ROS_INFO("kr16_node_impl: Initializing KRC Ethernet Client");
+
+		if (!kuka_client_.Initialize(xml_path, SocketAddress(config.robot_ip_address, config.robot_port), auto_connect))
+		{
+			int error = kuka_client_.getError();
+			if ( error == 1)
+			{
+				ROS_ERROR("kr16_node_impl: Connection to KUKA KRC failed");
+			}
+			else if (error == 2)
+			{
+				ROS_ERROR("kr16_node_impl: Xml KRC definition file could not be parsed");
+			}
+			else if (error == 3)
+			{
+				ROS_ERROR("kr16_node_impl: Connection failed AND Xml KRC definition file could not be parsed");
+			}
+		}
+		else
+		{
+			ROS_INFO("kr16_node_impl: Successfully connected to KUKA KRC");
+		}
+
+		boost::function<void (int)> fct( boost::bind( &kr16_node_impl::kukaCallback, this, _1 ) );
+		kuka_client_.setCallbackFcn(fct);
 		/* protected region user configure end */
-    }
-    void update(kr16_node_data &data, kr16_node_config config)
-    {
-        /* protected region user update on begin */
+	}
+
+	void update(kr16_node_data &data, kr16_node_config config)
+	{
+		/* protected region user update on begin */
+		data.out_joint_states = joint_state_msg_;
 		/* protected region user update end */
-    }
+	}
 
-    
-    void callback_follow_joint_trajectory_action_(const control_msgs::FollowJointTrajectoryGoalConstPtr &goal, actionlib::SimpleActionServer<control_msgs::FollowJointTrajectoryAction> *as_)
-    {
-    	/* protected region user implementation of action callback for follow_joint_trajectory_action on begin */
+	void callback_follow_joint_trajectory_action_(const control_msgs::FollowJointTrajectoryGoalConstPtr &goal, actionlib::SimpleActionServer<control_msgs::FollowJointTrajectoryAction> *as_)
+	{
+		/* protected region user implementation of action callback for follow_joint_trajectory_action on begin */
+		// helper variables
+		ros::Rate r(polling_rate_);
+		kuka_callback_received_ = false;
+
+		std::queue<int> msg_queue;
+
+		// TODO: Publish the feedback
+
+		ROS_INFO("kr16_node_impl: FollowjointTrajectoryGoal received containing %i waypoints.", goal->trajectory.points.size()) ;
+
+		for (u_int i = 0; i < goal->trajectory.points.size(); i++)
+		{
+			if (goal->trajectory.points[i].velocities.size() > 1)
+			{
+				ROS_WARN("kr16_node_impl: Only first velocity is accepted and defines all axes!");
+			}
+			float overall_velocity = goal->trajectory.points[i].velocities[0];
+
+			int current_msg_id = kuka_client_.getMessageID();
+			msg_queue.push(current_msg_id);
+
+			kuka_client_.movePTP(current_msg_id,
+					goal->trajectory.points[i].positions[0],
+					goal->trajectory.points[i].positions[1],
+					goal->trajectory.points[i].positions[2],
+					goal->trajectory.points[i].positions[3],
+					goal->trajectory.points[i].positions[4],
+					goal->trajectory.points[i].positions[5],
+					overall_velocity);
+		}
+
+		// waiti until execution of the action has finished
+		while (!msg_queue.empty() && ros::ok() && !as_->isPreemptRequested())
+		{
+			if(kuka_callback_received_)
+			{
+				kuka_callback_received_ = false;
+				// work through msgId-Queue;
+				if(msg_queue.front() != received_msg_id_)
+				{
+					ROS_WARN("kr16_node_impl: QueueFront = %i; Recv = %i -> Indicating sync problem! Send Actions does not match responses by KRC", msg_queue.front(), received_msg_id_);
+				}
+				msg_queue.pop();
+			}
+
+			// TODO: publish the feedback
+			//as_->publishFeedback(trajfeedback_);
+			r.sleep();
+		}
+
+		if (as_->isPreemptRequested() || !ros::ok())
+		{
+			ROS_INFO("kr16_node_impl: : Preempted");
+			// set the action state to preempted
+			as_->setPreempted();
+		}
+		else
+		{
+			ROS_INFO("kr16_node_impl: : Succeeded");
+			// set the action state to succeeded
+			as_->setSucceeded();
+		}
 		/* protected region user implementation of action callback for follow_joint_trajectory_action end */
-    
-    }
-    
 
+	}
 
-    
-    /* protected region user additional functions on begin */
+	/* protected region user additional functions on begin */
+	void kukaCallback(int msgID)
+	{
+		ROS_INFO("kr16_node_impl: KRC called back with MsgID %i done", msgID);
+
+		received_msg_id_ = msgID;
+
+		kuka_callback_received_ = true;
+		ROS_INFO("kr16_node_impl: Kuka callback received");
+
+		KukaAxis current_axis = kuka_client_.getCurrentAxis();
+
+		//Setting joint state
+		sensor_msgs::JointState joint_state_msg;
+		joint_state_msg.header.stamp = ros::Time::now();
+		joint_state_msg.name = joint_names_;
+		joint_state_msg.position = current_axis.toStdVector();
+
+		//robot_pose = kuka_client_.getCurrentFrame();
+	}
 	/* protected region user additional functions end */
-    
+
 };
 ```
 You can now build the node by executing catkin_make in your catkin workspace on the console
@@ -142,7 +277,7 @@ You can now build the node by executing catkin_make in your catkin workspace on 
 cd /home/ros/catkin_ws
 catkin_make
 ```
-Congratulation you just created your first model-based ROS node.
+If you there are no errors: Congratulation you just created your first model-based ROS node.
 
 ### 5.  Create a corresponding node to execute motion commands
 
@@ -166,39 +301,131 @@ Edit their properties as follows:
 ![tc_param1_properties](./doc/tc_param1_properties.png "Parameter properties for the kr16_test_client")
 ![tc_param2_properties](./doc/tc_param2_properties.png "Parameter properties for the kr16_test_client")
 
-After generating the code out of the model you can alter the update function of the kr16_test_client_impl class of the common/src/kr16_test_client_common.cpp file as follows: 
+After generating the code out of the model you can alter the kr16_test_client_impl class of the common/src/kr16_test_client_common.cpp file as follows. At fist we need to insert some more include files to make ActionClients feasible (this won't be necessary in later BRIDE versions any more):
+```
+//ROS typedefs
+#include "ros/ros.h"
+#include <control_msgs/JointTrajectoryControllerState.h>
+
+/* protected region user include files on begin */
+#include <actionlib/client/simple_action_client.h>
+#include <control_msgs/FollowJointTrajectoryAction.h>
+/* protected region user include files end */
+```
+
+Now, we edit the "kr16_test_client_impl" class to trigger the kr16 driver node:
+
 ```
 class kr16_test_client_impl
 {
 	/* protected region user member variables on begin */
+
 	/* protected region user member variables end */
 
 public:
-    kr16_test_client_impl() 
-    {
-        /* protected region user constructor on begin */
+	kr16_test_client_impl()
+	{
+		/* protected region user constructor on begin */
+
 		/* protected region user constructor end */
-    }
-    void configure(kr16_test_client_config config) 
-    {
-        /* protected region user configure on begin */
+	}
+	void configure(kr16_test_client_config config)
+	{
+		/* protected region user configure on begin */
 		/* protected region user configure end */
-    }
-    void update(kr16_test_client_data &data, kr16_test_client_config config)
-    {
-        /* protected region user update on begin */
+	}
+	void update(kr16_test_client_data &data, kr16_test_client_config config)
+	{
+		/* protected region user update on begin */
+
+		actionlib::SimpleActionClient<control_msgs::FollowJointTrajectoryAction> ac("follow_joint_trajectory_action", true);
+		ROS_INFO("kr16_test_client_impl: Waiting for action server to start.");
+		ac.waitForServer(); //will wait for infinite time
+
+		// declaring goal of the action
+		control_msgs::FollowJointTrajectoryGoal goal;
+		// We will have two waypoints in this goal trajectory
+		goal.trajectory.points.resize(2);
+
+		int ind = 0;
+		goal.trajectory.points[ind].positions.resize(7);
+		goal.trajectory.points[ind].positions[0] = -35;
+		goal.trajectory.points[ind].positions[1] = -98;
+		goal.trajectory.points[ind].positions[2] = 108;
+		goal.trajectory.points[ind].positions[3] = -0.2;
+		goal.trajectory.points[ind].positions[4] = 80;
+		goal.trajectory.points[ind].positions[5] = 0.4;
+		goal.trajectory.points[ind].positions[6] = 0.0;
+		// Velocities
+		goal.trajectory.points[ind].velocities.resize(7);
+		for (size_t j = 0; j < 7; ++j)
+		{
+			goal.trajectory.points[ind].velocities[j] = 10.0;
+		}
+		// To be reached 1 second after starting along the trajectory
+		goal.trajectory.points[ind].time_from_start = ros::Duration(60.0);
+
+		// Second trajectory point
+		// Positions
+		ind += 1;
+		goal.trajectory.points[ind].positions.resize(7);
+		goal.trajectory.points[ind].positions[0] = -25;
+		goal.trajectory.points[ind].positions[1] = -95;
+		goal.trajectory.points[ind].positions[2] = 105;
+		goal.trajectory.points[ind].positions[3] = -0.5;
+		goal.trajectory.points[ind].positions[4] = 80;
+		goal.trajectory.points[ind].positions[5] = 10.5;
+		goal.trajectory.points[ind].positions[6] = 0;
+		// Velocities
+		goal.trajectory.points[ind].velocities.resize(7);
+		for (size_t j = 0; j < 7; ++j)
+		{
+			goal.trajectory.points[ind].velocities[j] = 10.0;
+		}
+		// To be reached 2 seconds after starting along the trajectory
+		goal.trajectory.points[ind].time_from_start = ros::Duration(60.0);
+
+
+		// ********************************//
+		// sending of goal to actionserver //
+		// ********************************//
+
+		// send the goal to the action server
+		ac.sendGoal(goal);
+		ROS_INFO("kr16_test_client_impl: Sending trajectory to server");
+
+		// ********************************//
+		// waiting for reply by act-server //
+		// ********************************//
+
+		// wait for the action to return
+		ROS_INFO("kr16_test_client_impl: Waiting for action to return");
+		bool finished_before_timeout = ac.waitForResult(ros::Duration(60.0));
+
+		// handling possible timeout of actionserver reply
+		if (finished_before_timeout)
+		{
+			actionlib::SimpleClientGoalState state = ac.getState();
+			ROS_WARN("kr16_test_client_impl: Action finished: %s",state.toString().c_str());
+		}
+		else
+		{
+			ROS_WARN("kr16_test_client_impl: Action did not finish before the time out.");
+		}
 		/* protected region user update end */
-    }
 
-    
+	}
 
 
-    
-    /* protected region user additional functions on begin */
+
+	/* protected region user additional functions on begin */
 	/* protected region user additional functions end */
-    
+
 };
 ```
+
+Well done, our nodes are now ready to be deployed by the system model.
+
 ### 6.  Using the BRIDE system model for deployment
 
 Create a new Eclipse project by "File -> New -> Project" and then "General -> Project". Give the project a name, e.g. "kr16_deployment" and finish the creation wizard. Afterwards you can create a new folder named "model" as when creating capability models.

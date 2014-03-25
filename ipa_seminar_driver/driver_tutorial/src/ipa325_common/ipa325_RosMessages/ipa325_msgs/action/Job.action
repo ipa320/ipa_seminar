@@ -1,0 +1,27 @@
+######### DEPRECATED #########
+#   This Action is legacy    #
+# Don't use for new projects #
+##############################
+
+#goal definition
+int32 msgId     #unique msg identify number
+int32 jobId     #number for job declaration
+    #possible parameter
+int32 param1
+int32 param2
+    #Pose definition
+float32[] pose
+float32 linVel  #velocity of linear movement m/s
+    #Axis configuration
+float32[] axis
+float32 axVel   #velocity of joint movement grad/s
+---
+#result definition
+int32 msgId
+int32 jobId
+int32 errorcode
+---
+#feedback
+int32 msgId
+int32 jobId
+int32 stage
