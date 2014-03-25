@@ -1,0 +1,13 @@
+1. Lege schwarzen Schalter um -> orange Leuchte blinkt
+2. Hit start auf mobilem Schalterteil
+3. Hit Quit auf mobilem Schalterteil
+4. Alle OK drücken auf KUKA Panel
+5. Falls nicht goto step 2.
+6. Connect via Netzwerkkabel auf Router
+6.1 Robtergeschw an Kuka Panel runter drehen
+7. Start main_loop auf Kuka Panel unter R1/Programme/MRK... mittels "anwählen" Button
+7.1 Weißen Knopf LEICHT drücken -> S + I grün (Ansonsten loslassen und Start button drücken)
+7.2 Grüner Knopf gedrückt halten -> Roboter bewegt sich bis SAK erreicht
+7.3 Schlüsselschalter drehen -> Automatikbetrieb EXT auswählen -> Schlüsselschalter zurückdrehen
+8. Start Knopf drücken -> SIRExt Grün
+
