@@ -424,6 +424,12 @@ public:
 };
 ```
 
+Again, you can now build the node by executing catkin_make in your catkin workspace on the console
+```
+cd /home/ros/catkin_ws
+catkin_make
+```
+
 Well done, our nodes are now ready to be deployed by the system model.
 
 ### 6.  Using the BRIDE system model for deployment
