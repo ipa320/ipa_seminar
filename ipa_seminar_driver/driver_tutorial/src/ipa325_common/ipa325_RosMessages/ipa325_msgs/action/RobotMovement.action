@@ -1,0 +1,27 @@
+##############################
+#      Action to move        #
+#    robot arm to a pose     #
+#        via waypoint        #
+##############################
+
+#goal definition
+Header header
+int32 msgId
+WayPoint[] points
+---
+#result definition
+Header header
+int32 msgId
+int32 error_code
+string error_message
+
+WayPoint final_desired
+WayPoint final_actual
+WayPoint final_error
+---
+#feedback defintion
+Header header
+int32 msgId
+WayPoint desired
+WayPoint actual
+WayPoint error

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+
+	<!-- send kr16 urdf (robot description) to param server -->
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find ipa325_robot_descriptions)/urdf/cells/ipa325_kr16_empty.urdf.xacro'" />
+
+	<node pkg="ipa325_eki_driver" type="EkiDriver" name="EkiDriver" output="screen" cwd="node">
+		<rosparam command="load" file="$(find ipa325_eki_driver)/launch/config_dummy.yaml"/>
+	</node>
+
+	<node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher"/>
+
+</launch>
+
+

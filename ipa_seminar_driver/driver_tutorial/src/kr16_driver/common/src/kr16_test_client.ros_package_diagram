@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:ros="http://ros/1.0" xmi:id="___VGILD0EeOzMqfauE_9bg" type="RosPackage" name="kr16_test_client.ros_package_diagram" measurementUnit="Pixel">
+  <styles xmi:type="notation:DiagramStyle" xmi:id="___VGIbD0EeOzMqfauE_9bg"/>
+  <element xmi:type="ros:Package" href="kr16_test_client.ros_package#/"/>
+</notation:Diagram>

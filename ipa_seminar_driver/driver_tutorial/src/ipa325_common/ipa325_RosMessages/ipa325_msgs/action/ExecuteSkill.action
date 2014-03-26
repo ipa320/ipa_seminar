@@ -1,0 +1,19 @@
+##############################
+#      Action to request     #
+#    robotic capabilities    #
+##############################
+
+#goal definition
+
+#identifier for skill
+string skill_id
+
+#parameter can be found here on the parameter server 
+string[] parameter_id
+---
+#result definition
+int32 error_code
+string error_message
+---
+#feedback
+int32 stage

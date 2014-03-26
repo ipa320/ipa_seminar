@@ -1,0 +1,22 @@
+##############################
+#      Action to move        #
+#    robot arm to a pose     #
+#        via waypoint        #
+##############################
+
+#goal definition
+PoseTrajectory trajectory
+
+---
+#result definition
+int32 msgId
+int32 error_code
+string error_message
+
+---
+#feedback defintion
+Header header
+int32 msgId
+PoseTrajectoryPoint desired
+PoseTrajectoryPoint actual
+PoseTrajectoryPoint error

@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       name="euroc" >
+
+  <!-- includes -->
+  <xacro:include filename="$(find ipa325_robot_descriptions)/urdf/ur5/ipa325_ur5_euroc.urdf.xacro" />
+  <xacro:include filename="$(find ipa325_robot_descriptions)/urdf/camera/camera.urdf.xacro" />
+  <xacro:include filename="$(find ipa325_robot_descriptions)/urdf/kinect/kinect.urdf.xacro" />
+
+  <link name="world"/>
+
+  <!-- setup workspace TODO: mesh -->
+  <joint name="table_joint" type="fixed">
+    <parent link="world"/>
+    <child link="table_link"/>
+    <origin xyz="0 -1 1" rpy="0 0 0"/>
+  </joint>
+
+  <link name="table_link">
+    <collision>
+      <origin xyz="0.5 1 -0.5" rpy="0 0 0"/>
+      <geometry>
+        <box size="1 2 1"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0.5 1 -0.5" rpy="0 0 0"/>
+      <geometry>
+        <box size="1 2 1"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- setup workpiece TODO: mesh -->
+  <joint name="workpiece_joint" type="fixed">
+    <parent link="table_link"/>
+    <child link="workpiece_link"/>
+    <origin xyz="0.6 0.8 0.2" rpy="0 0 0"/>
+  </joint>
+
+  <link name="workpiece_link">
+    <collision>
+      <origin xyz="0.15 0.2 -0.1" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.3 0.4 0.2"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0.15 0.2 -0.1" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.3 0.4 0.2"/>
+      </geometry>
+    </visual>
+  </link> 
+
+  <!-- include robot -->
+  <xacro:ipa325_ur5_euroc prefix="" parent="table_link">
+    <origin xyz="0.2 1 0" rpy="0 0 0"/>
+  </xacro:ipa325_ur5_euroc>
+
+  <!-- include camera 1 -->
+  <xacro:cam name="camera1" parent="ee_link">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:cam>
+
+  <!-- include camera 2 -->
+  <xacro:cam name="camera2" parent="ee_link">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:cam>
+
+  <!-- include kinect 1 -->
+  <xacro:kinect name="kinect1" parent="world">
+    <origin xyz="1 -2 1" rpy="0 0 ${pi/3}"/>
+  </xacro:kinect>
+
+  <!-- include kinect 2 -->
+  <xacro:kinect name="kinect2" parent="world">
+    <origin xyz="-0.5 0.3 2" rpy="0 ${pi/4} 0"/>
+  </xacro:kinect>
+
+</robot>

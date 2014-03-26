@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+	 xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+	 xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+	 xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+	 name="lbr5_Stihl">
+
+	<!-- common stuff -->
+	<xacro:include filename="$(find ipa325_robot_descriptions)/urdf/common/common.xacro" />
+	<xacro:include filename="$(find ipa325_robot_descriptions)/urdf/common/materials.urdf.xacro" />
+
+	<!-- lbr5 -->
+	<xacro:include filename="$(find ipa325_robot_descriptions)/urdf/lbr5/lbr5_7.urdf.xacro" />
+
+	<!-- tool -->
+	<xacro:include filename="$(find ipa325_robot_descriptions)/urdf/cells/tool_screwdriver_stihl.urdf.xacro" />
+
+	<!-- arm mount positions | relative to base_link -->
+	<property name="arm_x" value="0.9275"/>
+	<property name="arm_y" value="0.4575"/>
+	<property name="arm_z" value="0.015"/>
+	<property name="arm_roll" value="0"/>
+	<property name="arm_pitch" value="0"/>
+	<property name="arm_yaw" value="1.570796327"/>
+
+	<!-- tool mount positions | relative to flange -->
+	<property name="tool_x" value="0"/>
+	<property name="tool_y" value="0"/>
+	<property name="tool_z" value="-0.005"/>
+	<property name="tool_roll" value="0"/>
+	<property name="tool_pitch" value="0"/>
+	<property name="tool_yaw" value="0"/>
+
+	<!-- fix table link -->
+	<link name="world">
+		<!--visual>
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<geometry>
+				<mesh filename="package://ipa325_robot_descriptions/meshes/table/Tisch_27092013.stl" />
+			</geometry>
+			<material name="Grey2" />
+		</visual-->
+
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<geometry>
+				<mesh filename="package://ipa325_robot_descriptions/meshes/table/Tisch_27092013.stl" />
+			</geometry>
+		</collision>
+
+	</link>
+
+	<!-- arm -->
+	<xacro:lbr5_7 name="base" prefix="" parent="world">
+	<origin xyz="${arm_x} ${arm_y} ${arm_z}" rpy="${arm_roll} ${arm_pitch} ${arm_yaw}" />
+	</xacro:lbr5_7>
+
+
+	<!-- tool -->
+	<xacro:screwdriver_tool prefix="" parent="flange">
+	<origin xyz="${tool_x} ${tool_y} ${tool_z}" rpy="${tool_roll} ${tool_pitch} ${tool_yaw}" />
+	</xacro:screwdriver_tool>
+
+</robot>
+

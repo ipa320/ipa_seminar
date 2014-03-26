@@ -1,0 +1,15 @@
+<package>
+  <name>ipa325_common</name>
+  <version>1.0.0</version>
+  <description>
+    The ipa325_common repository includes packages that provide common functionality needed by multiple projects.
+  </description>
+  <maintainer email="todo@todo.de">TODO</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <export>
+    <metapackage/>
+  </export>
+</package>

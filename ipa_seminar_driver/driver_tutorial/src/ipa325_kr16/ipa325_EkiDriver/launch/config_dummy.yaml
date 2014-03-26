@@ -1,0 +1,6 @@
+IP_address: "192.1.10.20"
+port: 49152
+autoConnect: false
+dummyMode: true
+krl_ethernet_xml: "/home/lth/catkin_ws/src/ipa325_drivers/ipa325_kr16/ipa325_EkiDriver/common/files/EKI_Dummy.xml"
+joint_names: [arm_1_joint, arm_2_joint, arm_3_joint, arm_4_joint, arm_5_joint, arm_6_joint]

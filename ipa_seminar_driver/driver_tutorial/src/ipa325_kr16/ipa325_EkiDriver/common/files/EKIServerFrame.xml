@@ -1,0 +1,59 @@
+<ETHERNETKRL>
+	<CONFIGURATION>
+		<EXTERNAL>
+			<TYPE>Client</TYPE>
+			<IP>172.31.1.1</IP>
+			<PORT>49152</PORT>
+		</EXTERNAL>
+		<INTERNAL>
+			<IP>"172.31.1.147"</IP>
+			<PORT>49152</PORT>
+			<ALIVE Set_Flag="2"/>
+		</INTERNAL>
+	</CONFIGURATION>
+	<SEND>
+		<XML>
+			<ELEMENT Tag="Robot/SubID" Type="INT" />
+			<ELEMENT Tag="Robot/MsgID" Type="INT" />
+			<ELEMENT Tag="Robot/ConfirmTag" Type="INT" />
+			<ELEMENT Tag="Robot/CurPos" Type="FRAME"/>
+			<ELEMENT Tag="Robot/CurPos/@X"/>
+			<ELEMENT Tag="Robot/CurPos/@Y"/>
+			<ELEMENT Tag="Robot/CurPos/@Z"/>
+			<ELEMENT Tag="Robot/CurPos/@A"/>
+			<ELEMENT Tag="Robot/CurPos/@B"/>
+			<ELEMENT Tag="Robot/CurPos/@C"/>
+			<ELEMENT Tag="Robot/CurAxis" />
+			<ELEMENT Tag="Robot/CurAxis/@A1"/>
+			<ELEMENT Tag="Robot/CurAxis/@A2"/>
+			<ELEMENT Tag="Robot/CurAxis/@A3"/>
+			<ELEMENT Tag="Robot/CurAxis/@A4"/>
+			<ELEMENT Tag="Robot/CurAxis/@A5"/>
+			<ELEMENT Tag="Robot/CurAxis/@A6"/>
+			<ELEMENT Tag="Robot/Slot1" Type="INT" />
+			<ELEMENT Tag="Robot/Slot2" Type="INT" />
+			<ELEMENT Tag="Robot/Slot3" Type="INT" />
+			<ELEMENT Tag="Robot/RunPointer" Type="INT" />
+			<ELEMENT Tag="Robot/RecvPointer" Type="INT" />
+		</XML>
+	</SEND>
+	<RECEIVE>
+		<XML>
+			<ELEMENT Tag="Ext/SubID" Type="INT" />
+			<ELEMENT Tag="Ext/MsgID" Type="INT" />
+			<ELEMENT Tag="Ext/Param1" Type="INT" />
+			<ELEMENT Tag="Ext/Param2" Type="INT" />
+			<ELEMENT Tag="Ext/Frame" Type="Frame" />
+			<ELEMENT Tag="Ext/Axis" />
+			<ELEMENT Tag="Ext/Axis/@A1" Type="REAL"/>
+			<ELEMENT Tag="Ext/Axis/@A2" Type="REAL"/>
+			<ELEMENT Tag="Ext/Axis/@A3" Type="REAL"/>
+			<ELEMENT Tag="Ext/Axis/@A4" Type="REAL"/>
+			<ELEMENT Tag="Ext/Axis/@A5" Type="REAL"/>
+			<ELEMENT Tag="Ext/Axis/@A6" Type="REAL"/>
+			<ELEMENT Tag="Ext/LinVel" Type="REAL"/>
+			<ELEMENT Tag="Ext/AxVel" Type="REAL"/>
+			<ELEMENT Tag="Ext" Set_Flag="999" />
+		</XML>
+	</RECEIVE>
+</ETHERNETKRL>

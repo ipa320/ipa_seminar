@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+     xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+     xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+     xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="human_transmission" params="prefix">
+
+    <transmission name="human_arm_r_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${prefix}human_arm_r_joint"/>
+      <actuator name="motor1">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <transmission name="human_arm_l_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${prefix}human_arm_l_joint"/>
+      <actuator name="motor2">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+  </xacro:macro>
+
+</robot>
