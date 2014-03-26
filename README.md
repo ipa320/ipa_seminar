@@ -2,6 +2,7 @@ ros_seminar
 ===========
 
 Links to tutorials and slides:
+* [Slides](https://github.com/ipa320/ipa_seminar/tree/master/docs)
 * [Perception](https://github.com/ipa320/ipa_seminar/tree/master/ipa_seminar_perception)
 * [Navigation](https://github.com/ipa320/ipa_seminar/tree/master/ipa_seminar_navigation)
 * [Manipulation](https://github.com/ipa320/ipa_seminar/tree/master/ipa_seminar_manipulation)
