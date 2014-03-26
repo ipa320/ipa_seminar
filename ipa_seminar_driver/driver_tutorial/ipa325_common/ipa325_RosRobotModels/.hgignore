@@ -1,6 +1,0 @@
-syntax: glob
-.git
-build
-msg_gen
-bin
-*~

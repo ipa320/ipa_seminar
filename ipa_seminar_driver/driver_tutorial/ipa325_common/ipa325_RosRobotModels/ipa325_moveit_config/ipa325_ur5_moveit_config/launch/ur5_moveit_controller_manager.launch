@@ -1,3 +1,0 @@
-<launch>
-  <rosparam file="$(find ur5_moveit_config)/config/controllers.yaml" ns="move_group"/>
-</launch>
