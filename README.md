@@ -1,10 +1,26 @@
 ros_seminar
 ===========
 
-TODO: fill in tutorial instructions here
+Links to tutorials and slides:
+* [Perception](https://github.com/ipa320/ipa_seminar/tree/master/ipa_seminar_perception)
+* [Navigation](https://github.com/ipa320/ipa_seminar/tree/master/ipa_seminar_navigation)
+* [Manipulation](https://github.com/ipa320/ipa_seminar/tree/master/ipa_seminar_manipulation)
+* [Application](https://github.com/ipa320/ipa_seminar/tree/master/ipa_seminar_application)
+* [Driver development](https://github.com/ipa320/ipa_seminar/tree/master/ipa_seminar_driver)
 
 
-# Setup
+
+
+
+
+
+
+
+
+
+
+Setup
+=======================================
 ## group pcs
 * user: group1 ... group4
 * pw: group1 ... group4
