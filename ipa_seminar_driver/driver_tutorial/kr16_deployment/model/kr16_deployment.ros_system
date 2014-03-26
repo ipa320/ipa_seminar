@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ros:Architecture xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ros="http://ros/1.0" name="kr16_deployment">
+  <topic name="/arm_controller/state">
+    <publisher href="platform:/resource//kr16_driver/model/kr16_driver.ros_package#//@node.0/@publisher.1"/>
+    <subscriber href="platform:/resource//kr16_test_client/model/kr16_test_client.ros_package#//@node.0/@subscriber.0"/>
+  </topic>
+  <packages href="platform:/resource//kr16_driver/model/kr16_driver.ros_package#/"/>
+  <packages href="platform:/resource//kr16_test_client/model/kr16_test_client.ros_package#/"/>
+  <action name="follow_joint_trajectory_action">
+    <actionserver href="platform:/resource//kr16_driver/model/kr16_driver.ros_package#//@node.0/@actionserver.0"/>
+    <actionclient href="platform:/resource//kr16_test_client/model/kr16_test_client.ros_package#//@node.0/@actionclient.0"/>
+  </action>
+</ros:Architecture>

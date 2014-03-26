@@ -1,0 +1,37 @@
+<package>
+  <name>kr16_driver</name>
+  <description>KUKA KR16 driver node</description>
+  <version>0.0.0</version>
+  <maintainer email="jsf@ipa.fhg.de">Jan Fischer</maintainer>
+  <author email="Tjsf@ipa.fhg.de">Jan Fischer</author>
+  <license></license>
+  <url></url>
+
+  <buildtool_depend>catkin</buildtool_depend>  
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>std_msgs</build_depend>
+
+  <build_depend>actionlib</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>dynamic_reconfigure</build_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>rospy</run_depend>
+  <run_depend>dynamic_reconfigure</run_depend>
+
+  	<build_depend>sensor_msgs</build_depend>
+    <run_depend>sensor_msgs</run_depend>
+  	<build_depend>control_msgs</build_depend>
+    <run_depend>control_msgs</run_depend>
+  	<build_depend>ipa325_eki_driver</build_depend>
+    <run_depend>ipa325_eki_driver</run_depend>
+  
+
+  <!-- protected region additional manifest statements on begin -->
+  <!-- protected region additional manifest statements end -->
+  
+  
+</package>
+
+

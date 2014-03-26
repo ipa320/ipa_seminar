@@ -1,0 +1,25 @@
+<package>
+  <name>kr16_deployment</name>
+  <description>Architecture kr16_deployment</description>
+  <version>0.0.0</version>
+  <maintainer email="TODO@TODO.to">TODO</maintainer>
+  <author email="TODO@TODO.to">TODO</author>
+  <license>TODO</license>
+  <url>TODO</url>
+
+  <buildtool_depend>catkin</buildtool_depend>  
+
+    <build_depend>kr16_driver</build_depend>
+    <run_depend>kr16_driver</run_depend>
+    <build_depend>kr16_test_listener</build_depend>
+    <run_depend>kr16_test_listener</run_depend>
+ 
+  
+
+  <!-- protected region additional manifest statements on begin -->
+  <!-- protected region additional manifest statements end -->
+  
+  
+</package>
+
+
