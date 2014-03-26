@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+
+<xacro:macro name="lbr5_7" params="parent name prefix *origin">
+
+  <!-- mount the arm to the robot -->
+  <joint name="${name}_fixture" type="fixed" >
+   <insert_block name="origin" />
+   <parent link="${parent}" />
+   <child link="${prefix}segment_0" />
+ </joint>
+
+  <!-- Robot descripition by KUKA -->
+ <link name="${prefix}segment_0">
+    <visual>
+      <geometry>
+        <mesh filename="package://ipa325_robot_descriptions/meshes/lbr5_7/segment_0.dae" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+  </link>
+
+ <link name="${prefix}segment_1">
+    <visual>
+      <geometry>
+        <mesh filename="package://ipa325_robot_descriptions/meshes/lbr5_7/segment_1.dae" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+  </link>
+
+ <link name="${prefix}segment_2">
+    <visual>
+      <geometry>
+        <mesh filename="package://ipa325_robot_descriptions/meshes/lbr5_7/segment_2.dae" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+  </link>
+
+ <link name="${prefix}segment_3">
+    <visual>
+      <geometry>
+        <mesh filename="package://ipa325_robot_descriptions/meshes/lbr5_7/segment_3.dae" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+  </link>
+
+ <link name="${prefix}segment_4">
+    <visual>
+      <geometry>
+        <mesh filename="package://ipa325_robot_descriptions/meshes/lbr5_7/segment_4.dae" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+  </link>
+
+ <link name="${prefix}segment_5">
+    <visual>
+      <geometry>
+        <mesh filename="package://ipa325_robot_descriptions/meshes/lbr5_7/segment_5.dae" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="${prefix}segment_6">
+    <visual>
+      <geometry>
+        <mesh filename="package://ipa325_robot_descriptions/meshes/lbr5_7/segment_6.dae" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="${prefix}segment_7">
+    <visual>
+      <geometry>
+        <mesh filename="package://ipa325_robot_descriptions/meshes/lbr5_7/segment_7.dae" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+  </link>
+
+ <link name="${prefix}flange"/>
+
+  <joint name="${prefix}joint_0" type="continuous">
+    <parent link="${prefix}segment_0"/>
+    <child link="${prefix}segment_1"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0 0 .157"/>
+  </joint>
+
+  <joint name="${prefix}joint_1" type="continuous">
+    <parent link="${prefix}segment_1"/>
+    <child link="${prefix}segment_2"/>
+    <axis xyz="0 1 0"/>
+    <origin xyz="0 0 .185"/>
+  </joint>
+
+  <joint name="${prefix}joint_2" type="continuous">
+    <parent link="${prefix}segment_2"/>
+    <child link="${prefix}segment_3"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0 0 .185"/>
+  </joint>
+
+  <joint name="${prefix}joint_3" type="continuous">
+    <parent link="${prefix}segment_3"/>
+    <child link="${prefix}segment_4"/>
+    <axis xyz="0 -1 0"/>
+    <origin xyz="0 0 .215"/>
+  </joint>
+
+  <joint name="${prefix}joint_4" type="continuous">
+    <parent link="${prefix}segment_4"/>
+    <child link="${prefix}segment_5"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0 0 .185"/>
+  </joint>
+
+  <joint name="${prefix}joint_5" type="continuous">
+    <parent link="${prefix}segment_5"/>
+    <child link="${prefix}segment_6"/>
+    <axis xyz="0 1 0"/>
+    <origin xyz="0 0 .215"/>
+  </joint>
+
+  <joint name="${prefix}joint_6" type="continuous">
+    <parent link="${prefix}segment_6"/>
+    <child link="${prefix}segment_7"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0 0 .080"/>
+  </joint>
+
+  <!-- joint between segment_7 and flange -->
+  <joint name="lbr_flange_joint" type="fixed" >
+    <origin xyz="0 0 0.029" rpy="0 0 0" />
+    <parent link="${prefix}segment_7" />
+    <child link="${prefix}flange" />
+  </joint>
+
+</xacro:macro>
+</robot>

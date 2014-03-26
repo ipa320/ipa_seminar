@@ -1,0 +1,532 @@
+&ACCESS RVP
+&REL 107
+&PARAM DISKPATH = KRC:\R1\Program\MRK_BatteryCells
+DEF main_loop_RSI( )
+;FOLD Declaration EKI
+DECL EKI_STATUS RET
+DECL INT iter
+;ENDFOLD
+
+;FOLD INI
+  ;FOLD BASISTECH INI
+    GLOBAL INTERRUPT DECL 3 WHEN $STOPMESS==TRUE DO IR_STOPM ( )
+    INTERRUPT ON 3 
+    BAS (#INITMOV,0 )
+  ;ENDFOLD (BASISTECH INI)
+  ;FOLD USER INI
+    ;Make your modifications here   
+    $FLAG[2]=FALSE
+    ;interrupt of bkw (slow down on digital input = 1, restore override on digital input = 0
+    GLOBAL INTERRUPT DECL 11 WHEN $IN[1]==TRUE DO SLOWDOWN ()
+    INTERRUPT ON 11
+    GLOBAL INTERRUPT DECL 10 WHEN $IN[1]==FALSE DO SPEEDUP ()
+    INTERRUPT ON 10
+    iter = 1
+  ;ENDFOLD (USER INI)
+;ENDFOLD (INI)
+;FOLD Define callback interrupts
+INTERRUPT DECL 89 WHEN $FLAG[999]==TRUE DO GET_DATA()
+INTERRUPT ON 89
+;ENDFOLD
+;FOLD PTP HOME_A Vel=10 % DEFAULT Tool[3]:Sauger Base[0];%{PE}%R 8.2.19,%MKUKATPBASIS,%CMOVE,%VPTP,%P 1:PTP, 2:HOME_A, 3:, 5:10, 7:DEFAULT
+$BWDSTART=FALSE
+PDAT_ACT=PDEFAULT
+FDAT_ACT=FHOME_A
+BAS(#PTP_PARAMS,10)
+PTP XHOME_A 
+;ENDFOLD
+;FOLD Initialisation
+$OV_PRO = 50
+;rechts anfangen
+$OUT[3] = FALSE
+;sauger aus
+$OUT[1] = TRUE ;Vakuum
+$OUT[2] = FALSE ;ablasen aus
+$ADVANCE = vorlaufMax
+;ENDFOLD
+LOOP
+	;FOLD Initialisation of new connection
+    ; init at the beginning of loop
+    ;**** init pointer ****;
+	bufferReadingPointer = 1
+	bufferReceivingPointer = 1
+	bufferCounter = 0
+	;**** init buffer ****;
+	FOR iter=1 TO bufferSize STEP 1
+		msgIdBuffer[iter] = -1
+		subIdBuffer[iter] = -1
+		param1Buffer[iter] = 0
+		param2Buffer[iter] = 0
+		paramFrameBuffer[iter] = {X 0, Y 0, Z 0, A 0, B 0, C 0}
+		paramLinVelBuffer[iter] = 0
+		paramAxisBuffer[iter] = {A1 0, A2 0, A3 0, A4 0, A5 0, A6 0}
+		paramAxisVelBuffer[iter] = 0
+	ENDFOR
+	;**** init xml tcp server ****;
+	RET=EKI_Init("EKIServerFrame")
+	RET=EKI_Open("EKIServerFrame")
+	; init done
+	;ENDFOLD
+	; RSI First Init
+	; RSI_REINIT()
+	wait for $FLAG[2]
+	alive = TRUE
+	;FOLD Mainloop
+	WHILE (alive)
+	; DO LOOP HERE !
+	IF bufferCounter > 0 THEN
+		SWITCH subIdBuffer[bufferReadingPointer]
+            CASE -1 ; Ignore -1 subID!
+			CASE 10
+				; TestCell_A
+				FCT_TEST_CELL_A(param1Buffer[bufferReadingPointer], param2Buffer[bufferReadingPointer])
+			CASE 11
+				;StackCell_A
+				FCT_STACK_CELL_A(param1Buffer[bufferReadingPointer], param2Buffer[bufferReadingPointer])
+			CASE 12
+				;PlacePackage_A
+				FCT_PLACE_PACKAGE_A()
+			CASE 13
+				;DelieverBattery_A
+				FCT_DELIEVER_BATTERY_A(param1Buffer[bufferReadingPointer])
+			CASE 14
+				; Pose_A
+				FCT_POSER_A()
+			CASE 15
+				; TestAndStack
+				FCT_TEST_N_STACK_A(param1Buffer[bufferReadingPointer], param2Buffer[bufferReadingPointer])
+			CASE 20
+				; TestCell_B
+				FCT_TEST_CELL_B(param1Buffer[bufferReadingPointer], param2Buffer[bufferReadingPointer])
+			CASE 21
+				;StackCell_B
+				FCT_STACK_CELL_B(param1Buffer[bufferReadingPointer], param2Buffer[bufferReadingPointer])
+			CASE 22
+				;PlacePackage_B
+				FCT_PLACE_PACKAGE_B()
+			CASE 23
+				;DelieverBattery_B
+				FCT_DELIEVER_BATTERY_B(param1Buffer[bufferReadingPointer])
+			CASE 24
+				; Pose_B
+				FCT_POSER_B()
+			CASE 25
+				; TestAndStack
+				FCT_TEST_N_STACK_B(param1Buffer[bufferReadingPointer], param2Buffer[bufferReadingPointer])
+			CASE 30
+				;SwitchA_B
+				FCT_SWITCH_A2B()
+			CASE 40
+				;SwitchB_A
+				FCT_SWITCH_B2A()
+			CASE 50
+				;FlushBuffer
+				FLUSH_BUFFER()
+			CASE 60
+				;Stop AdvancePointer
+				WAIT_NULL()
+			CASE 66
+				; Echo
+				ECHO_TEST()
+			CASE 100
+				; PTP Motion (to axis)
+				FCT_MOVE_PTP_AXIS(paramAxisBuffer[bufferReadingPointer], paramAxisVelBuffer[bufferReadingPointer])
+			CASE 101
+				; PTP Motion (to frame)
+				FCT_MOVE_PTP_FRAME(paramFrameBuffer[bufferReadingPointer], paramLinVelBuffer[bufferReadingPointer])
+			CASE 201
+				; LIN Motion (to frame)
+				FCT_MOVE_LIN_FRAME(paramFrameBuffer[bufferReadingPointer], paramLinVelBuffer[bufferReadingPointer])
+			CASE 211
+				; LIN_REL Motion (in tool coord)
+				FCT_MOVE_LINREL_FRAME(paramFrameBuffer[bufferReadingPointer], paramLinVelBuffer[bufferReadingPointer])
+			CASE 300
+				; Sets IOs
+				FCT_SET_OUT(param1Buffer[bufferReadingPointer], param2Buffer[bufferReadingPointer])
+			DEFAULT
+				ECHO_TEST()
+            ; subId cannot be identified -> step over msg as if nothing happened.
+		ENDSWITCH		
+		ITER_READING_BUFFER()
+		CONTINUE
+	ENDIF
+	
+	CONTINUE
+	alive = $FLAG[2]
+	CONTINUE
+	ENDWHILE
+	;ENDFOLD
+	RET=EKI_Clear("EKIServerFrame")
+	alive = FALSE
+ENDLOOP
+END ;Main loop
+
+DEF GET_DATA()
+;FOLD Declaration
+DECL EKI_STATUS RET
+INT msgID, subID, param1, param2
+INT i, iter
+FRAME paramFrame
+AXIS paramAxis
+REAL linVel, axVel
+;ENDFOLD
+;FOLD Initialize sample data
+ msgID = -1
+ subID = -1
+ param1 = 0
+ param2 = 0
+ paramFrame = {X 0, Y 0, Z 0, A 0, B 0, C 0}
+ paramAxis = {A1 0, A2 0, A3 0, A4 0, A5 0, A6 0}
+ linVel = 0
+ axVel = 0
+ i = 1
+;ENDFOLD
+WHILE (i >= 1)
+	;FOLD Get new data from Ethernet buffer
+	; Get integer from xml
+	RET=EKI_GetInteger("EKIServerFrame","Ext/SubID", subID)	
+	RET=EKI_GetInteger("EKIServerFrame","Ext/Param1", param1)
+	RET=EKI_GetInteger("EKIServerFrame","Ext/Param2", param2)
+	RET=EKI_GetInteger("EKIServerFrame","Ext/MsgID", msgID)
+    RET=EKI_GetFrame("EKIServerFrame","Ext/Frame", paramFrame)
+;    RET=EKI_GetAxis("EKIServerFrame","Ext/Axis", paramAxis)
+	RET=EKI_GetReal("EKIServerFrame","Ext/Axis/@A1", paramAxis.A1)
+	RET=EKI_GetReal("EKIServerFrame","Ext/Axis/@A2", paramAxis.A2)
+	RET=EKI_GetReal("EKIServerFrame","Ext/Axis/@A3", paramAxis.A3)
+	RET=EKI_GetReal("EKIServerFrame","Ext/Axis/@A4", paramAxis.A4)
+	RET=EKI_GetReal("EKIServerFrame","Ext/Axis/@A5", paramAxis.A5)
+	RET=EKI_GetReal("EKIServerFrame","Ext/Axis/@A6", paramAxis.A6)
+	RET=EKI_GetReal("EKIServerFrame","Ext/LinVel", linVel)
+	RET=EKI_GetReal("EKIServerFrame","Ext/AxVel", axVel)
+	; i has number of pending stuff in xml receiving buffer
+	i = RET.Buff
+	;ENDFOLD
+	SWITCH subID 
+		CASE 0	;STOP SubID == 0
+			SLOWDOWN()
+		CASE 1	;RESUME SubID == 1
+			SPEEDUP()
+		DEFAULT	
+			; Put in array
+			IF subID == 50 THEN ;FLUSHBUFFER SubId == 50
+				;**** reInit buffer ****;
+				;FOLD ReInit Buffers
+				FOR iter=1 TO bufferSize STEP 1
+					IF iter <> bufferReadingPointer THEN
+						msgIdBuffer[iter] = -1
+						subIdBuffer[iter] = -1
+						param1Buffer[iter] = 0
+						param2Buffer[iter] = 0
+						paramFrameBuffer[iter] = {X 0, Y 0, Z 0, A 0, B 0, C 0}
+						paramLinVelBuffer[iter] = 0
+						paramAxisBuffer[iter] = {A1 0, A2 0, A3 0, A4 0, A5 0, A6 0}
+						paramAxisVelBuffer[iter] = 0
+					ENDIF
+				ENDFOR
+				IF bufferReadingPointer == buffersize THEN
+					bufferReceivingPointer = 1
+				ELSE
+					bufferReceivingPointer = bufferReadingPointer + 1 
+				ENDIF
+				;ENDFOLD
+			bufferCounter = 1
+			ENDIF
+			;FOLD Store new message
+			IF bufferCounter < bufferSize THEN
+				msgIdBuffer[bufferReceivingPointer] = msgID
+				subIdBuffer[bufferReceivingPointer] = subID
+				param1Buffer[bufferReceivingPointer] = param1
+				param2Buffer[bufferReceivingPointer] = param2
+				paramFrameBuffer[bufferReceivingPointer] = paramFrame
+				paramAxisBuffer[bufferReceivingPointer] = paramAxis
+				paramAxisVelBuffer[bufferReceivingPointer] = axVel
+				paramLinVelBuffer[bufferReceivingPointer] = linVel
+				; One more command was stored
+				ITER_RECV_BUFFER()
+			ENDIF
+			;ENDFOLD
+	ENDSWITCH
+ENDWHILE
+;CONTINUE
+$FLAG[999]=FALSE
+CONTINUE
+END
+
+;******************* Iteration of buffer pointer **************************;
+
+;******* Iterate to next command and acknowledge the last ********;
+DEF ITER_READING_BUFFER ( )
+;FOLD Declaration
+DECL EKI_STATUS RET
+;ENDFOLD
+   CONTINUE
+   IF ($FLAG[2]) THEN  ;   Acknowledge if network OK
+		CONTINUE
+		IF (msgIdBuffer[bufferReadingPointer] <> -1) AND ( subIDBuffer[bufferReadingPointer] <> -1) THEN
+			; Acknowledge Message with confirmation 20 (done)
+		RET = EKI_SetInt("EKIServerFrame","Robot/ConfirmTag", 20)
+		ELSE
+			; Message was not performed! Confirm this error with 40 (KRL_ERROR)
+		  RET = EKI_SetInt("EKIServerFrame","Robot/ConfirmTag", 40)
+		ENDIF
+		RET = EKI_SetInt("EKIServerFrame","Robot/MsgID", msgIdBuffer[bufferReadingPointer])
+		RET = EKI_SetInt("EKIServerFrame","Robot/SubID", subIDBuffer[bufferReadingPointer])
+		;RET = EKI_SetFrame("EKIServerFrame", "Robot/CurPos", $POS_ACT)
+		
+		RET = EKI_SetInt("EKIServerFrame","Robot/Slot1", msgIdBuffer[1])
+		RET = EKI_SetInt("EKIServerFrame","Robot/Slot2", msgIdBuffer[2])
+		RET = EKI_SetInt("EKIServerFrame","Robot/Slot3", msgIdBuffer[3])
+		RET = EKI_SetInt("EKIServerFrame","Robot/RunPointer", bufferReadingPointer)
+		RET = EKI_SetInt("EKIServerFrame","Robot/RecvPointer", bufferReceivingPointer)
+		
+		RET = EKI_Send("EKIServerFrame","Robot")
+   ENDIF
+	; uninitalize current value
+	msgIdBuffer[bufferReadingPointer] = -1
+	subIdBuffer[bufferReadingPointer] = -1
+	param1Buffer[bufferReadingPointer] = 0
+	param2Buffer[bufferReadingPointer] = 0
+	paramFrameBuffer[bufferReadingPointer] = {X 0, Y 0, Z 0, A 0, B 0, C 0}
+	paramLinVelBuffer[bufferReadingPointer] = 0
+	paramAxisBuffer[bufferReadingPointer] = {A1 0, A2 0, A3 0, A4 0, A5 0, A6 0}
+	paramAxisVelBuffer[bufferReadingPointer] = 0
+            
+      ; increment Reading Pointer 
+	CONTINUE
+	IF bufferReadingPointer >= bufferSize THEN
+		CONTINUE
+		bufferReadingPointer = 1
+	ELSE
+		CONTINUE
+		bufferReadingPointer = bufferReadingPointer + 1
+	ENDIF
+
+      ; decrement bufferCounter (number of messages in stock)
+	CONTINUE
+	IF bufferCounter > 0 THEN
+		CONTINUE
+		bufferCounter = bufferCounter - 1
+	ENDIF
+	CONTINUE
+END
+
+;********* Iterate to next free space to receive new commands **********;
+DEF ITER_RECV_BUFFER ( )
+	CONTINUE
+	bufferCounter = bufferCounter + 1
+	CONTINUE
+	IF bufferReceivingPointer >= bufferSize THEN
+		CONTINUE
+		bufferReceivingPointer = 1
+	ELSE
+		CONTINUE
+		bufferReceivingPointer = bufferReceivingPointer + 1
+	ENDIF
+	CONTINUE
+END
+
+;******************************** SUB ROUTINES ****************************;
+DEF FCT_MOVE_LIN_FRAME(paramFrame :IN, speed :IN)
+	;FOLD Declaration
+      FRAME paramFrame
+	  REAL speed
+	;ENDFOLD
+   CONTINUE
+	;IF NOT((paramFrame.X == 0) AND (paramFrame.Y == 0) AND (paramFrame.Z == 0) AND (paramFrame.A == 0) AND (paramFrame.B == 0) AND (paramFrame.C == 0)) THEN
+		$BWDSTART=FALSE
+     ; LCPDAT.VEL = speed
+		LDAT_ACT=LCPDAT
+		FDAT_ACT=FP_DAT
+      BAS(#CP_PARAMS, speed)
+		LIN paramFrame C_DIS
+	;ENDIF
+	CONTINUE
+END
+
+DEF FCT_MOVE_LINREL_FRAME(paramFrame :IN, speed :IN)
+	;FOLD Declaration
+      FRAME paramFrame
+	  REAL speed
+	;ENDFOLD
+   CONTINUE
+	;IF NOT((paramFrame.X == 0) AND (paramFrame.Y == 0) AND (paramFrame.Z == 0) AND (paramFrame.A == 0) AND (paramFrame.B == 0) AND (paramFrame.C == 0)) THEN
+		$BWDSTART=FALSE
+     ; LCPDAT.VEL = speed
+		LDAT_ACT=LCPDAT
+		FDAT_ACT=FP_DAT
+      BAS(#CP_PARAMS, speed)
+      LIN_REL paramFrame #TOOL
+	;ENDIF
+	CONTINUE
+END
+
+DEF FCT_MOVE_PTP_AXIS(paramAxis :IN, speed :IN)
+	;FOLD Declaration
+		AXIS paramAxis
+		REAL speed
+	;ENDFOLD
+	CONTINUE
+	;IF NOT((paramAxis.A1 == 0) AND (paramAxis.A2 == 0) AND (paramAxis.A3 == 0) AND (paramAxis.A4 == 0) AND (paramAxis.A5 == 0) AND (paramAxis.A6 == 0)) THEN
+		$BWDSTART=FALSE
+      ;PPDAT.VEL = speed
+		PDAT_ACT=PPDAT
+		FDAT_ACT=FP_DAT
+      BAS(#PTP_PARAMS, speed)
+		PTP paramAxis C_DIS
+	;ENDIF
+	CONTINUE
+END
+
+DEF FCT_MOVE_PTP_FRAME(paramFrame :IN, speed :IN)
+	;FOLD Declaration
+      FRAME paramFrame
+	  REAL speed
+	;ENDFOLD
+   CONTINUE
+	;IF NOT((paramFrame.X == 0) AND (paramFrame.Y == 0) AND (paramFrame.Z == 0) AND (paramFrame.A == 0) AND (paramFrame.B == 0) AND (paramFrame.C == 0)) THEN
+		$BWDSTART=FALSE
+     ; LCPDAT.VEL = speed
+		PDAT_ACT=PPDAT	; ????
+		LDAT_ACT=LCPDAT ; ????
+		
+		FDAT_ACT=FP_DAT
+      BAS(#CP_PARAMS, speed)
+		PTP paramFrame C_DIS
+	;ENDIF
+	CONTINUE
+END
+
+DEF FCT_SET_OUT(paramIoNr :IN, paramValue :IN)
+	;FOLD Declaration
+		INT paramIoNr
+		INT paramValue
+	;ENDFOLD
+	;CONTINUE
+	IF (paramValue > 0) THEN
+		$OUT[paramIoNr] = TRUE
+	ELSE
+		$OUT[paramIoNr] = FALSE
+	ENDIF
+	CONTINUE
+END
+
+DEF ECHO_TEST()
+	DECL EKI_STATUS RET
+
+	WAIT SEC 2
+	
+	EKI_SetCurAxis()
+	RET = EKI_SetFrame("EKIServerFrame", "Robot/CurPos", $POS_ACT)
+
+	CONTINUE
+END
+
+DEF WAIT_NULL()
+	DECL EKI_STATUS RET
+
+	WAIT SEC 0.005
+
+	EKI_SetCurAxis()
+	RET = EKI_SetFrame("EKIServerFrame", "Robot/CurPos", $POS_ACT)
+	CONTINUE
+END
+
+DEF FLUSH_BUFFER()
+;FOLD Declaration
+DECL EKI_STATUS RET
+;ENDFOLD
+	$ADVANCE = 0
+   ;bufferCounter = 1
+   ;bufferReadingPointer = 1
+   ;bufferReceivingPointer = bufferReadingPointer
+	RET = EKI_ClearBuffer("EKIServerFrame", "Ext")
+	;RET = EKI_ClearBuffer("EKIServerFrame", "Robot")
+	$ADVANCE = vorlaufMax
+	CONTINUE
+END
+
+DEF SLOWDOWN()
+; store current override
+OLD_OV_PRO = $OV_PRO
+
+; ;TEST ACC adjustment
+; ; store current acceleration
+; OLD_PDAT = PDAT_ACT
+; OLD_LDAT = LDAT_ACT
+; ; adjust ramp to make harsh stop
+; PDAT_ACT = PDAT_MAX
+; LDAT_ACT = LDAT_MAX
+; ; END test ACC adjustment
+
+; BRAKE
+BRAKE F
+; END BRAKE
+
+$OV_PRO = 0
+END
+
+DEF SPEEDUP()
+; ;restore acceleration
+; ;TEST ACC adjustment
+; PDAT_ACT = OLD_PDAT
+; LDAT_ACT = OLD_LDAT
+; ; END test ACC adjustment
+
+;restore override
+$OV_PRO = 50 ;OLD_OV_PRO
+END
+
+DEF EKI_SetCurAxis ()
+DECL EKI_STATUS RET
+
+	RET=EKI_SetReal("EKIServerFrame","Robot/CurAxis/@A1", $AXIS_ACT.A1)
+	RET=EKI_SetReal("EKIServerFrame","Robot/CurAxis/@A2", $AXIS_ACT.A2)
+	RET=EKI_SetReal("EKIServerFrame","Robot/CurAxis/@A3", $AXIS_ACT.A3)
+	RET=EKI_SetReal("EKIServerFrame","Robot/CurAxis/@A4", $AXIS_ACT.A4)
+	RET=EKI_SetReal("EKIServerFrame","Robot/CurAxis/@A5", $AXIS_ACT.A5)
+	RET=EKI_SetReal("EKIServerFrame","Robot/CurAxis/@A6", $AXIS_ACT.A6)
+
+END
+
+DEF RSI_REINIT ()
+;FOLD Declaration
+DECL INT RSI_RET ; Return value for RSI commands
+DECL INT CONTID ; ContainerID
+;ENDFOLD
+;FOLD Close RSI Connection
+RSI_RET = RSI_OFF()
+IF (RSI_RET <> RSIOK) THEN
+  HALT
+ENDIF
+;ENDFOLD
+;FOLD RSI Init
+; RSI Module must run before continue
+; Create RSI Context 
+RSI_RET = RSI_CREATE("RSI_ETHERNET3.rsi",CONTID,TRUE)
+IF (RSI_RET <> RSIOK) THEN
+	SWITCH RSI_RET 
+		 Case RSIFILENOTFOUND
+			HALT
+	   Case RSIINVFILE
+			HALT   
+		 Case RSINOMEMORY
+			HALT
+	;  Case RSIINVOBJTYPE
+	 ;    HALT
+	   Case RSIEXTLIBNOTFOUND
+			HALT
+	   Case RSINOTLINKED
+			HALT
+	   Case RSILNKCIRCLE
+			HALT
+	   DEFAULT
+			HALT
+	ENDSWITCH
+ENDIF
+; Start RSI execution
+RSI_RET = RSI_ON(#RELATIVE, #IPO, #BASE)
+IF (RSI_RET <> RSIOK) THEN
+	HALT
+ENDIF
+;ENDFOLD
+END

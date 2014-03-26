@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       name="human" >
+
+  <xacro:include filename="$(find ipa325_robot_descriptions)/urdf/human/human.transmission.urdf.xacro" />
+  <xacro:include filename="$(find ipa325_robot_descriptions)/urdf/human/gazebo.urdf.xacro" />
+
+  <property name="pi" value="3.14159265" />
+
+  <xacro:macro name="human" params="prefix">
+
+    <link name="${prefix}human_base_link">
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://ipa325_robot_descriptions/meshes/human/edited-Human_body_closed.dae" />
+        </geometry>
+      </collision>
+
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://ipa325_robot_descriptions/meshes/human/edited-Human_body_closed.dae" />
+        </geometry>
+      </visual>
+
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="100"/>
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+      </inertial>
+    </link>
+
+    <!-- right arm -->
+    <joint name="${prefix}human_arm_r_joint" type="revolute">
+      <parent link="${prefix}human_base_link"/>
+      <child link="${prefix}human_arm_r_link"/>
+      <origin xyz="-0.15 0 1.24" rpy="0 0 0"/>
+      <axis xyz="1 0 0" />
+      <limit lower="${-2.0 * pi}" upper="${2.0 * pi}" effort="150.0" velocity="${pi}"/>
+      <dynamics damping="10" friction="0.1"/>
+    </joint>
+
+    <link name="${prefix}human_arm_r_link">
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://ipa325_robot_descriptions/meshes/human/edited-Human_right_arm.dae" />
+        </geometry>
+      </collision>
+
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://ipa325_robot_descriptions/meshes/human/edited-Human_right_arm.dae" />
+        </geometry>
+      </visual>
+
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="1"/>
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+      </inertial>
+    </link>
+
+    <!-- joint/link for right arm tip -->
+    <joint name="${prefix}human_arm_r_tip_joint" type="fixed">
+      <parent link="${prefix}human_arm_r_link"/>
+      <child link="${prefix}human_arm_r_tip"/>
+      <origin xyz="0 0 -0.8" rpy="${pi} 0 0"/>
+    </joint>
+
+    <link name="${prefix}human_arm_r_tip"/>
+
+    <!-- left arm -->
+    <joint name="${prefix}human_arm_l_joint" type="revolute">
+      <parent link="${prefix}human_base_link"/>
+      <child link="${prefix}human_arm_l_link"/>
+      <origin xyz="0.15 0 1.24" rpy="0 0 0"/>
+      <axis xyz="1 0 0" />
+      <limit lower="${-2.0 * pi}" upper="${2.0 * pi}" effort="150.0" velocity="${pi}"/>
+      <dynamics damping="10" friction="0.1"/>
+    </joint>
+
+    <link name="${prefix}human_arm_l_link">
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://ipa325_robot_descriptions/meshes/human/edited-Human_left_arm.dae" />
+        </geometry>
+      </collision>
+
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://ipa325_robot_descriptions/meshes/human/edited-Human_left_arm.dae" />
+        </geometry>
+      </visual>
+
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="1"/>
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+      </inertial>
+    </link>
+
+    <!-- joint/link for left arm tip -->
+    <joint name="${prefix}human_arm_l_tip_joint" type="fixed">
+      <parent link="${prefix}human_arm_l_link"/>
+      <child link="${prefix}human_arm_l_tip"/>
+      <origin xyz="0 0 -0.8" rpy="${pi} 0 0"/>
+    </joint>
+
+    <link name="${prefix}human_arm_l_tip"/>
+
+    <!-- include transmissions -->
+    <xacro:human_transmission prefix="${prefix}"/>
+
+    <!-- include gazebo -->
+    <xacro:human_gazebo prefix="${prefix}"/>
+
+  </xacro:macro>
+
+  <xacro:human prefix=""/>
+
+</robot>

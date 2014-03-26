@@ -1,0 +1,274 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+	   xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+	   xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+	   xmlns:xacro="http://ros.org/wiki/xacro">
+
+	<!-- common stuff -->
+	<xacro:include filename="$(find ipa325_robot_descriptions)/urdf/kr16/gazebo.urdf.xacro" />
+	<xacro:include filename="$(find ipa325_robot_descriptions)/urdf/kr16/kr16.gazebo.xacro" />
+	<xacro:include filename="$(find ipa325_robot_descriptions)/urdf/kr16/kr16.transmission.xacro" />
+
+	<property name="pi" value="3.14159265" />
+
+	<!-- arm reference positions | used as calibration_rising for arm chain-->
+	<property name="arm_1_ref" value="0.0"/>
+	<property name="arm_2_ref" value="0.0"/>
+	<property name="arm_3_ref" value="0.0"/>
+	<property name="arm_4_ref" value="0.0"/>
+	<property name="arm_5_ref" value="0.0"/>
+	<property name="arm_6_ref" value="0.0"/>
+	<property name="arm_7_ref" value="0.0"/>
+
+	<xacro:macro name="ipa325_kr16" params="prefix parent *origin">
+
+		<joint name="base" type="fixed">
+			<parent link="${parent}"/>
+			<child link="${prefix}kr16_0_link"/>
+			<insert_block name="origin" />
+		</joint>
+
+		<link name="${prefix}kr16_0_link">
+			<inertial>
+				<origin xyz="0 0 0" rpy="0 0 0"/>
+				<mass value="2"/>
+				<inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
+			</inertial>
+
+			<visual>
+				<origin xyz="0 0 0" rpy="0 0 0" />
+				<geometry>
+					<!--cylinder radius="0.060" length="0.30"/-->
+					<mesh filename="package://ipa325_robot_descriptions/meshes/kr16/joint_0.stl" />
+				</geometry>
+				<material name="Black" />
+			</visual>
+
+			<collision>
+				<origin xyz="0 0 0" rpy="0 0 0" />
+				<geometry>
+					<mesh filename="package://ipa325_robot_descriptions/meshes/kr16/joint_0.stl" />
+				</geometry>
+			</collision>
+		</link>
+
+		<!-- joint between arm_0_link and arm_1_link -->
+		<joint name="${prefix}kr16_0_joint" type="revolute">
+		<origin xyz="0 0 0.390" rpy="${pi} 0 0"/>
+			<parent link="${prefix}kr16_0_link"/>
+			<child link="${prefix}kr16_1_link"/>
+			<axis xyz="0 0 1"/>
+			<calibration rising="${arm_1_ref}"/>
+			<dynamics damping="10" />
+			<limit effort="200" velocity="1.9634" lower="-2.9670" upper="2.9670"/>
+			<safety_controller k_position="20" k_velocity="50" soft_lower_limit="${-2.9670 + 0.01}" soft_upper_limit="${2.9670 - 0.01}" />
+		</joint>
+		
+		<link name="${prefix}kr16_1_link">
+			<inertial>
+				<origin xyz="0 0 0" rpy="0 0 0" />
+				<!--mass value="5.9907"/-->
+				<mass value="2"/>
+				<inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
+			</inertial>
+			
+			<visual>
+				<origin xyz="0 0 0" rpy="0 0 0" />
+				<geometry>
+					<mesh filename="package://ipa325_robot_descriptions/meshes/kr16/joint_1.stl" />
+				</geometry>
+				<material name="Orange" />
+			</visual>
+			
+			<collision>
+				<origin xyz="0 0 0" rpy="0 0 0" />
+				<geometry>
+					<mesh filename="package://ipa325_robot_descriptions/meshes/kr16/joint_1.stl" />
+				</geometry>
+			</collision>
+		</link>
+
+		<!-- joint between arm_1_link and arm_2_link -->	
+		<joint name="${prefix}kr16_1_joint" type="revolute">
+			<origin xyz="0.260 0.07 -0.285" rpy="${pi/2} 0 0"/>
+			<parent link="${prefix}kr16_1_link"/>
+			<child link="${prefix}kr16_2_link"/>
+			<axis xyz="0 0 1"/>
+			<calibration rising="${arm_2_ref}"/>
+			<dynamics damping="10" />
+			<limit effort="200" velocity="1.9634" lower="-2.0943" upper="2.0943"/>
+			<safety_controller k_position="20" k_velocity="50" soft_lower_limit="${-2.0943 + 0.01}" soft_upper_limit="${2.0943 - 0.01}" />
+		</joint>
+		
+		<link name="${prefix}kr16_2_link">
+			<inertial>
+				<origin xyz="0 0 0" rpy="0 0 0"/>
+				<mass value="2"/>
+				<inertia ixx="0.03" ixy="0" ixz="0" iyy="0.03" iyz="0" izz="0.03" />
+			</inertial>
+			
+			<visual>
+				<origin xyz="0 0 0" rpy="0 0 0" />
+				<geometry>
+					<mesh filename="package://ipa325_robot_descriptions/meshes/kr16/joint_2.stl" />
+				</geometry>
+				<material name="Black" />
+			</visual>
+			
+			<collision>
+				<origin xyz="0 0 0" rpy="0 0 0" />
+				<geometry>
+					<mesh filename="package://ipa325_robot_descriptions/meshes/kr16/joint_2.stl" />
+				</geometry>
+			</collision>
+		</link>
+
+		<!-- joint between arm_2_link and arm_3_link -->	
+		<joint name="${prefix}kr16_2_joint" type="revolute">
+			<origin xyz="0.680 0 -0.04" rpy="0 0 0"/>
+			<parent link="${prefix}kr16_2_link"/>
+			<child link="${prefix}kr16_3_link"/>
+			<axis xyz="0 0 1"/>
+			<calibration rising="${arm_3_ref}"/>
+			<dynamics damping="5" />
+			<limit effort="100" velocity="1.9634" lower="-2.9670" upper="2.9670"/>
+			<safety_controller k_position="20" k_velocity="25" soft_lower_limit="${-2.9670 + 0.01}" soft_upper_limit="${2.9670 - 0.01}" />
+		</joint>
+
+		<link name="${prefix}kr16_3_link">
+			<inertial>
+				<origin xyz="0 0 0" rpy="0 0 0"/>
+				<mass value="2"/>
+				<inertia ixx="0.03" ixy="0" ixz="0" iyy="0.03" iyz="0" izz="0.03" />
+			</inertial>
+			
+			<visual>
+				<origin xyz="0 0 0" rpy="0 0 0" />
+				<geometry>
+					<mesh filename="package://ipa325_robot_descriptions/meshes/kr16/joint_3.stl" />
+				</geometry>
+				<material name="Orange" />
+			</visual>
+			
+			<collision>
+				<origin xyz="0 0 0" rpy="0 0 0" />
+				<geometry>
+					<mesh filename="package://ipa325_robot_descriptions/meshes/kr16/joint_3.stl" />
+				</geometry>
+			</collision>
+		</link>	
+
+		<!-- joint between arm_3_link and arm_4_link -->
+		<joint name="${prefix}kr16_3_joint" type="revolute">
+			<origin xyz="0.400 0.035 0.118" rpy="0 -${pi/2} 0" />
+			<parent link="${prefix}kr16_3_link"/>
+			<child link="${prefix}kr16_4_link"/>
+			<axis xyz="0 0 1" />
+			<calibration rising="${arm_4_ref}"/>
+			<dynamics damping="5" />
+			<limit effort="100" velocity="1.9634" lower="-2.0943" upper="2.0943"/>
+			<safety_controller k_position="20" k_velocity="25" soft_lower_limit="${-2.0943 + 0.01}" soft_upper_limit="${2.0943 - 0.01}" />
+		</joint>
+
+		<link name="${prefix}kr16_4_link">
+			<inertial>
+				<origin xyz="0 0 0" rpy="0 0 0"/>
+				<mass value="2"/>
+				<inertia ixx="0.03" ixy="0" ixz="0" iyy="0.03" iyz="0" izz="0.03" />
+			</inertial>
+			
+			<visual>
+				<origin xyz="0 0 0" rpy="0 0 0" />
+				<geometry>
+					<mesh filename="package://ipa325_robot_descriptions/meshes/kr16/joint_4.stl" />
+				</geometry>
+				<material name="Black" />
+			</visual>
+			
+			<collision>
+				<origin xyz="0 0 0" rpy="0 0 0" />
+				<geometry>
+					<mesh filename="package://ipa325_robot_descriptions/meshes/kr16/joint_4.stl" />
+				</geometry>
+			</collision>
+		</link>
+
+		<!-- joint between arm_4_link and arm_5_link -->
+		<joint name="${prefix}kr16_4_joint" type="revolute">
+			<origin xyz="0.1 0 -0.270" rpy="0 ${pi/2} 0" />
+			<parent link="${prefix}kr16_4_link"/>
+			<child link="${prefix}kr16_5_link"/>
+			<axis xyz="0 0 1" />
+			<calibration rising="${arm_5_ref}"/>
+			<dynamics damping="5" />
+			<limit effort="100" velocity="1.9634" lower="-2.9670" upper="2.9670" />
+			<safety_controller k_position="20" k_velocity="25" soft_lower_limit="${-2.9670 + 0.01}" soft_upper_limit="${2.9670 - 0.01}" />
+		</joint>
+
+		<link name="${prefix}kr16_5_link">
+			<inertial>
+				<origin xyz="0 0 0" rpy="0 0 0"/>
+				<mass value="2"/>
+				<inertia ixx="0.03" ixy="0" ixz="0" iyy="0.03" iyz="0" izz="0.03" />
+			</inertial>
+			
+			<visual>
+				<origin xyz="0 0 0" rpy="0 0 0" />
+				<geometry>
+					<mesh filename="package://ipa325_robot_descriptions/meshes/kr16/joint_5.stl" />
+				</geometry>
+				<material name="Orange" />
+			</visual>
+			
+			<collision>
+				<origin xyz="0 0 0" rpy="0 0 0" />
+				<geometry>
+					<mesh filename="package://ipa325_robot_descriptions/meshes/kr16/joint_5.stl" />
+				</geometry>
+			</collision>
+		</link>
+
+		<!-- joint between arm_5_link and arm_6_link -->
+		<joint name="${prefix}kr16_5_joint" type="revolute">
+			<origin xyz="0.158 0 -0.1" rpy="0 -${pi/2} 0" /> 
+			<parent link="${prefix}kr16_5_link"/>
+			<child link="${prefix}kr16_6_link"/>
+			<axis xyz="0 0 1" />
+			<calibration rising="${arm_6_ref}"/>
+			<dynamics damping="5" />
+			<limit effort="30" velocity="1.9634" lower="-2.0943951" upper="2.0943951" />
+			<safety_controller k_position="20" k_velocity="25" soft_lower_limit="${-2.0943951 + 0.01}" soft_upper_limit="${2.0943951 - 0.01}" />
+		</joint>
+
+		<link name="${prefix}kr16_6_link">
+			<inertial>
+				<origin xyz="0 0 0" rpy="0 0 0"/>
+				<mass value="2"/>
+				<inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
+			</inertial>
+			
+			<visual>
+				<origin xyz="0 0 0" rpy="0 0 0" />
+				<geometry>
+					<mesh filename="package://ipa325_robot_descriptions/meshes/kr16/joint_6.stl" />
+				</geometry>
+				<material name="Black" />
+			</visual>
+			
+			<collision>
+				<origin xyz="0 0 0" rpy="0 0 0" />
+				<geometry>
+					<mesh filename="package://ipa325_robot_descriptions/meshes/kr16/joint_6.stl" />
+				</geometry>
+			</collision>
+		</link>
+
+		<!-- include gazebo -->
+		<xacro:kr16_gazebo name="${prefix}" />
+
+		<!-- include transmission -->
+		<xacro:kr16_transmission name="${prefix}" />
+
+	</xacro:macro>
+
+</robot>

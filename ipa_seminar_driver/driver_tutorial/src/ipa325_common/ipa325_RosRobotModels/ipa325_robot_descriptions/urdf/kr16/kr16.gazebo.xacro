@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+
+	<xacro:macro name="kr16_gazebo" params="name">
+
+		<gazebo reference="${name}kr16_0_link">
+			<material>Gazebo/Orange</material>
+		</gazebo>
+
+		<gazebo reference="${name}kr16_1_link">
+			<material>Gazebo/Orange</material>
+		</gazebo>
+	
+		<gazebo reference="${name}kr16_2_link">
+			<material>Gazebo/Orange</material>
+		</gazebo>
+	
+		<gazebo reference="${name}kr16_3_link">
+			<material>Gazebo/Orange</material>
+		</gazebo>
+	
+		<gazebo reference="${name}kr16_4_link">
+			<material>Gazebo/Orange</material>
+		</gazebo>
+
+		<gazebo reference="${name}kr16_5_link">
+			<material>Gazebo/Orange</material>
+		</gazebo>
+
+		<gazebo reference="${name}kr16_6_link">
+			<material>Gazebo/Orange</material>
+		</gazebo>
+
+
+	</xacro:macro>
+
+</robot>

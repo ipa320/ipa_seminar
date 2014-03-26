@@ -1,0 +1,14 @@
+<launch>
+	<include file="$(find ur_arm)/launch/ur5_delft_bringup.launch">
+	</include>
+
+	<include file="$(find ur5_moveit_config)/launch/planning_context.launch">
+		<arg name="load_robot_description" value="true"/>
+	</include>
+
+	<include file="$(find ur5_moveit_config)/launch/trajectory_execution.launch">
+	</include>
+
+	<include file="$(find ur5_moveit_config)/launch/move_group.launch">
+	</include>
+</launch>
