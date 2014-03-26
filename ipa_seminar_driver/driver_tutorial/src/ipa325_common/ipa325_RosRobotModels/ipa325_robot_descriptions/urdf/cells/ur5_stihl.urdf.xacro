@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+	 xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+	 xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+	 xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+	 name="UR5_Stihl">
+
+	<!-- common stuff -->
+	<xacro:include filename="$(find ipa325_robot_descriptions)/urdf/common/common.xacro" />
+	<xacro:include filename="$(find ur_description)/urdf/gazebo.urdf.xacro" />
+
+	<!-- ur5 -->
+	<xacro:include filename="$(find ipa325_robot_descriptions)/urdf/ur5/cob_ur5.urdf.xacro" />
+
+	<!-- arm mount positions | relative to base_link -->
+	<property name="arm_x" value="0"/>
+	<property name="arm_y" value="0"/>
+	<property name="arm_z" value="0"/>
+	<property name="arm_roll" value="0"/>
+	<property name="arm_pitch" value="0"/>
+	<property name="arm_yaw" value="${M_PI}"/>
+
+	<!-- ur_base -->
+	<link name="ur_base"/>
+
+	<!-- arm -->
+	<xacro:cob_ur5 name="" parent="ur_base">
+	<origin xyz="${arm_x} ${arm_y} ${arm_z}" rpy="${arm_roll} ${arm_pitch} ${arm_yaw}" />
+	</xacro:cob_ur5>
+
+	<!-- joint between ee_link and ur_flange -->
+	<joint name="$virt_7_joint" type="fixed" >
+		<origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
+		<parent link="ee_link" />
+		<child link="ur_flange" />
+	</joint>
+
+	<link name="ur_flange"/>
+
+	<!-- joint between ur_flange and kms40 -->
+	<joint name="$virt_8_joint" type="fixed" >
+		<origin xyz="0 0 0.027" rpy="0 0 0" />
+		<parent link="ur_flange" />
+		<child link="kms40" />
+	</joint>
+
+	<link name="kms40"/>
+
+	<!-- joint between kms40 and screwdriver because of turn -->
+	<joint name="$virt_8b_joint" type="fixed" >
+		<origin xyz="0 0 0" rpy="0 0 ${M_PI/4}" />
+		<parent link="kms40" />
+		<child link="screwdriver_fix0" />
+	</joint>
+
+	<link name="screwdriver_fix0"/>
+
+	<!-- joint between kms40 and screwdriver before edge -->
+	<joint name="$virt_9_joint" type="fixed" >
+		<origin xyz="0 0 0.0315" rpy="${M_PI/4} 0 0" />
+		<parent link="screwdriver_fix0" />
+		<child link="screwdriver_fix1" />
+	</joint>
+
+	<link name="screwdriver_fix1"/>
+
+	<!-- joint between screwdriver linear part and fixure for tool -->
+	<joint name="$virt_10_joint" type="fixed" >
+		<origin xyz="0 0 0.055" rpy="${-M_PI/2} 0 0" />
+		<parent link="screwdriver_fix1" />
+		<child link="screwdriver_fix2" />
+	</joint>
+
+	<link name="screwdriver_fix2"/>
+
+	<!-- joint between screwdriver fixture and screwdriver tip -->
+	<joint name="$virt_11_joint" type="fixed" >
+		<origin xyz="0 0 0.025" rpy="0 0 0" />
+		<parent link="screwdriver_fix2" />
+		<child link="screwdriver_tip" />
+	</joint>
+
+	<link name="screwdriver_tip"/>
+
+	<!-- joint between kms40 and tool_tcp -->
+	<joint name="$virt_12_joint" type="fixed" >
+		<origin xyz="0 0 0.15" rpy="0 0 0" />
+		<parent link="screwdriver_tip" />
+		<child link="tool_tcp" />
+	</joint>
+
+	<link name="tool_tcp"/>
+
+
+	<!-- test joint between ur_flange and test_frame -->
+	<joint name="$virt_66_joint" type="fixed" >
+		<origin xyz="0.79000156 0.3 0.2" rpy="${M_PI/3} -${M_PI/3} -${2*M_PI/6}" />
+		<parent link="ur_flange" />
+		<child link="test_frame" />
+	</joint>
+
+	<link name="test_frame"/>
+</robot>
+

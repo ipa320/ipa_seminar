@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ros:Package xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ros="http://ros/1.0" name="kr16_driver" author="Jan Fischer" description="KUKA KR16 driver node">
+  <node name="kr16_node" loopRate="10.0" namespace="">
+    <publisher name="joint_states" msg="sensor_msgs::JointState"/>
+    <actionserver name="follow_joint_trajectory_action"/>
+  </node>
+  <depend>sensor_msgs</depend>
+</ros:Package>

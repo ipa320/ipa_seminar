@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;kr16_deployment/package.xml&apos;" deleteContents="false" description="Delete resource &apos;kr16_deployment/package.xml&apos;" element1="/kr16_deployment/package.xml" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1395413530247"/>&#x0A;<refactoring comment="Delete resource &apos;kr16_deployment/system.launch&apos;" deleteContents="false" description="Delete resource &apos;kr16_deployment/system.launch&apos;" element1="/kr16_deployment/system.launch" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1395413534701"/>
+</session>

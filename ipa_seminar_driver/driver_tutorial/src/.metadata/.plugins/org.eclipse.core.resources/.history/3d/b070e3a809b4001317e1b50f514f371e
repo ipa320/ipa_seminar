@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ros:Package xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ros="http://ros/1.0" name="kr16_test_client" author="Jan Fischer" author_email="jsf@ipa.fhg.de" description="Test client for the KUKA KR16 ROS driver node" rosdep="">
+  <node name="kr16_test_client" loopRate="10.0">
+    <subscriber name="state" eventHandler="" msg="control_msgs::JointTrajectoryControllerState"/>
+    <parameter name="joint_position_1" value="-35 -98 108 -0.2 80 0.4 0" type="string"/>
+    <parameter name="joint_position_2" value="-25 -95 105 -0.5 80 10.5 0" type="string"/>
+    <actionclient name="follow_joint_trajectory_action" ActionType="control_msgs::FollowJointTrajectory"/>
+  </node>
+  <depend>sensor_msgs</depend>
+  <depend>control_msgs</depend>
+</ros:Package>

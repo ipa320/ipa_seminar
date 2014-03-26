@@ -1,0 +1,3 @@
+13:16:25 **** Build of configuration Default for project kr16_driver ****
+make all 
+make: *** No rule to make target `all'.  Stop.

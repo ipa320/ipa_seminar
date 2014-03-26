@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+
+<xacro:macro name="screwdriver_tool" params="parent prefix *origin">
+
+  <!-- mount the tool to the robot -->
+  <joint name="fixture" type="fixed" >
+   <insert_block name="origin" />
+   <parent link="${parent}" />
+   <child link="${prefix}screwdriver_fix0" />
+ </joint>
+
+	<link name="${prefix}screwdriver_fix0">
+
+		<inertial>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<mass value="2"/>
+			<inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
+		</inertial>
+
+		<visual>
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<geometry>
+			<mesh filename="package://ipa325_robot_descriptions/meshes/tool_screwdriver/Schrauber_02102013_3.stl"/>
+			</geometry>
+			<material name="Grey2" /> 
+		</visual>
+
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<geometry>
+				<mesh filename="package://ipa325_robot_descriptions/meshes/tool_screwdriver/SchrauberKomplett.stl"/>
+			</geometry>
+		</collision>
+
+	</link>
+
+	<!-- joint between fixture and screwdriver before edge -->
+<!--	<joint name="${prefix}tool_joint0" type="fixed" >
+		<origin xyz="0 0 0.0315" rpy="${M_PI/4} 0 0" />
+		<parent link="${prefix}screwdriver_fix0" />
+		<child link="${prefix}screwdriver_fix1" />
+	</joint>
+
+	<link name="${prefix}screwdriver_fix1"/>
+-->
+	<!-- joint between screwdriver linear part and fixure for tool -->
+<!--	<joint name="${prefix}tool_joint1" type="fixed" >
+		<origin xyz="0 0 0.055" rpy="${-M_PI/2} 0 0" />
+		<parent link="${prefix}screwdriver_fix1" />
+		<child link="${prefix}screwdriver_fix2" />
+	</joint>
+
+	<link name="${prefix}screwdriver_fix2"/>
+-->
+	<!-- joint between screwdriver fixture and screwdriver tip -->
+<!--	<joint name="${prefix}tool_joint2" type="fixed" >
+		<origin xyz="0 0 0.025" rpy="0 0 0" />
+		<parent link="${prefix}screwdriver_fix2" />
+		<child link="${prefix}screwdriver_tip" />
+	</joint>
+
+	<link name="${prefix}screwdriver_tip"/>
+-->
+	<!-- joint between screwdriverfix0 and tool_tcp -->
+<!--
+	<joint name="${prefix}tool_joint3" type="fixed" >
+		<origin xyz="0 0 0.15" rpy="${-M_PI/4} 0 0" />
+		<parent link="${prefix}screwdriver_fix0" />
+		<child link="${prefix}tcp" />
+	</joint>
+
+	<link name="${prefix}tcp"/>
+-->
+</xacro:macro>
+</robot>

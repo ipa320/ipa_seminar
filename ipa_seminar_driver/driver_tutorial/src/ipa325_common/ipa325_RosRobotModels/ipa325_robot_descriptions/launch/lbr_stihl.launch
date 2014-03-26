@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<launch>
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find ipa325_robot_descriptions)/urdf/cells/lbr5_stihl.urdf.xacro'" />
+</launch>

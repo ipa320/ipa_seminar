@@ -1,0 +1,8 @@
+---
+std_msgs/Header header
+float32[] pose #[X,Y,Z,A,B,C] (Euler ZYX)
+uint8 errorId
+
+uint8 OK=0
+uint8 NO_PART=1
+uint8 VIEW_OBSTRUCTED=2

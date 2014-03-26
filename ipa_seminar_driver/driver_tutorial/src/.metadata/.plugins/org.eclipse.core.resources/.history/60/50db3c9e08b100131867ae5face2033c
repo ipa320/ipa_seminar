@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ros:Package xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ros="http://ros/1.0" name="kr16_driver" author="Jan Fischer" author_email="jsf@ipa.fhg.de" description="KUKA KR16 driver node">
+  <node name="kr16_node" loopRate="10.0" namespace="">
+    <publisher name="joint_states" msg="sensor_msgs::JointState"/>
+    <publisher name="state" msg="control_msgs::JointTrajectoryControllerState"/>
+    <parameter name="robot_ip_address" value="172.0.0.1" type="string"/>
+    <parameter name="robot_description" value="/home/ros/" type="string"/>
+    <parameter name="robot_port" value="4242"/>
+    <actionserver name="follow_joint_trajectory_action" ActionType="control_msgs::FollowJointTrajectory"/>
+  </node>
+  <depend>sensor_msgs</depend>
+  <depend>control_msgs</depend>
+</ros:Package>

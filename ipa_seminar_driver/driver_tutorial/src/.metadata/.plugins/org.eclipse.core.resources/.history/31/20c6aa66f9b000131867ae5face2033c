@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ros:Package xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ros="http://ros/1.0" name="kr16_test_listener" author="Jan Fischer" author_email="jsf@ipa.fhg.de" description="Test client for the KUKA KR16 ROS driver node" rosdep="">
+  <depend>sensor_msgs</depend>
+</ros:Package>
