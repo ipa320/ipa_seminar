@@ -28,6 +28,10 @@ public:
   typedef pcl::PointXYZRGB Point;
   typedef pcl::PointCloud<Point> PointCloud;
 
+  /*
+   * constructor
+   * setup which topics are passed out (advertise) and to which topics are listend (subscribe)
+   */
   PlaneSegmentationNode()
   {
     pub_ = nh_.advertise<PointCloud>("point_cloud_out",1);
