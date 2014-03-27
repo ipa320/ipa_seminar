@@ -37,11 +37,21 @@ public:
     sub_ = nh_.subscribe ("point_cloud_in", 1,  &PlaneSegmentationNode::cloudCallback, this);
     config_server_.setCallback(boost::bind(&PlaneSegmentationNode::dynReconfCallback, this, _1, _2));
 
+    double dist_thr;
+    int max_its;
+
+    // "~" means, that the node hand is opened within the private namespace (to get the "own" paraemters)
+    ros::NodeHandle private_nh("~");
+
+    //read parameters with default value
+    private_nh.param("dist_thresh", dist_thr, 0.01);
+    private_nh.param("max_iterations", max_its, 50);
+
     seg_.setModelType (pcl::SACMODEL_PLANE);
     seg_.setMethodType (pcl::SAC_RANSAC);
     seg_.setOptimizeCoefficients (true);
-    seg_.setDistanceThreshold (0.01);
-    seg_.setMaxIterations (50);
+    seg_.setDistanceThreshold (dist_thr);
+    seg_.setMaxIterations (max_its);
   }
 
   ~PlaneSegmentationNode() {}

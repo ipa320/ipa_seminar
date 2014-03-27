@@ -25,8 +25,17 @@ public:
     sub_ = nh_.subscribe ("point_cloud_in", 1,  &PlaneSegmentationNode::cloudCallback, this);
     config_server_.setCallback(boost::bind(&PlaneSegmentationNode::dynReconfCallback, this, _1, _2));
 
+    double upper_limit, lower_limit;
+
+    // "~" means, that the node hand is opened within the private namespace (to get the "own" paraemters)
+    ros::NodeHandle private_nh("~");
+
+    //read parameters with default value
+    private_nh.param("lower_limit", lower_limit, 2.);
+    private_nh.param("upper_limit", upper_limit, 5.);
+
     pt_.setFilterFieldName ("z");
-    pt_.setFilterLimits (2.0, 5.0);
+    pt_.setFilterLimits (lower_limit, upper_limit);
   }
 
   ~PlaneSegmentationNode() {}
