@@ -132,6 +132,11 @@ public:
   void
   cloudCallback(const PointCloud::ConstPtr& cloud_in)
   {
+    if(!cloud_in || cloud_in->size()<=0) {
+	ROS_WARN("got empty or invalid pointcloud --> ignoring");
+	return;
+    }
+
     PrecisionStopWatch sw;
     pcl::ModelCoefficients::Ptr coefficients (new pcl::ModelCoefficients);
     pcl::PointIndices::Ptr inliers (new pcl::PointIndices);
