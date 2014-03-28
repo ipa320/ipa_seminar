@@ -59,7 +59,7 @@ With the palette on the right you can now add a "Node" to the graphical plane by
 
 ![create_a_node](./doc/create_a_node.png "Creating a node")
 
-Following the [ROS-I driver specs](http://wiki.ros.org/Industrial/Industrial_Robot_Driver_Spec), add a Publisher called "joint_states" and "states" and an ActionServer called "folllow_joint_trajectory_action" by selecting the corresponding type on the right pane and clicking on the corner of the graphical node representation. You should then see the following screen: 
+Following the [ROS-I driver specs](http://wiki.ros.org/Industrial/Industrial_Robot_Driver_Spec), add a Publisher called "joint_states" and "states" and an ActionServer called "follow_joint_trajectory_action" by selecting the corresponding type on the right pane and clicking on the corner of the graphical node representation. You should then see the following screen: 
 
 ![create_action_pub](./doc/create_action_pub.png "Creating a publisher and action")
 

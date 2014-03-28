@@ -58,7 +58,7 @@ public:
 		/* protected region user configure on begin */
 		bool dummy_mode = false;
 		bool auto_connect = true;
-		std::string xml_path = "/home/ros/catkin_ws/src/ipa325_kr16/ipa325_EkiDriver/common/files/EKIServerFrame.xml";
+		std::string xml_path = "common/files/EKIServerFrame.xml";
 		kuka_client_.setClientDummy(dummy_mode);
 
 		ROS_INFO("kr16_node_impl: Initializing KRC Ethernet Client");
