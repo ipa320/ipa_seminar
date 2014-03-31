@@ -25,7 +25,15 @@ public:
     sub_ = nh_.subscribe ("point_cloud_in", 1,  &PlaneSegmentationNode::cloudCallback, this);
     config_server_.setCallback(boost::bind(&PlaneSegmentationNode::dynReconfCallback, this, _1, _2));
 
-    vg_.setLeafSize (0.01f, 0.01f, 0.01f);
+    double leafsize;
+
+    // "~" means, that the node hand is opened within the private namespace (to get the "own" paraemters)
+    ros::NodeHandle private_nh("~");
+
+    //read parameters with default value
+    private_nh.param("leafsize", leafsize, 0.01);
+
+    vg_.setLeafSize (leafsize,leafsize,leafsize);
   }
 
   ~PlaneSegmentationNode() {}
