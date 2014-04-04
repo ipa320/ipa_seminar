@@ -13,17 +13,17 @@
 #include <pcl/filters/voxel_grid.h>
 
 
-class PlaneSegmentationNode
+class VoxelFilterNode
 {
 public:
   typedef pcl::PointXYZRGB Point;
   typedef pcl::PointCloud<Point> PointCloud;
 
-  PlaneSegmentationNode()
+  VoxelFilterNode()
   {
     pub_ = nh_.advertise<PointCloud>("point_cloud_out",1);
-    sub_ = nh_.subscribe ("point_cloud_in", 1,  &PlaneSegmentationNode::cloudCallback, this);
-    config_server_.setCallback(boost::bind(&PlaneSegmentationNode::dynReconfCallback, this, _1, _2));
+    sub_ = nh_.subscribe ("point_cloud_in", 1,  &VoxelFilterNode::cloudCallback, this);
+    config_server_.setCallback(boost::bind(&VoxelFilterNode::dynReconfCallback, this, _1, _2));
 
     double leafsize;
 
@@ -36,7 +36,7 @@ public:
     vg_.setLeafSize (leafsize,leafsize,leafsize);
   }
 
-  ~PlaneSegmentationNode() {}
+  ~VoxelFilterNode() {}
 
   void
   dynReconfCallback(pcl_tutorial::voxel_filter_nodeConfig &config, uint32_t level)
@@ -67,7 +67,7 @@ int main (int argc, char** argv)
 {
   ros::init (argc, argv, "voxel_filter_node");
 
-  PlaneSegmentationNode vf;
+  VoxelFilterNode vf;
 
   ros::spin();
 }

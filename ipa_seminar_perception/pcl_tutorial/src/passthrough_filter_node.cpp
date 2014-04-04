@@ -13,17 +13,17 @@
 #include <pcl/filters/passthrough.h>
 
 
-class PlaneSegmentationNode
+class PassthroughFilterNode
 {
 public:
   typedef pcl::PointXYZRGB Point;
   typedef pcl::PointCloud<Point> PointCloud;
 
-  PlaneSegmentationNode()
+  PassthroughFilterNode()
   {
     pub_ = nh_.advertise<PointCloud>("point_cloud_out",1);
-    sub_ = nh_.subscribe ("point_cloud_in", 1,  &PlaneSegmentationNode::cloudCallback, this);
-    config_server_.setCallback(boost::bind(&PlaneSegmentationNode::dynReconfCallback, this, _1, _2));
+    sub_ = nh_.subscribe ("point_cloud_in", 1,  &PassthroughFilterNode::cloudCallback, this);
+    config_server_.setCallback(boost::bind(&PassthroughFilterNode::dynReconfCallback, this, _1, _2));
 
     double upper_limit, lower_limit;
 
@@ -38,7 +38,7 @@ public:
     pt_.setFilterLimits (lower_limit, upper_limit);
   }
 
-  ~PlaneSegmentationNode() {}
+  ~PassthroughFilterNode() {}
 
   void
   dynReconfCallback(pcl_tutorial::passthrough_filter_nodeConfig &config, uint32_t level)
@@ -69,7 +69,7 @@ int main (int argc, char** argv)
 {
   ros::init (argc, argv, "voxel_filter_node");
 
-  PlaneSegmentationNode vf;
+  PassthroughFilterNode vf;
 
   ros::spin();
 }
