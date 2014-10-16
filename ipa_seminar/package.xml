@@ -1,0 +1,29 @@
+<package>
+  <name>ipa_seminar</name>
+  <version>0.6.0</version>
+  <description>This package includes the resources used in the seminar - ROS for industrial Applications</description>
+  
+  <maintainer email="fmw@ipa.fhg.de">Florian Weisshardt</maintainer>
+  <maintainer email="fxm@ipa.fhg.de">Felix Messmer</maintainer>
+  <maintainer email="aub@ipa.fhg.de">Alexander Bubeck</maintainer>
+  <maintainer email="josh@ipa.fhg.de">Joschua Hampp</maintainer>
+  <maintainer email="jsf@ipa.fhg.de">Jan Fischer</maintainer>
+
+  <license>LGPL</license>
+
+  <url type="website">https://github.com/ipa320/ipa_seminar</url>
+  <url type="bugtracker">https://github.com/ipa320/ipa_seminar/issues</url>
+
+ 
+  <buildtool_depend>catkin</buildtool_depend>
+  <run_depend>ipa_seminar_application</run_depend>
+  <run_depend>ipa_seminar_driver</run_depend>
+  <run_depend>ipa_seminar_manipulation</run_depend>
+  <run_depend>ipa_seminar_navigation</run_depend>
+  <run_depend>ipa_seminar_perception</run_depend>
+
+
+  <export>
+    <metapackage/>
+  </export>
+</package>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+  <name>lbr_bringup</name>
+  <version>0.6.0</version>
+  <description>models, configs and launch files for the ipa_seminar_manipulation booth</description>
+
+  <maintainer email="fxm@ipa.fhg.de">Felix Messmer</maintainer>
+
+  <license>LGPL</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <run_depend>roscpp</run_depend>
+
+
+  <export>
+  </export>
+</package>
