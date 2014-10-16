@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
-<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
-       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
-       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
-       xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"
        name="lbr_solo" >
   
   <!-- common stuff -->
-  <include filename="$(find cob_description)/urdf/common.xacro" />
-  <include filename="$(find cob_description)/urdf/materials.urdf.xacro" />
+  <xacro:include filename="$(find cob_description)/urdf/common.xacro" />
+  <xacro:include filename="$(find cob_description)/urdf/materials.urdf.xacro" />
+  
+  <!-- generic simulator_gazebo plugins for starting mechanism control, ros time, ros battery -->
+  <xacro:include filename="$(find cob_description)/gazebo/gazebo.urdf.xacro" />
 
   <!-- calibration -->
   <!-- arm mount positions | relative to base_link -->
@@ -25,20 +25,22 @@
   <property name="cam3d_roll" value="3.67"/>
   <property name="cam3d_pitch" value="0"/>
   <property name="cam3d_yaw" value="-3.93"/>  
-
-  
   
   <!-- arm -->
-  <include filename="$(find cob_description)/urdf/lbr/lbr.urdf.xacro" />
+  <xacro:include filename="$(find cob_description)/urdf/lbr/lbr.urdf.xacro" />
   
   <!-- cameras -->
-  <include filename="$(find cob_description)/urdf/sensors/kinect.urdf.xacro" />
-
-  <!-- generic simulator_gazebo plugins for starting mechanism control, ros time, ros battery -->
-  <include filename="$(find cob_description)/gazebo/gazebo.urdf.xacro" />
+  <xacro:include filename="$(find cob_description)/urdf/sensors/kinect.urdf.xacro" />
 
 
   <!-- composition of the robot -->
+  <link name="world"/>
+  
+  <joint name="world_joint" type="fixed" >
+    <parent link="world" />
+    <child link="base_link" />
+  </joint>
+  
   <link name="base_link">
     <inertial>
        <origin xyz="0 0 -10" rpy="0 0 0"/>
@@ -93,9 +95,11 @@
       </geometry>
     </collision>
   </link>
+<!--
   <gazebo reference="wall_left_link">
     <material>IPA/Transparent</material>
   </gazebo>
+-->
   
   <joint name="wall_right_joint" type="fixed" >
     <origin xyz="0 0 0" rpy="0 0 0" />
@@ -125,13 +129,15 @@
       </geometry>
     </collision>
   </link>
+<!--
   <gazebo reference="wall_right_link">
     <material>IPA/Transparent</material>
   </gazebo>
+-->
    
-  <xacro:cob_lbr name="arm" parent="base_link">
+  <xacro:lbr name="arm" parent="base_link">
     <origin xyz="${arm_x} ${arm_y} ${arm_z}" rpy="${arm_roll} ${arm_pitch} ${arm_yaw}" />
-  </xacro:cob_lbr>
+  </xacro:lbr>
   
   <link name="gripper_link">
     <inertial>

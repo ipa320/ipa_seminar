@@ -10,7 +10,9 @@
 
   <buildtool_depend>catkin</buildtool_depend>
   
-  <run_depend>roscpp</run_depend>
+  <run_depend>cob_gazebo_worlds</run_depend>
+  <run_depend>cob_controller_configuration_gazebo</run_depend>
+  <run_depend></run_depend>
 
 
   <export>
