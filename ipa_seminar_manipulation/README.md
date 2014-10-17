@@ -60,7 +60,7 @@ You should see the screen below.
 ![SetupAssistant1](./doc/SetupAssistant1.png "SetupAssistant1")
 
 In order to create a new configuration, select __Create New MoveIt Configuration Package__.  
-Load the robot model (URDF) by browsing to `~/git/ipa_seminar/ipa_seminar_manipulation/lbr_bringup/urdf` and selecting the `lbr_solo.urdf.xacro` file.  
+Load the robot model (URDF) by browsing to `~/seminar/src/ipa_seminar/ipa_seminar_manipulation/lbr_bringup/urdf` and selecting the `lbr_solo.urdf.xacro` file.  
 You should now see our robot within the SetupAssistant.  
 
 ![SetupAssistant2](./doc/SetupAssistant2.png "SetupAssistant2")
@@ -134,7 +134,7 @@ The tab __Passive Joints__ is not relevant for our scenario. Just skip it.
 In the final step, the MoveIt! SetupAssistant generates all files required for motion planning automatically.  
 You can see a list of files to be generated below. It comprises configuration files (.yaml) as well as startup files (.launch). By clicking on a file you can get more information about it in the text box beside it.  
 
-To generate the files, specify a location where the files should be stored by browsing to the folder `~/git/ipa_seminar/ipa_seminar_manipulation`. Create a new folder `lbr_moveit_config` and select it as destination.  
+To generate the files, specify a location where the files should be stored by browsing to the folder `~/seminar/src/ipa_seminar/ipa_seminar_manipulation`. Create a new folder `lbr_moveit_config` and select it as destination.  
 Then press __Generate Package__.  
 
 Close the Setup Assistant by clicking __Exit Setup Assistant__.
@@ -187,7 +187,7 @@ In the visualization, you will see several models of the robot:
 * the __Scene Robot__ which displays the current state of the robot
 * the __Start State__ which virtually displays the start state for a planning request (depicted in green with an interactive marker attached)
 * the __Goal State__ which displays the virtual goal state for a planning request (depicted in orange with an interactive marker attached)
-* the __Planned Path__ whicht virtually displays the result trajectory of a planning request
+* the __Planned Path__ which virtually displays the result trajectory of a planning request
 
 You can modify what you see in the visualization by adjusting the settings in the display section. You can e.g. toggle some of the displays or change colors. Save the changes into the RVIZ configuration file through the menu bar at the top.  
 
@@ -222,11 +222,11 @@ Also we will add controllers that allow us to use MoveIt! with the real robot ha
 #### 4.1 Perception  
 
 MoveIt! uses a concept called __Planning Scene__ to provide information about an environment situation. The Planning Scene combines the following information:  
-* __Robot State:__ The state of the robot, i.e. its joint configuration
+* __Robot State:__ The current state of the robot, i.e. its current joint configuration
 * __Collision Objects:__ A set of (known) collision objects. A collision object is defined by its geometry and its pose
 * __Visual Information:__ Information retrieved from a visual sensor
 
-Now, in order to consider visual information within the Planning Scene, we need to specify on which ROS topics such sensor information can be received. Therefore we will add a new configuration file within the lbr_moveit_config that specifies all required information.
+Now, in order to consider visual information within the Planning Scene, we need to specify from which ROS topics such sensor information can be received. Therefore we will add a new configuration file within the lbr_moveit_config that specifies all required information.
 
 Create a new file `sensor_kinect.yaml` with the following content and save it within `lbr_moveit_config/config`.  
 ```
@@ -239,7 +239,7 @@ sensors:
     shape_scale: 1.0
 ```
 
-In order to use this new configuration file, paste the following lines to `lbr_solo_moveit_sensor_manager.launch` in `lbr_moveit_config/launch`:  
+In order to use this new configuration file, paste the following lines to `lbr_solo_moveit_sensor_manager.launch` in `lbr_moveit_config/launch.xml`:  
 ```
 <launch>
   <param name="octomap_frame" type="string" value="base_link" />
@@ -253,8 +253,8 @@ In order to use this new configuration file, paste the following lines to `lbr_s
 #### 4.2 Control  
 
 In order to be able to use MoveIt! with a real robot hardware we need to tell MoveIt!:  
-1. where from it can receive information about the robot's current configuration (i.e. the joint states)  
-2. where to send the planned trajectory for execution  
+1. from which topic it can receive information about the robot's current configuration (i.e. the joint states)  
+2. to which topic the planned trajectory is to be send for execution  
 
 Both of this can be achieved by configuring an according controller for our KUKA LBR.
 
@@ -262,8 +262,8 @@ Create a new file `controllers.yaml` with the following content and save it with
 ```
 controller_list:
   - name: arm_controller
-    ns: follow_joint_trajectory
-    default: true
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
     joints:
       - arm_1_joint
       - arm_2_joint
@@ -274,13 +274,13 @@ controller_list:
       - arm_7_joint
 ```
 
-In order to use this new configuration file, paste the following lines to `lbr_solo_moveit_controller_manager.launch` in `lbr_moveit_config/launch`:  
+In order to use this new configuration file, paste the following lines to `lbr_solo_moveit_controller_manager.launch` in `lbr_moveit_config/launch.xml`:  
 ```
 <launch>
   <rosparam file="$(find lbr_moveit_config)/config/controllers.yaml"/>
   <param name="use_controller_manager" value="false"/>
   <param name="trajectory_execution/execution_duration_monitoring" value="false"/>
-  <param name="moveit_controller_manager" value="pr2_moveit_controller_manager/Pr2MoveItControllerManager"/>
+  <param name="moveit_controller_manager" value="moveit_simple_controller_manager/MoveItSimpleControllerManager"/>
 </launch>
 ```
 
