@@ -1,7 +1,7 @@
 <package>
   <name>ipa_seminar</name>
   <version>0.6.0</version>
-  <description>This package includes the resources used in the seminar - ROS for industrial Applications</description>
+  <description>Documents and code for the seminar 'ROS for industrial Applications' at Fraunhofer IPA</description>
   
   <maintainer email="fmw@ipa.fhg.de">Florian Weisshardt</maintainer>
   <maintainer email="fxm@ipa.fhg.de">Felix Messmer</maintainer>
@@ -17,7 +17,7 @@
  
   <buildtool_depend>catkin</buildtool_depend>
   <run_depend>ipa_seminar_application</run_depend>
-  <run_depend>ipa_seminar_driver</run_depend>
+  <!--run_depend>ipa_seminar_driver</run_depend-->
   <run_depend>ipa_seminar_manipulation</run_depend>
   <run_depend>ipa_seminar_navigation</run_depend>
   <run_depend>ipa_seminar_perception</run_depend>
