@@ -5,6 +5,8 @@
 #source /home/ros/seminar/devel/setup.bash
 source ~/seminar/devel/setup.bash
 
+export JAVA_HOME=/usr/lib/jvm/java-6-openjdk-amd64
+
 export ROBOT=lbr_solo
 export ROBOT_ENV=empty
 export ROS_MASTER_URI=http://localhost:11311
