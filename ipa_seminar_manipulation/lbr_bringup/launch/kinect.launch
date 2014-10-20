@@ -3,8 +3,11 @@
 
   <arg name="robot" default="lbr_solo"/>
 
+<!--
   <param name="/cam3d/driver/data_skip" type="int" value="2"/>
   <param name="/cam3d/driver/depth_registration" type="bool" value="true"/>
+  <param name="/cam3d/driver/z_offset_mm" value="-130"/>
+-->
 
   <include file="$(find openni_launch)/launch/openni.launch">
     <arg name="camera" value="cam3d"/>
