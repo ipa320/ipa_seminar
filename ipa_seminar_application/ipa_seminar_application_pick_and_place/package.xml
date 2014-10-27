@@ -1,0 +1,27 @@
+<package>
+  <name>ipa_seminar_application_pick_and_place</name>
+  <version>0.1.0</version>
+  <description>ipa_seminar_application_pick_and_place</description>
+
+  <license>LGPL</license>
+
+  <url type="website">http://ros.org/wiki/ipa_seminar_application_pick_and_place</url>
+  <!-- <url type="bugtracker"></url> -->
+
+  <maintainer email="fmw@ipa.fhg.de">Florian Weisshardt</maintainer>
+  <author email="fmw@ipa.fhg.de">Florian Weisshardt</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+ 
+  <build_depend>roslaunch</build_depend>
+
+  <run_depend>rospy</run_depend>
+  <run_depend>smach</run_depend>
+  <run_depend>smach_ros</run_depend>
+  <run_depend>brics_showcase_industry_interfaces</run_depend>
+  <run_depend>cob_script_server</run_depend>
+ 
+  <export>
+
+  </export>
+</package>
