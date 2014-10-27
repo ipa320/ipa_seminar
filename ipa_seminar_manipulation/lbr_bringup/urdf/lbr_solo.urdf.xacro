@@ -19,10 +19,10 @@
   <property name="arm_yaw" value="-1.87"/>
 
   <!-- kinect mount positions | relative to base_link -->
-  <property name="cam3d_x" value="0.5"/>
-  <property name="cam3d_y" value="0.5"/>
-  <property name="cam3d_z" value="2.49"/>
-  <property name="cam3d_roll" value="3.67"/>
+  <property name="cam3d_x" value="0.56"/>
+  <property name="cam3d_y" value="0.53"/>
+  <property name="cam3d_z" value="2.44"/>
+  <property name="cam3d_roll" value="3.65"/>
   <property name="cam3d_pitch" value="0"/>
   <property name="cam3d_yaw" value="-3.93"/>  
   
