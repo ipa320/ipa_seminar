@@ -7,7 +7,6 @@ find_package(catkin REQUIRED COMPONENTS roslaunch rostest)
 # rostest for robots
 set(robotlist
 ur
-lbr
 lwa4d
 )
 
