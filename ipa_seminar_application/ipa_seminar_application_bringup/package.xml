@@ -23,7 +23,7 @@
   <run_depend>cob_controller_configuration_gazebo</run_depend>
   <run_depend>joint_trajectory_action</run_depend>
   <run_depend>gazebo</run_depend>
-  <run_depend>gazebo_worlds</run_depend>
+  <run_depend>gazebo_ros</run_depend>
   <run_depend>tf2_ros</run_depend>
   <run_depend>ur_driver</run_depend>
   <run_depend>robot_state_publisher</run_depend>

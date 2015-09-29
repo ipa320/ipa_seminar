@@ -1,7 +1,5 @@
 #!/usr/bin/env python
-import roslib; roslib.load_manifest('ipa_seminar_application_bringup')
 import rospy
-import time
 from brics_showcase_industry_interfaces.srv import MoveGripper, MoveGripperResponse	
 
 def handle_move_gripper(req):
