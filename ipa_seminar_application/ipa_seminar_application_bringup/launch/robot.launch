@@ -13,9 +13,7 @@
 	<include file="$(find ipa_seminar_application_bringup)/launch/$(arg robot).launch" />
 
 	<!-- start gripper -->
-	<node pkg="brics_showcase_industry_schunk_gripper" type="schunk_gripper" name="gripper" output="screen"/>
-	<!-- fake joint state publisher for gripper-->
-	<node pkg="ipa_seminar_application_bringup" type="fake_gripper_joint_state_publisher.py" name="gripper_fake_joint_state_publisher"/>
+	<node pkg="ipa_seminar_application_bringup" type="fake_gripper.py" name="fake_gripper"/>
 
 	<!-- send objects locations to parameter server -->
 	<rosparam command="delete" param="/objects"/>

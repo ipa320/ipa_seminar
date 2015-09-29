@@ -1,4 +1,5 @@
 joint_names: ["gripper_finger_left_joint", "gripper_finger_right_joint"]
+action_name: "/gripper_controller/follow_joint_trajectory"
 
 open: [[0.03, 0.03]]
 close: [[0.0, 0.0]]
