@@ -1,20 +1,12 @@
-- git:
-    uri: 'git://github.com/ipa320/brics_showcase_industry.git'
-    local-name: brics_showcase_industry
-    version: groovy_dev
-- git:
-    uri: 'git://github.com/ipa320/cob_robots.git'
-    local-name: cob_robots
-    version: groovy_dev
+#- git:
+#    uri: 'git://github.com/ipa320/brics_showcase_industry.git'
+#    local-name: brics_showcase_industry
+#    version: groovy_dev
 - git:
     uri: 'git://github.com/ipa320/ipa_seminar.git'
     local-name: ipa_seminar
-    version: master
-- git:
-    uri: 'git://github.com/ipa320/schunk_modular_robotics.git'
-    local-name: schunk_modular_robotics
-    version: groovy_dev
+    version: indigo_dev
 - git:
     uri: 'git://github.com/ipa320/universal_robot.git'
     local-name: universal_robot
-    version: groovy_dev
+    version: indigo-devel
