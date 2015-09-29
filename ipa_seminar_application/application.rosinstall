@@ -10,3 +10,7 @@
     uri: 'git://github.com/ipa320/universal_robot.git'
     local-name: universal_robot
     version: indigo-devel
+- git:
+    uri: 'git://github.com/ipa-fxm/schunk_modular_robotics.git'
+    local-name: schunk_modular_robotics
+    version: fix_urdf_lwa4d_axis
