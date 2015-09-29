@@ -6,10 +6,10 @@
 
   <param name="/cam3d/driver/data_skip" type="int" value="0"/>
   <param name="/cam3d/driver/depth_registration" type="bool" value="false"/>
-  <param name="/cam3d/driver/depth_ir_offset_x" value="3.0"/>
-  <param name="/cam3d/driver/depth_ir_offset_y" value="4.0"/>
-  <param name="/cam3d/driver/z_offset_mm" value="100"/>
-  <param name="/cam3d/driver/z_scaling" value="0.92"/>
+  <param name="/cam3d/driver/depth_ir_offset_x" value="10.0"/>
+  <param name="/cam3d/driver/depth_ir_offset_y" value="-4.0"/>
+  <param name="/cam3d/driver/z_offset_mm" value="0.0"/>
+  <param name="/cam3d/driver/z_scaling" value="0.98"/>
 
 
   <include file="$(find openni_launch)/launch/openni.launch">
@@ -17,7 +17,8 @@
     <arg name="rgb_frame_id" value="/cam3d_link" />
     <arg name="depth_frame_id" value="/cam3d_link" />
     <arg name="publish_tf" value="false" />
-    <arg name="rgb_camera_info_url" value="file:///$(find lbr_bringup)/config/kinect_rgb.yaml" />
+    <!--arg name="rgb_camera_info_url" value="file:///$(find lbr_bringup)/config/kinect_rgb.yaml" />
+    <arg name="depth_camera_info_url" value="file:///$(find lbr_bringup)/config/kinect_depth.yaml" /-->
   </include>
 
 </launch>
