@@ -27,7 +27,6 @@
   <run_depend>tf2_ros</run_depend>
   <run_depend>ur_driver</run_depend>
   <run_depend>robot_state_publisher</run_depend>
-  <run_depend>brics_showcase_industry_interfaces</run_depend>
  
   <export>
 
