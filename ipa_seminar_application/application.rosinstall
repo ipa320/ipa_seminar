@@ -7,6 +7,10 @@
     local-name: universal_robot
     version: indigo-devel
 - git:
+    uri: 'git@github.com:ThomasTimm/ur_modern_driver.git'
+    local-name: ur_modern_driver
+    version: master
+- git:
     uri: 'git://github.com/ipa-fxm/schunk_modular_robotics.git'
     local-name: schunk_modular_robotics
     version: fix_urdf_lwa4d_axis
