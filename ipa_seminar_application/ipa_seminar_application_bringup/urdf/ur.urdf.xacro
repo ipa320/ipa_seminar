@@ -7,8 +7,8 @@
   <xacro:include filename="$(find cob_description)/urdf/materials.urdf.xacro" />
   <xacro:include filename="$(find schunk_description)/urdf/pg70/pg70.urdf.xacro" />
 
-  <!-- ur10 -->
-  <xacro:include filename="$(find cob_description)/urdf/ur_arm/ur10_arm.urdf.xacro" />
+  <!-- ur5 -->
+  <xacro:include filename="$(find cob_description)/urdf/ur_arm/ur5_arm.urdf.xacro" />
 
   <link name="world"/>
   
@@ -37,9 +37,9 @@
   </link>
 
   <!-- arm -->
-  <xacro:ur10 name="arm" parent="base_link">
+  <xacro:ur5 name="arm" parent="base_link">
     <origin xyz="0 0 1" rpy="0 0 0.40" />
-  </xacro:ur10>
+  </xacro:ur5>
 
   <!-- gripper -->
   <xacro:schunk_pg70 name="gripper" parent="arm_ee_link">
