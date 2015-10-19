@@ -51,7 +51,7 @@ git pull origin master
 We have already prepared a pick and place application which moves an object from `area_1` to `area_2`.
 
 #### Start the application
-We'll start with the real robot which is running on `http://robot-lbr:11311`. To start the application:
+We'll start with the real robot which is running on `http://robot-ur:11311`. To start the application:
 ```
 export ROS_MASTER_URI=http://robot-ur:11311
 roslaunch ipa_seminar_application_pick_and_place pick_and_place.launch
