@@ -5,7 +5,7 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /MotionPlanning1
-      Splitter Ratio: 0.74256
+      Splitter Ratio: 0.640835
     Tree Height: 297
   - Class: rviz/Help
     Name: Help
@@ -243,10 +243,32 @@ Visualization Manager:
         Show Robot Collision: false
         Show Robot Visual: true
       Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /areas
+      Name: Areas
+      Namespaces:
+        area_1arrow: true
+        area_1cube: true
+        area_1text: true
+        area_2arrow: true
+        area_2cube: true
+        area_2text: true
+        area_3arrow: true
+        area_3cube: true
+        area_3text: true
+        area_4arrow: true
+        area_4cube: true
+        area_4text: true
+        area_5arrow: true
+        area_5cube: true
+        area_5text: true
+      Queue Size: 100
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: world
+    Fixed Frame: base_link
     Frame Rate: 30
   Name: root
   Tools:
@@ -258,7 +280,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 3.71566
+      Distance: 3.12208
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
@@ -270,10 +292,10 @@ Visualization Manager:
         Z: 2.23518e-07
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.354797
+      Pitch: 0.575204
       Target Frame: world
       Value: XYOrbit (rviz)
-      Yaw: 0.731765
+      Yaw: 6.04494
     Saved: ~
 Window Geometry:
   Displays:

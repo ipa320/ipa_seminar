@@ -4,6 +4,8 @@ project(ipa_seminar_application_pick_and_place)
 
 find_package(catkin REQUIRED COMPONENTS roslaunch rostest)
 
+catkin_python_setup()
+
 # rostest for robots
 set(robotlist
 ur

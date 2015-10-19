@@ -27,6 +27,7 @@
   <run_depend>tf2_ros</run_depend>
   <run_depend>ur_driver</run_depend>
   <run_depend>robot_state_publisher</run_depend>
+  <run_depend>ipa_seminar_application_pick_and_place</run_depend>
  
   <export>
 

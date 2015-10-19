@@ -7,7 +7,7 @@ from pick_and_place_states import get_pose_from_parameter_server
 
 def publisher():
 	rospy.init_node('area_publisher')
-	pub = rospy.Publisher('areas', Marker)
+	pub = rospy.Publisher('areas', Marker, latch=True, queue_size=1)
 
 	while not rospy.is_shutdown():
 		try:
@@ -43,6 +43,7 @@ def publisher():
 				arrow_marker.type = 0
 				arrow_marker.scale.x = 0.2
 				arrow_marker.scale.y = 0.01
+				arrow_marker.scale.z = 0.01
 				#arrow_marker.scale.z = 0.3
 				arrow_marker.color.r = 1
 				arrow_marker.color.g = 0
@@ -56,8 +57,11 @@ def publisher():
 				text_marker.header.stamp = rospy.Time.now()
 				text_marker.pose = get_pose_from_parameter_server(area).pose
 				text_marker.pose.position.z = 1.05
+				text_marker.pose.orientation.w = 1.0
 				text_marker.ns = area + "text"
 				text_marker.type = 9
+				text_marker.scale.x = 0.075
+				text_marker.scale.y = 0.075
 				text_marker.scale.z = 0.075
 				text_marker.color = color
 				text_marker.text = area
