@@ -51,7 +51,7 @@ git pull origin master
 We have already prepared a pick and place application which moves an object from `area_1` to `area_2`.
 
 #### Start the application
-We'll start with the real robot which is running on `http://robot-lbr:11311`. To start the application:
+We'll start with the real robot which is running on `http://robot-ur:11311`. To start the application:
 ```
 export ROS_MASTER_URI=http://robot-ur:11311
 roslaunch ipa_seminar_application_pick_and_place pick_and_place.launch
@@ -84,7 +84,7 @@ The following screenshots show the composition of the `pick_object` and the `pla
 |<img src="./doc/pick.png" width="350px" />|<img src="./doc/place.png" width="350px" />|
 
 The source code for the states and application above is distributed over four files inside the `ipa_seminar_application_pick_and_place` package. Each file represents one aspect of the **separation of concerns**:
-* `src/pick_and_place_states.py`:   Defines basic states (= building blocks for our application)
+* `src/pick_and_place_states/pick_and_place_states.py`:   Defines basic states (= building blocks for our application)
 * `src/pick_and_place.py`:          Defines the pick and place application (= coordination for our application)
 * `config/application_config.yaml`:    Defines the target areas (= configuration for our application)
 * `launch/pick_and_place.launch`:      Defines which components need to be started (= deployment of our application)
