@@ -13,7 +13,6 @@
 		<param name="min_payload" type="double" value="$(arg min_payload)"/>
 		<param name="max_payload" type="double" value="$(arg max_payload)"/>
 		<param name="max_velocity" type="double" value="$(arg max_velocity)"/>
-		<remap from="/arm_controller/joint_states" to="/joint_states"/>
 		<param name="prefix" value="arm_"/>
 	</node>
 

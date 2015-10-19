@@ -37,6 +37,7 @@ class move_planned(smach.State):
 		self.pose_stamped = pose_stamped
 
 	def execute(self, userdata):
+		rospy.sleep(0.1)
 		# plan trajectory
 		traj = mgc.plan(self.pose_stamped.pose)
 		if len(traj.joint_trajectory.points) == 0: # TODO is there a better way to know if planning failed or not?
@@ -54,13 +55,20 @@ class move_lin(smach.State):
 		self.pose_stamped = pose_stamped
 
 	def execute(self, userdata):
+		rospy.sleep(0.1)
 		# plan trajectory
 		(traj,frac) = mgc.compute_cartesian_path([self.pose_stamped.pose], 0.01, 4, False)
 		if len(traj.joint_trajectory.points) == 0: # TODO is there a better way to know if planning failed or not?
 			return 'failed'
 		if frac != 1.0: # this means moveit couldn't plan to the end
 			return 'failed'
-
+		
+		# fix trajectory
+		speed_factor = 2.00
+		for i in range(len(traj.joint_trajectory.points)):
+			traj.joint_trajectory.points[i].velocities = [0]*len(traj.joint_trajectory.points[i].positions)
+			traj.joint_trajectory.points[i].time_from_start *= 1.0/speed_factor
+		
 		# execute trajectory
 		mgc.execute(traj)
 
