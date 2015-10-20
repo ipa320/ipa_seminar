@@ -2,7 +2,10 @@
 <launch>
 
 	<!-- start rviz with configuration -->
+<!--
 	<node pkg="rviz" type="rviz" name="$(anon rviz)" args="-d $(find ipa_seminar_application_bringup)/config/rviz_config.rviz" respawn="false" output="screen" />
+-->
+    <include file="$(find ipa_seminar_application_bringup)/../ipa_seminar_application_moveit_config_$(arg robot)/launch/moveit_rviz.launch" />
 
 </launch>
 
