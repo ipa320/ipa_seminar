@@ -1,16 +1,16 @@
 - git:
     local-name: ipa_seminar
-    uri: git@github.com:ipa-fxm/ipa_seminar.git
+    uri: https://github.com/ipa-fxm/ipa_seminar.git
     version: update_application
 - git:
     local-name: schunk_modular_robotics
-    uri: git@github.com:ipa-fxm/schunk_modular_robotics.git
+    uri: https://github.com/ipa-fxm/schunk_modular_robotics.git
     version: fix_urdf_lwa4d_axis
 - git:
     local-name: universal_robot
-    uri: git@github.com:ros-industrial/universal_robot.git
+    uri: https://github.com/ros-industrial/universal_robot.git
     version: indigo-devel
 - git:
     local-name: ur_modern_driver
-    uri: git@github.com:ThomasTimm/ur_modern_driver.git
+    uri: https://github.com/ThomasTimm/ur_modern_driver.git
     version: master
