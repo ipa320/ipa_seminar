@@ -39,7 +39,10 @@ if __name__ == '__main__':
 	pose = gen_pose(pos=[0.5, -0.2, 1.2])
 	psi.add_box("box", pose, size=(0.15, 0.15, 0.5))
 	rospy.sleep(1.0)
-	
+
+	### Move to joint goal
+	mgc.go([-1.3780676708976536, -1.6994479592734537, 1.3636316141915703, -2.647661781458232, -2.213850085030142, 1.6799727955218422])
+
 	### Move to stored joint position
 	mgc.set_named_target("right")
 	mgc.go()
