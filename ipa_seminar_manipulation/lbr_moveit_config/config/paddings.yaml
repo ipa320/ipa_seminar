@@ -1,0 +1,13 @@
+default_robot_padding: 0.0
+default_robot_scale: 1.0
+default_object_padding: 0.0
+default_attached_padding: 0.0
+default_robot_link_padding: {   "arm_0_link"    : &link_padding 0.1,
+                                "arm_1_link"    : *link_padding,
+                                "arm_2_link"    : *link_padding,
+                                "arm_3_link"    : *link_padding,
+                                "arm_4_link"    : *link_padding,
+                                "arm_5_link"    : *link_padding,
+                                "arm_6_link"    : *link_padding,
+                                "arm_7_link"    : *link_padding,
+                                "gripper_link"  : *link_padding }

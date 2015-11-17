@@ -1,52 +1,56 @@
 <?xml version="1.0"?>
-<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
-       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
-       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
-       xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"
        name="ur10" >
 
   <!-- common stuff -->
-  <include filename="$(find ur_description)/urdf/gazebo.urdf.xacro" />
-  <include filename="$(find cob_description)/urdf/common.xacro" />
-  <include filename="$(find cob_description)/urdf/materials.urdf.xacro" />
-  <include filename="$(find cob_description)/gazebo/gazebo.urdf.xacro" />
-  <include filename="$(find schunk_description)/urdf/pg70/pg70.urdf.xacro" />
+  <xacro:include filename="$(find cob_description)/urdf/common.xacro" />
+  <xacro:include filename="$(find cob_description)/urdf/materials.urdf.xacro" />
+  <xacro:include filename="$(find schunk_description)/urdf/pg70/pg70.urdf.xacro" />
 
-  <!-- ur10 -->
-  <include filename="$(find raw_description)/urdf/ur_arm/ur10_arm.urdf.xacro" />
+  <!-- ur5 -->
+  <xacro:include filename="$(find cob_description)/urdf/ur_arm/ur5_arm.urdf.xacro" />
+
+  <link name="world"/>
+  
+  <joint name="world_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="world"/>
+    <child link="base_link"/>
+  </joint>
 
   <!-- foot for arm -->
-	<link name="base_link">
-		<inertial>
-		   <origin xyz="0 0 -10" rpy="0 0 0"/>
-		   <mass value="1000.0"/>
-		   <inertia ixx="100.0"  ixy="0"  ixz="0" iyy="100.0" iyz="0" izz="100.0" />
-		</inertial>
+  <link name="base_link">
+	<visual>
+	  <origin xyz="0 0 0.5" rpy="0 0 0" />
+	  <geometry>
+		<box size="2 2 1"/>
+	  </geometry>
+	  <material name="IPA/LightGrey" />
+	</visual>
 
-		<visual>
-		   <origin xyz="0 0 0.5" rpy="0 0 0" />
-		   <geometry>
-			  <box size="2 2 1"/>
-		   </geometry>
-		   <material name="IPA/LightGrey" />
-		</visual>
-
-		<collision>
-		   <origin xyz="0 0 0.5" rpy="0 0 0" />
-		   <geometry>
-			  <box size="2 2 1"/>
-		   </geometry>
-		</collision>
-	</link>
+	<collision>
+	  <origin xyz="0 0 0.5" rpy="0 0 0" />
+	  <geometry>
+		<box size="2 2 1"/>
+	  </geometry>
+	</collision>
+  </link>
 
   <!-- arm -->
-  <xacro:cob_ur10 name="arm" parent="base_link">
+  <xacro:ur5 name="arm" parent="base_link">
     <origin xyz="0 0 1" rpy="0 0 0.40" />
-  </xacro:cob_ur10>
+  </xacro:ur5>
 
   <!-- gripper -->
   <xacro:schunk_pg70 name="gripper" parent="arm_ee_link">
       <origin xyz="0 0 0" rpy="0 1.5708 0" />
   </xacro:schunk_pg70>
+  
+  <gazebo>
+    <plugin name="ros_control" filename="libgazebo_ros_control.so">
+      <!--robotNamespace>/</robotNamespace-->
+      <!--robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType-->
+    </plugin>
+  </gazebo>
 
 </robot>

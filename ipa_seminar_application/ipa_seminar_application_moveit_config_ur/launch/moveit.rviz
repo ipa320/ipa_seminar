@@ -1,15 +1,12 @@
 Panels:
   - Class: rviz/Displays
-    Help Height: 84
+    Help Height: 0
     Name: Displays
     Property Tree Widget:
       Expanded:
         - /MotionPlanning1
-        - /MotionPlanning1/Planning Request1
-        - /MotionPlanning1/Planned Path1
-        - /Axes1
-      Splitter Ratio: 0.74256
-    Tree Height: 268
+      Splitter Ratio: 0.640835
+    Tree Height: 379
   - Class: rviz/Help
     Name: Help
   - Class: rviz/Views
@@ -40,7 +37,9 @@ Visualization Manager:
       Value: true
     - Class: moveit_rviz_plugin/MotionPlanning
       Enabled: true
+      Move Group Namespace: ""
       MoveIt_Goal_Tolerance: 0
+      MoveIt_Planning_Attempts: 10
       MoveIt_Planning_Time: 5
       MoveIt_Use_Constraint_Aware_IK: true
       MoveIt_Warehouse_Host: 127.0.0.1
@@ -53,6 +52,10 @@ Visualization Manager:
           Expand Link Details: false
           Expand Tree: false
           Link Tree Style: Links in Alphabetic Order
+          arm_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
           arm_base_link:
             Alpha: 1
             Show Axes: false
@@ -62,12 +65,8 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
-          arm_forearm_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
             Value: true
-          arm_forearm_middle_link:
+          arm_forearm_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -77,17 +76,11 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          arm_tool0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
           arm_upper_arm_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_upper_arm_middle_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_upper_shoulder_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -112,12 +105,12 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          gripper_finger_1_link:
+          gripper_finger_left_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          gripper_finger_2_link:
+          gripper_finger_right_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -127,13 +120,17 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          world:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
         Loop Animation: false
         Robot Alpha: 0.5
         Show Robot Collision: false
         Show Robot Visual: true
         Show Trail: false
-        State Display Time: 0.05 s
-        Trajectory Topic: /move_group/display_planned_path
+        State Display Time: REALTIME
+        Trajectory Topic: move_group/display_planned_path
       Planning Metrics:
         Payload: 1
         Show Joint Torques: false
@@ -153,10 +150,10 @@ Visualization Manager:
         Show Workspace: false
         Start State Alpha: 1
         Start State Color: 0; 255; 0
-      Planning Scene Topic: /move_group/monitored_planning_scene
+      Planning Scene Topic: move_group/monitored_planning_scene
       Robot Description: robot_description
       Scene Geometry:
-        Scene Alpha: 0.9
+        Scene Alpha: 1
         Scene Color: 50; 230; 50
         Scene Display Time: 0.2
         Show Scene Geometry: true
@@ -170,6 +167,10 @@ Visualization Manager:
           Expand Link Details: false
           Expand Tree: false
           Link Tree Style: Links in Alphabetic Order
+          arm_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
           arm_base_link:
             Alpha: 1
             Show Axes: false
@@ -179,12 +180,8 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
-          arm_forearm_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
             Value: true
-          arm_forearm_middle_link:
+          arm_forearm_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -194,17 +191,11 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          arm_tool0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
           arm_upper_arm_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_upper_arm_middle_link:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-            Value: true
-          arm_upper_shoulder_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -229,12 +220,12 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-          gripper_finger_1_link:
+          gripper_finger_left_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          gripper_finger_2_link:
+          gripper_finger_right_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -244,55 +235,68 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          world:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
         Robot Alpha: 0.5
-        Show Scene Robot: true
+        Show Robot Collision: false
+        Show Robot Visual: true
       Value: true
-    - Class: rviz/Axes
+    - Class: rviz/Marker
       Enabled: true
-      Length: 1
-      Name: Axes
-      Radius: 0.1
-      Reference Frame: /gripper_palm_link
+      Marker Topic: /areas
+      Name: Areas
+      Namespaces:
+        {}
+      Queue Size: 100
       Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: /base_link
+    Fixed Frame: base_link
+    Frame Rate: 30
   Name: root
   Tools:
     - Class: rviz/Interact
       Hide Inactive Objects: true
     - Class: rviz/MoveCamera
     - Class: rviz/Select
+    - Class: rviz/FocusCamera
   Value: true
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 3.75881
+      Distance: 4.32313
+      Enable Stereo Rendering:
+        Stereo Eye Separation: 0.06
+        Stereo Focal Distance: 1
+        Swap Stereo Eyes: false
+        Value: false
       Focal Point:
-        X: 0.367685
-        Y: 0.1629
-        Z: 2.23518e-07
+        X: 0.275114
+        Y: -0.00395422
+        Z: 9.38774e-07
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.779797
-      Target Frame: /base_link
+      Pitch: 0.450204
+      Target Frame: world
       Value: XYOrbit (rviz)
-      Yaw: 4.91495
+      Yaw: 0.0117571
     Saved: ~
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 876
+  Height: 1056
   Help:
     collapsed: false
   Hide Left Dock: false
   Hide Right Dock: false
   Motion Planning:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000100000000000002a200000326fc0200000005fb000000100044006900730070006c0061007900730100000028000001a1000000dd00fffffffb0000000800480065006c00700000000342000000bb0000007600fffffffb0000000a0056006900650077007300000003b0000000b0000000b000fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e006701000001cf0000017f0000017400ffffff000003570000032600000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000100000000000002b1000003dafc0200000005fb000000100044006900730070006c0061007900730100000028000001bc000000dd00fffffffb0000000800480065006c00700000000342000000bb0000007600fffffffb0000000a0056006900650077007300000003b0000000b0000000b000fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e006701000001ea00000218000001ab00ffffff00000488000003da00000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Views:
     collapsed: false
-  Width: 1535
-  X: 58
-  Y: 24
+  Width: 1855
+  X: 55
+  Y: -14

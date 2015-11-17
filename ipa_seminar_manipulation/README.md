@@ -333,6 +333,21 @@ For this tutorial we will use the Python API to implement an example script in w
 
 For your script(s) you can use the template file `scripting_template.py` in `lbr_bringup/scripts`. Create a copy of this script in the same folder before editing. 
 
+#### 5.0. Helpfull commands  
+
+The following commands are useful for finding joint and Cartesian goals during e.g. a teach in process. 
+The current joint configuration can be querried by using:  
+```
+rostopic echo /joint_states -n 1
+```
+
+The current endeffector pose (in Cartesian coordinates) can be seen by using:  
+```
+rosrun tf tf_echo <from> <to>
+```
+where `<from>` is the frame in which the endeffector pose is received (e.g. `/base_link`) and `<to>` is the endeffector frame (e.g. `/arm_wrist_3_link`).
+
+
 #### 5.1. PlanningSceneInterface  
 
 This part of the API allows you to add and remove (virtual) static obstacles (geometric primitives or meshes) to the Planning Scene. Also objects can be attached and detached to the robot. This is particularly interesting when grasping objects as attached objects become part of the robot itself and thus are considered during motion planning. The full API can be found [here](https://github.com/ros-planning/moveit_commander/blob/groovy-devel/src/moveit_commander/planning_scene_interface.py "PlanningSceneInterface").  

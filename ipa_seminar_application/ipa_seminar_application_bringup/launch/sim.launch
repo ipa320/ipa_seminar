@@ -7,43 +7,40 @@
 	<param name="robot_description" command="$(find xacro)/xacro.py '$(find ipa_seminar_application_bringup)/urdf/$(arg robot).urdf.xacro'" />
 
 	<!-- launch an empty world -->
-	<include file="$(find gazebo_worlds)/launch/empty_world.launch" />
+	<include file="$(find gazebo_ros)/launch/empty_world.launch" />
 
 	<!-- push robot_description to factory and spawn robot in gazebo -->
-	<node name="spawn_gazebo_model" pkg="gazebo" type="spawn_model" args="-urdf -param robot_description -model arm -z 0.01 " respawn="false" output="screen" />
+	<node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model robot -z 0.01 " respawn="false" output="screen" />
 
-	<!-- Controller Manager -->
-	<include file="$(find cob_controller_configuration_gazebo)/ros/launch/controller_manager.launch" />
+	<!-- robot_state_publisher -->
+	<node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen" />
+	
+	<rosparam command="load" file="$(find ipa_seminar_application_bringup)/controller/joint_state_controller.yaml"/>
+	<node pkg="controller_manager" type="controller_manager" name="joint_state_controller_spawner" args="spawn joint_state_controller" respawn="false" output="screen"/>
 
 	<!-- start arm -->
-	<rosparam file="$(find ipa_seminar_application_bringup)/controller/arm_controller_$(arg robot).yaml" command="load"/>
-	<node name="arm_controller_spawner" pkg="cob_controller_configuration_gazebo" type="spawner" args="arm_controller" />
-	<group ns="arm_controller">
-		<node name="arm_joint_trajectory_action_node" pkg="joint_trajectory_action" type="joint_trajectory_action" />
-	</group>
+	<rosparam command="load" file="$(find ipa_seminar_application_bringup)/controller/arm_controller_$(arg robot).yaml"/>
+	<node pkg="controller_manager" type="controller_manager" name="arm_controller_spawner" args="spawn arm_controller" respawn="false" output="screen"/>
 	
 	<!-- start gripper -->
-	<rosparam file="$(find ipa_seminar_application_bringup)/controller/pg70_controller.yaml" command="load" />
-	<node name="gripper_controller_spawner" pkg="cob_controller_configuration_gazebo" type="spawner" args="gripper_controller" />
-	<group ns="gripper_controller">
-		<node name="gripper_joint_trajectory_action_node" pkg="joint_trajectory_action" type="joint_trajectory_action" />
-	</group>
-	<node pkg="ipa_seminar_application_bringup" name="fake_gripper" type="fake_gripper.py" />
+	<rosparam command="load" file="$(find ipa_seminar_application_bringup)/controller/gripper_controller_pg70.yaml"/>
+	<node pkg="controller_manager" type="controller_manager" name="gripper_controller_spawner" args="spawn gripper_controller" respawn="false" output="screen"/>
 
 	<!-- send objects locations to parameter server -->
 	<rosparam command="delete" param="/objects"/>
-	<rosparam command="load" ns="objects" file="$(find ipa_seminar_application_bringup)/config/object_locations.yaml"/>
+	<rosparam ns="objects" command="load" file="$(find ipa_seminar_application_bringup)/config/object_locations.yaml"/>
 	<!--node pkg="cob_bringup_sim" name="spawn_object" type="spawn_object.py" args="all"/-->
-	<node pkg="ipa_seminar_application_bringup" name="area_publisher" type="area_publisher.py"/>
+
+	<node pkg="ipa_seminar_application_bringup" type="area_publisher.py" name="area_publisher"/>
 
 	<!-- move it -->
 	<include file="$(find ipa_seminar_application_bringup)/../ipa_seminar_application_moveit_config_$(arg robot)/launch/move_group.launch" />
 
 	<!-- load default configuration -->
-	<rosparam command="load" ns="/script_server/arm" file="$(find ipa_seminar_application_bringup)/config/arm_joint_configurations_$(arg robot).yaml"/>
-	<rosparam command="load" ns="/script_server/gripper" file="$(find ipa_seminar_application_bringup)/config/gripper_joint_configurations.yaml"/>
+	<rosparam ns="/script_server/arm" command="load" file="$(find ipa_seminar_application_bringup)/config/arm_joint_configurations_$(arg robot).yaml"/>
+	<rosparam ns="/script_server/gripper" command="load" file="$(find ipa_seminar_application_bringup)/config/gripper_joint_configurations.yaml"/>
 
 	<!-- prepare robot -->
-	<node pkg="ipa_seminar_application_bringup" name="prepare_robot" type="prepare_robot.py" />
+	<node pkg="ipa_seminar_application_bringup" type="prepare_robot.py" name="prepare_robot" />
 
 </launch>

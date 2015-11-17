@@ -1,7 +1,5 @@
 #!/usr/bin/env python
-import roslib; roslib.load_manifest('ipa_seminar_application_bringup')
 import rospy
-import time
 from sensor_msgs.msg import JointState
 
 def fake_publisher():

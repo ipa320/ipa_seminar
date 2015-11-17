@@ -11,11 +11,11 @@
 
 	<!-- start arm -->
 	<include file="$(find ipa_seminar_application_bringup)/launch/$(arg robot).launch" />
+	<node name="arm_joint_states_relay" pkg="topic_tools" type="relay" args="/arm_controller/joint_states /joint_states" cwd="node" respawn="true" output="screen"/>
 
 	<!-- start gripper -->
-	<node pkg="brics_showcase_industry_schunk_gripper" type="schunk_gripper" name="gripper" output="screen"/>
-	<!-- fake joint state publisher for gripper-->
-	<node pkg="ipa_seminar_application_bringup" type="fake_gripper_joint_state_publisher.py" name="gripper_fake_joint_state_publisher"/>
+	<node pkg="ipa_seminar_application_bringup" type="fake_gripper.py" name="fake_gripper"/>
+	<node name="gripper_joint_states_relay" pkg="topic_tools" type="relay" args="/gripper_controller/joint_states /joint_states" cwd="node" respawn="true" output="screen"/>
 
 	<!-- send objects locations to parameter server -->
 	<rosparam command="delete" param="/objects"/>
@@ -28,5 +28,6 @@
 
 	<!-- load default configuration -->
 	<rosparam command="load" ns="/script_server/arm" file="$(find ipa_seminar_application_bringup)/config/arm_joint_configurations_$(arg robot).yaml"/>
+	<rosparam command="load" ns="/script_server/gripper" file="$(find ipa_seminar_application_bringup)/config/gripper_joint_configurations.yaml"/>
 
 </launch>
